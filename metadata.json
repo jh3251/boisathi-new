@@ -1,0 +1,9 @@
+{
+  "name": "Remix: BoiSathi.com (বইসাথী)",
+  "description": "পুরোনো বই আর কেজি দরে নয় - Bangladesh\u0027s premier student marketplace for buying, selling, and donating books.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ],
+  "majorCapabilities": []
+}
