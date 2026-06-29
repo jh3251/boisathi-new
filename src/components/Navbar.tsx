@@ -12,14 +12,8 @@ export default function Navbar({ user, onLogout }: { user: UserProfile | null, o
   return (
     <nav className="fixed top-4 left-4 right-4 max-w-7xl mx-auto bg-white rounded-full shadow-sm border border-emerald-50 z-50 px-6 py-3 flex justify-between items-center">
       {/* Logo Section */}
-      <Link to="/" className="flex items-center gap-2">
-        <div className="w-8 h-8 md:w-10 md:h-10 bg-accent rounded-lg flex items-center justify-center p-1.5">
-          <img src={SITE_LOGO_URL} alt="BoiSathi Logo" className="w-full h-full object-contain filter brightness-0 invert" />
-        </div>
-        <div className="flex flex-col">
-          <span className="font-serif font-black text-slate-900 leading-none text-lg md:text-xl">BoiSathi</span>
-          <span className="font-bn font-black text-accent leading-none text-xs md:text-sm">বইসাথী</span>
-        </div>
+      <Link to="/" className="flex items-center transition-transform hover:scale-105" aria-label="BoiSathi Home">
+        <img src={SITE_LOGO_URL} alt="BoiSathi Logo" className="h-8 md:h-12 w-auto object-contain" />
       </Link>
 
       {/* Center/Right Section */}

@@ -23,9 +23,9 @@ api.post("/upload", async (c) => {
     const e = env<any>(c);
     const B2_BUCKET_NAME = e.B2_BUCKET_NAME || "";
     
-    // Using Hono's standard web API to parse form data (natively supported by Cloudflare)
-    const formData = await c.req.parseBody();
-    const file = formData["file"];
+    // Using native Web API to parse form data (natively supported and optimized in C++ by Cloudflare)
+    const formData = await c.req.formData();
+    const file = formData.get("file");
 
     if (!file || !(file instanceof File)) {
       return c.json({ error: "No file uploaded" }, 400);
@@ -38,12 +38,11 @@ api.post("/upload", async (c) => {
     const fileExtension = file.name.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExtension}`;
 
-    const arrayBuffer = await file.arrayBuffer();
     const command = new PutObjectCommand({
       Bucket: B2_BUCKET_NAME,
       Key: fileName,
-      // Cloudflare standard Workers use Uint8Array which works perfectly here
-      Body: new Uint8Array(arrayBuffer),
+      // Pass the File (Blob) directly to AWS SDK to avoid memory/CPU spikes
+      Body: file,
       ContentType: file.type,
     });
 

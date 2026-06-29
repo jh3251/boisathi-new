@@ -10,11 +10,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-4 mb-16">
            {/* Column 1: Brand & Info */}
            <div className="md:col-span-5 space-y-6">
-              <Link to="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center p-1.5">
-                  <img src={SITE_LOGO_URL} alt="BoiSathi" className="w-full h-full object-contain filter brightness-0 invert" />
+              <Link to="/" className="flex items-center">
+                <div className="bg-white px-2 py-1 rounded-lg">
+                  <img src={SITE_LOGO_URL} alt="BoiSathi" className="h-8 md:h-10 w-auto object-contain" />
                 </div>
-                <span className="font-serif font-black text-white text-xl">BoiSathi.com</span>
               </Link>
               <p className="text-zinc-400 text-[10px] md:text-xs font-medium leading-relaxed max-w-sm">
                 A student-centric online platform where BoiSathi becomes your study companion. Buying, selling, and donating pre-loved books is now easier than ever.
