@@ -13,6 +13,7 @@ const getEnv = (c: any) => {
   return new Proxy({}, {
     get(target, prop) {
       if (typeof prop === 'string') {
+        if (c && c.env && c.env[prop] !== undefined) return c.env[prop];
         if (e && e[prop] !== undefined) return e[prop];
         if (typeof process !== 'undefined' && process.env && process.env[prop] !== undefined) return process.env[prop];
       }
