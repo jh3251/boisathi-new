@@ -1,8 +1,24 @@
 import { Hono } from "hono";
 import { GoogleGenAI } from "@google/genai";
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import { env } from "hono/adapter";
+
 const getEnv = (c: any) => {
-  return { ...(c.env || {}), ...(typeof process !== 'undefined' ? process.env : {}) };
+  let e: any = {};
+  try {
+    e = env(c) || {};
+  } catch (err) {}
+  
+  // Create a proxy to check Hono env first, then process.env
+  return new Proxy({}, {
+    get(target, prop) {
+      if (typeof prop === 'string') {
+        if (e && e[prop] !== undefined) return e[prop];
+        if (typeof process !== 'undefined' && process.env && process.env[prop] !== undefined) return process.env[prop];
+      }
+      return undefined;
+    }
+  });
 };
 
 const api = new Hono().basePath('/api');
