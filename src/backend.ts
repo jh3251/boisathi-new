@@ -58,23 +58,6 @@ const getS3Client = (e: any) => {
 
 api.get("/health", (c) => c.json({ status: "ok" }));
 
-api.get("/debug-env", (c) => {
-  const e = getEnv(c);
-  return c.json({
-    hasPublicDomain: !!e.S3_PUBLIC_DOMAIN,
-    publicDomainValue: e.S3_PUBLIC_DOMAIN || "none"
-  });
-});
-
-api.get("/debug-env2", (c) => {
-  const e = getEnv(c);
-  return c.json({
-    endpoint: e.S3_ENDPOINT,
-    bucket: e.S3_BUCKET_NAME,
-    publicDomain: e.S3_PUBLIC_DOMAIN
-  });
-});
-
 api.post("/upload", async (c) => {
   try {
     const e = getEnv(c);
