@@ -37,11 +37,11 @@ const api = new Hono().basePath('/api');
 
 const getS3Client = (e: any) => {
   return new S3Client({
-    region: e.B2_REGION || "us-west-004",
-    endpoint: e.B2_ENDPOINT ? (e.B2_ENDPOINT.startsWith('http') ? e.B2_ENDPOINT : `https://${e.B2_ENDPOINT}`) : "https://s3.us-west-004.backblazeb2.com",
+    region: e.S3_REGION || "auto",
+    endpoint: e.S3_ENDPOINT ? (e.S3_ENDPOINT.startsWith('http') ? e.S3_ENDPOINT : `https://${e.S3_ENDPOINT}`) : "",
     credentials: {
-      accessKeyId: e.B2_KEY_ID || "",
-      secretAccessKey: e.B2_APP_KEY || "",
+      accessKeyId: e.S3_ACCESS_KEY_ID || e.B2_KEY_ID || "",
+      secretAccessKey: e.S3_SECRET_ACCESS_KEY || e.B2_APP_KEY || "",
     }
   });
 };
@@ -51,28 +51,32 @@ api.get("/health", (c) => c.json({ status: "ok" }));
 api.post("/upload", async (c) => {
   try {
     const e = getEnv(c);
-    const B2_BUCKET_NAME = e.B2_BUCKET_NAME || "";
+    const bucketName = e.S3_BUCKET_NAME || e.B2_BUCKET_NAME || "";
+    const endpointStr = e.S3_ENDPOINT || e.B2_ENDPOINT || "";
+    const accessKeyId = e.S3_ACCESS_KEY_ID || e.B2_KEY_ID || "";
+    const secretAccessKey = e.S3_SECRET_ACCESS_KEY || e.B2_APP_KEY || "";
     
-    // Using native Web API to parse form data (natively supported and optimized in C++ by Cloudflare)
-    const formData = await c.req.formData();
+    let formData;
+    try {
+      formData = await c.req.formData();
+    } catch (err: any) {
+      console.error("FormData parse error", err);
+      return c.json({ error: "Failed to parse form data" }, 400);
+    }
     const file = formData.get("file");
 
     if (!file || !(file instanceof File)) {
       return c.json({ error: "No file uploaded" }, 400);
     }
 
-    if (!B2_BUCKET_NAME || !e.B2_KEY_ID || !e.B2_APP_KEY) {
+    if (!bucketName || !endpointStr || !accessKeyId || !secretAccessKey) {
       const missing = [];
-      if (!B2_BUCKET_NAME) missing.push("B2_BUCKET_NAME");
-      if (!e.B2_KEY_ID) missing.push("B2_KEY_ID");
-      if (!e.B2_APP_KEY) missing.push("B2_APP_KEY");
+      if (!bucketName) missing.push("S3_BUCKET_NAME");
+      if (!endpointStr) missing.push("S3_ENDPOINT");
+      if (!accessKeyId) missing.push("S3_ACCESS_KEY_ID");
+      if (!secretAccessKey) missing.push("S3_SECRET_ACCESS_KEY");
       
-      let debugEnvKeys: string[] = [];
-      try {
-        if (c && c.env) debugEnvKeys = Object.keys(c.env);
-      } catch (err) {}
-      
-      return c.json({ error: `Backblaze B2 is not configured. Missing: ${missing.join(", ")}. Available env keys: ${debugEnvKeys.join(", ")}` }, 500);
+      return c.json({ error: `Cloudflare R2 / S3 storage is not configured. Missing: ${missing.join(", ")}` }, 500);
     }
 
     const fileExtension = file.name.split('.').pop();
@@ -80,7 +84,7 @@ api.post("/upload", async (c) => {
 
     const arrayBuffer = await file.arrayBuffer();
     const command = new PutObjectCommand({
-      Bucket: B2_BUCKET_NAME,
+      Bucket: bucketName,
       Key: fileName,
       Body: new Uint8Array(arrayBuffer),
       ContentType: file.type,
@@ -89,8 +93,14 @@ api.post("/upload", async (c) => {
     const s3Client = getS3Client(e);
     await s3Client.send(command);
 
-    const endpoint = e.B2_ENDPOINT ? (e.B2_ENDPOINT.startsWith('http') ? e.B2_ENDPOINT : `https://${e.B2_ENDPOINT}`) : "https://s3.us-west-004.backblazeb2.com";
-    const secure_url = `${endpoint}/${B2_BUCKET_NAME}/${fileName}`;
+    let secure_url;
+    if (e.S3_PUBLIC_DOMAIN) {
+      const pubDomain = e.S3_PUBLIC_DOMAIN.startsWith('http') ? e.S3_PUBLIC_DOMAIN : `https://${e.S3_PUBLIC_DOMAIN}`;
+      secure_url = `${pubDomain}/${fileName}`;
+    } else {
+      const endpoint = endpointStr.startsWith('http') ? endpointStr : `https://${endpointStr}`;
+      secure_url = `${endpoint}/${bucketName}/${fileName}`;
+    }
 
     return c.json({ secure_url, delete_token: fileName });
   } catch (err: any) {
@@ -102,18 +112,22 @@ api.post("/upload", async (c) => {
 api.delete("/upload/:token", async (c) => {
   try {
     const e = getEnv(c);
-    const B2_BUCKET_NAME = e.B2_BUCKET_NAME || "";
+    const bucketName = e.S3_BUCKET_NAME || e.B2_BUCKET_NAME || "";
+    const endpointStr = e.S3_ENDPOINT || e.B2_ENDPOINT || "";
+    const accessKeyId = e.S3_ACCESS_KEY_ID || e.B2_KEY_ID || "";
+    const secretAccessKey = e.S3_SECRET_ACCESS_KEY || e.B2_APP_KEY || "";
     
-    if (!B2_BUCKET_NAME || !e.B2_KEY_ID || !e.B2_APP_KEY) {
+    if (!bucketName || !endpointStr || !accessKeyId || !secretAccessKey) {
       const missing = [];
-      if (!B2_BUCKET_NAME) missing.push("B2_BUCKET_NAME");
-      if (!e.B2_KEY_ID) missing.push("B2_KEY_ID");
-      if (!e.B2_APP_KEY) missing.push("B2_APP_KEY");
-      return c.json({ error: `Backblaze B2 is not configured. Missing: ${missing.join(", ")}` }, 500);
+      if (!bucketName) missing.push("S3_BUCKET_NAME");
+      if (!endpointStr) missing.push("S3_ENDPOINT");
+      if (!accessKeyId) missing.push("S3_ACCESS_KEY_ID");
+      if (!secretAccessKey) missing.push("S3_SECRET_ACCESS_KEY");
+      return c.json({ error: `Cloudflare R2 / S3 storage is not configured. Missing: ${missing.join(", ")}` }, 500);
     }
 
     const command = new DeleteObjectCommand({
-      Bucket: B2_BUCKET_NAME,
+      Bucket: bucketName,
       Key: c.req.param("token"),
     });
     

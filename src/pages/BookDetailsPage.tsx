@@ -28,21 +28,25 @@ const BookDetailsPage: React.FC = () => {
     const fetchAll = async () => {
       if (!id) return;
       setLoading(true);
-      const data = await api.db.getListingById(id);
-      if (data) {
-        setBook(data);
-        const userData = await api.db.getUserById(data.sellerId);
-        setSeller(userData);
-        let savedIds: string[] = [];
-        try {
-          const rawSaved = localStorage.getItem('bk_saved_v1');
-          if (rawSaved && rawSaved !== 'undefined') {
-            savedIds = JSON.parse(rawSaved);
+      try {
+        const data = await api.db.getListingById(id);
+        if (data) {
+          setBook(data);
+          const userData = await api.db.getUserById(data.sellerId);
+          setSeller(userData);
+          let savedIds: string[] = [];
+          try {
+            const rawSaved = localStorage.getItem('bk_saved_v1');
+            if (rawSaved && rawSaved !== 'undefined') {
+              savedIds = JSON.parse(rawSaved);
+            }
+          } catch (e) {
+            console.error("Failed to parse saved ids", e);
           }
-        } catch (e) {
-          console.error("Failed to parse saved ids", e);
+          setIsSaved(savedIds.includes(id));
         }
-        setIsSaved(savedIds.includes(id));
+      } catch (e) {
+        console.error("fetchAll error", e);
       }
       setLoading(false);
     };

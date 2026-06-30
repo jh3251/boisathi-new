@@ -128,8 +128,12 @@ export const api = {
   db: {
     subscribeToListings: (callback: (listings: BookListing[]) => void) => {
       const fetchListings = async () => {
-        const { data } = await supabase.from('bookListings').select('*').order('createdAt', { ascending: false });
-        callback((data || []) as BookListing[]);
+        try {
+          const { data } = await supabase.from('bookListings').select('*').order('createdAt', { ascending: false });
+          callback((data || []) as BookListing[]);
+        } catch (e) {
+          console.error("fetchListings error:", e);
+        }
       };
       
       fetchListings();
@@ -143,7 +147,12 @@ export const api = {
     uploadBookImage: async (fileOrBlob: File | Blob): Promise<{ secure_url: string, delete_token?: string }> => {
       const formData = new FormData();
       formData.append("file", fileOrBlob);
-      const response = await fetch(`/api/upload`, { method: "POST", body: formData });
+      let response;
+      try {
+        response = await fetch(`/api/upload`, { method: "POST", body: formData });
+      } catch (err: any) {
+        throw new Error(err.message === 'Failed to fetch' ? 'Network error: Failed to connect to upload server.' : err.message);
+      }
       
       let data;
       try {
@@ -266,8 +275,12 @@ export const api = {
     },
     subscribeToConversations: (userId: string, callback: (conversations: Conversation[]) => void) => {
       const fetchConvs = async () => {
-        const { data } = await supabase.from('conversations').select('*').contains('participants', [userId]);
-        callback((data || []) as Conversation[]);
+        try {
+          const { data } = await supabase.from('conversations').select('*').contains('participants', [userId]);
+          callback((data || []) as Conversation[]);
+        } catch (e) {
+          console.error("fetchConvs error:", e);
+        }
       };
       
       fetchConvs();
@@ -280,8 +293,12 @@ export const api = {
     },
     subscribeToMessages: (conversationId: string, callback: (messages: ChatMessage[]) => void) => {
       const fetchMsgs = async () => {
-        const { data } = await supabase.from('messages').select('*').eq('conversationId', conversationId).order('createdAt', { ascending: true });
-        callback((data || []) as ChatMessage[]);
+        try {
+          const { data } = await supabase.from('messages').select('*').eq('conversationId', conversationId).order('createdAt', { ascending: true });
+          callback((data || []) as ChatMessage[]);
+        } catch (e) {
+          console.error("fetchMsgs error:", e);
+        }
       };
       
       fetchMsgs();

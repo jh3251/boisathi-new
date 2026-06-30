@@ -56,16 +56,21 @@ const SellPage: React.FC<SellPageProps> = ({ user }) => {
 
     if (id) {
       const fetchListing = async () => {
-        const listing = await api.db.getListingById(id);
-        if (listing && listing.sellerId === user.uid) {
-          setFormData(listing);
-          if (listing.imageUrl) {
-            setImagePreview(listing.imageUrl);
+        try {
+          const listing = await api.db.getListingById(id);
+          if (listing && listing.sellerId === user.uid) {
+            setFormData(listing);
+            if (listing.imageUrl) {
+              setImagePreview(listing.imageUrl);
+            }
+            if (listing.imageDeleteToken) {
+              setCurrentDeleteToken(listing.imageDeleteToken);
+            }
+          } else {
+            navigate('/dashboard');
           }
-          if (listing.imageDeleteToken) {
-            setCurrentDeleteToken(listing.imageDeleteToken);
-          }
-        } else {
+        } catch (e) {
+          console.error("fetchListing error", e);
           navigate('/dashboard');
         }
       };
