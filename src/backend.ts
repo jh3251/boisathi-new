@@ -1,7 +1,9 @@
 import { Hono } from "hono";
 import { GoogleGenAI } from "@google/genai";
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { env } from "hono/adapter";
+const getEnv = (c: any) => {
+  return { ...(c.env || {}), ...(typeof process !== 'undefined' ? process.env : {}) };
+};
 
 const api = new Hono().basePath('/api');
 
@@ -20,7 +22,7 @@ api.get("/health", (c) => c.json({ status: "ok" }));
 
 api.post("/upload", async (c) => {
   try {
-    const e = env<any>(c);
+    const e = getEnv(c);
     const B2_BUCKET_NAME = e.B2_BUCKET_NAME || "";
     
     // Using native Web API to parse form data (natively supported and optimized in C++ by Cloudflare)
@@ -46,7 +48,7 @@ api.post("/upload", async (c) => {
     const command = new PutObjectCommand({
       Bucket: B2_BUCKET_NAME,
       Key: fileName,
-      Body: Buffer.from(arrayBuffer),
+      Body: new Uint8Array(arrayBuffer),
       ContentType: file.type,
     });
 
@@ -65,7 +67,7 @@ api.post("/upload", async (c) => {
 
 api.delete("/upload/:token", async (c) => {
   try {
-    const e = env<any>(c);
+    const e = getEnv(c);
     const B2_BUCKET_NAME = e.B2_BUCKET_NAME || "";
     
     if (!B2_BUCKET_NAME || !e.B2_KEY_ID || !e.B2_APP_KEY) {
@@ -93,7 +95,7 @@ api.delete("/upload/:token", async (c) => {
 
 api.post("/chat", async (c) => {
   try {
-    const e = env<any>(c);
+    const e = getEnv(c);
     const body = await c.req.json();
     const ai = new GoogleGenAI({
       apiKey: e.GEMINI_API_KEY,
