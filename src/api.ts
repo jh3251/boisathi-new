@@ -144,9 +144,16 @@ export const api = {
       const formData = new FormData();
       formData.append("file", fileOrBlob);
       const response = await fetch(`/api/upload`, { method: "POST", body: formData });
-      const data = await response.json();
+      
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        throw new Error(`Server returned invalid response (Status ${response.status})`);
+      }
+      
       if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
+        throw new Error(data?.error || 'Upload failed');
       }
       return { secure_url: data.secure_url, delete_token: data.delete_token };
     },

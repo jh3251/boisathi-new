@@ -31,18 +31,22 @@ api.post("/upload", async (c) => {
       return c.json({ error: "No file uploaded" }, 400);
     }
 
-    if (!B2_BUCKET_NAME || !e.B2_KEY_ID) {
-      return c.json({ error: "Backblaze B2 is not configured" }, 500);
+    if (!B2_BUCKET_NAME || !e.B2_KEY_ID || !e.B2_APP_KEY) {
+      const missing = [];
+      if (!B2_BUCKET_NAME) missing.push("B2_BUCKET_NAME");
+      if (!e.B2_KEY_ID) missing.push("B2_KEY_ID");
+      if (!e.B2_APP_KEY) missing.push("B2_APP_KEY");
+      return c.json({ error: `Backblaze B2 is not configured. Missing: ${missing.join(", ")}` }, 500);
     }
 
     const fileExtension = file.name.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExtension}`;
 
+    const arrayBuffer = await file.arrayBuffer();
     const command = new PutObjectCommand({
       Bucket: B2_BUCKET_NAME,
       Key: fileName,
-      // Pass the File (Blob) directly to AWS SDK to avoid memory/CPU spikes
-      Body: file,
+      Body: Buffer.from(arrayBuffer),
       ContentType: file.type,
     });
 
@@ -64,8 +68,12 @@ api.delete("/upload/:token", async (c) => {
     const e = env<any>(c);
     const B2_BUCKET_NAME = e.B2_BUCKET_NAME || "";
     
-    if (!B2_BUCKET_NAME || !e.B2_KEY_ID) {
-      return c.json({ error: "Backblaze B2 is not configured" }, 500);
+    if (!B2_BUCKET_NAME || !e.B2_KEY_ID || !e.B2_APP_KEY) {
+      const missing = [];
+      if (!B2_BUCKET_NAME) missing.push("B2_BUCKET_NAME");
+      if (!e.B2_KEY_ID) missing.push("B2_KEY_ID");
+      if (!e.B2_APP_KEY) missing.push("B2_APP_KEY");
+      return c.json({ error: `Backblaze B2 is not configured. Missing: ${missing.join(", ")}` }, 500);
     }
 
     const command = new DeleteObjectCommand({

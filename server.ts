@@ -16,9 +16,12 @@ async function startServer() {
 
   // Mount the Hono API
   // getRequestListener converts standard Web Fetch API into a Node req/res handler
-  app.use("/api", (req, res) => {
-    const listener = getRequestListener(api.fetch);
-    listener(req, res);
+  app.use(async (req, res, next) => {
+    if (req.url.startsWith("/api")) {
+      const listener = getRequestListener(api.fetch);
+      return listener(req, res);
+    }
+    next();
   });
 
   // Vite middleware for development
