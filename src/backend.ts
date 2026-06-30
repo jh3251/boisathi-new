@@ -13,9 +13,20 @@ const getEnv = (c: any) => {
   return new Proxy({}, {
     get(target, prop) {
       if (typeof prop === 'string') {
+        // Cloudflare Pages specific
         if (c && c.env && c.env[prop] !== undefined) return c.env[prop];
+        
+        // Hono adapter
         if (e && e[prop] !== undefined) return e[prop];
+        
+        // Node.js process.env
         if (typeof process !== 'undefined' && process.env && process.env[prop] !== undefined) return process.env[prop];
+
+        // Vite / client-side import.meta.env (just in case)
+        try {
+          // @ts-ignore
+          if (import.meta && import.meta.env && import.meta.env[prop] !== undefined) return import.meta.env[prop];
+        } catch (err) {}
       }
       return undefined;
     }
@@ -55,7 +66,13 @@ api.post("/upload", async (c) => {
       if (!B2_BUCKET_NAME) missing.push("B2_BUCKET_NAME");
       if (!e.B2_KEY_ID) missing.push("B2_KEY_ID");
       if (!e.B2_APP_KEY) missing.push("B2_APP_KEY");
-      return c.json({ error: `Backblaze B2 is not configured. Missing: ${missing.join(", ")}` }, 500);
+      
+      let debugEnvKeys: string[] = [];
+      try {
+        if (c && c.env) debugEnvKeys = Object.keys(c.env);
+      } catch (err) {}
+      
+      return c.json({ error: `Backblaze B2 is not configured. Missing: ${missing.join(", ")}. Available env keys: ${debugEnvKeys.join(", ")}` }, 500);
     }
 
     const fileExtension = file.name.split('.').pop();
