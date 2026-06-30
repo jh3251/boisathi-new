@@ -19,7 +19,15 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
     <div className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-emerald-50 p-3 sm:p-4 flex flex-col sm:flex-row gap-3 sm:gap-5 hover:shadow-lg transition-all duration-300">
       <div className="relative w-full sm:w-28 md:w-36 h-48 sm:h-36 md:h-44 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
         {book.imageUrl ? (
-          <img src={book.imageUrl} alt={book.title} className="w-full h-full object-cover" />
+          <img 
+            src={book.imageUrl} 
+            alt={book.title} 
+            className="w-full h-full object-cover" 
+            onError={(e) => {
+              (e.target as HTMLImageElement).onerror = null;
+              (e.target as HTMLImageElement).src = "https://res.cloudinary.com/dxbqn8ms0/image/upload/v1740856000/logo.png";
+            }}
+          />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center text-slate-300">
             <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 mb-2" />

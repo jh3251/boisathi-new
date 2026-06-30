@@ -217,6 +217,10 @@ const BookDetailsPage: React.FC = () => {
                 src={book.imageUrl || "https://res.cloudinary.com/dxbqn8ms0/image/upload/v1740856000/logo.png"} 
                 alt={`${book.title} Book Cover`}
                 className="max-h-full max-w-full object-contain hover:scale-105 transition duration-1000"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).onerror = null;
+                  (e.target as HTMLImageElement).src = "https://res.cloudinary.com/dxbqn8ms0/image/upload/v1740856000/logo.png";
+                }}
               />
             </div>
           </div>

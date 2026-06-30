@@ -36,17 +36,44 @@ const getEnv = (c: any) => {
 const api = new Hono().basePath('/api');
 
 const getS3Client = (e: any) => {
+  let endpoint = e.S3_ENDPOINT ? (e.S3_ENDPOINT.startsWith('http') ? e.S3_ENDPOINT : `https://${e.S3_ENDPOINT}`) : "";
+  const bucketName = e.S3_BUCKET_NAME || e.B2_BUCKET_NAME || "";
+  
+  // Clean endpoint: if it ends with /<bucketName>, remove it
+  if (endpoint && bucketName && endpoint.endsWith(`/${bucketName}`)) {
+    endpoint = endpoint.substring(0, endpoint.length - bucketName.length - 1);
+  }
+  // also strip trailing slash
+  endpoint = endpoint.replace(/\/$/, "");
+
   return new S3Client({
     region: e.S3_REGION || "auto",
-    endpoint: e.S3_ENDPOINT ? (e.S3_ENDPOINT.startsWith('http') ? e.S3_ENDPOINT : `https://${e.S3_ENDPOINT}`) : "",
+    endpoint: endpoint,
     credentials: {
       accessKeyId: e.S3_ACCESS_KEY_ID || e.B2_KEY_ID || "",
-      secretAccessKey: e.S3_SECRET_ACCESS_KEY || e.B2_APP_KEY || "",
+      secretAccessKey: e.S3_SECRET_ACCESS_KEY || e.S3_SECRET_ACCESS || e.B2_APP_KEY || "",
     }
   });
 };
 
 api.get("/health", (c) => c.json({ status: "ok" }));
+
+api.get("/debug-env", (c) => {
+  const e = getEnv(c);
+  return c.json({
+    hasPublicDomain: !!e.S3_PUBLIC_DOMAIN,
+    publicDomainValue: e.S3_PUBLIC_DOMAIN || "none"
+  });
+});
+
+api.get("/debug-env2", (c) => {
+  const e = getEnv(c);
+  return c.json({
+    endpoint: e.S3_ENDPOINT,
+    bucket: e.S3_BUCKET_NAME,
+    publicDomain: e.S3_PUBLIC_DOMAIN
+  });
+});
 
 api.post("/upload", async (c) => {
   try {
@@ -54,7 +81,7 @@ api.post("/upload", async (c) => {
     const bucketName = e.S3_BUCKET_NAME || e.B2_BUCKET_NAME || "";
     const endpointStr = e.S3_ENDPOINT || e.B2_ENDPOINT || "";
     const accessKeyId = e.S3_ACCESS_KEY_ID || e.B2_KEY_ID || "";
-    const secretAccessKey = e.S3_SECRET_ACCESS_KEY || e.B2_APP_KEY || "";
+    const secretAccessKey = e.S3_SECRET_ACCESS_KEY || e.S3_SECRET_ACCESS || e.B2_APP_KEY || "";
     
     let formData;
     try {
@@ -96,12 +123,15 @@ api.post("/upload", async (c) => {
     let secure_url;
     if (e.S3_PUBLIC_DOMAIN) {
       const pubDomain = e.S3_PUBLIC_DOMAIN.startsWith('http') ? e.S3_PUBLIC_DOMAIN : `https://${e.S3_PUBLIC_DOMAIN}`;
-      secure_url = `${pubDomain}/${fileName}`;
+      const cleanPubDomain = pubDomain.replace(/\/$/, "");
+      secure_url = `${cleanPubDomain}/${fileName}`;
     } else {
       const endpoint = endpointStr.startsWith('http') ? endpointStr : `https://${endpointStr}`;
-      secure_url = `${endpoint}/${bucketName}/${fileName}`;
+      const cleanEndpoint = endpoint.replace(/\/$/, "");
+      secure_url = `${cleanEndpoint}/${bucketName}/${fileName}`;
     }
 
+    console.log("Uploaded successfully, returning URL:", secure_url);
     return c.json({ secure_url, delete_token: fileName });
   } catch (err: any) {
     console.error("Upload error", err);
@@ -115,7 +145,7 @@ api.delete("/upload/:token", async (c) => {
     const bucketName = e.S3_BUCKET_NAME || e.B2_BUCKET_NAME || "";
     const endpointStr = e.S3_ENDPOINT || e.B2_ENDPOINT || "";
     const accessKeyId = e.S3_ACCESS_KEY_ID || e.B2_KEY_ID || "";
-    const secretAccessKey = e.S3_SECRET_ACCESS_KEY || e.B2_APP_KEY || "";
+    const secretAccessKey = e.S3_SECRET_ACCESS_KEY || e.S3_SECRET_ACCESS || e.B2_APP_KEY || "";
     
     if (!bucketName || !endpointStr || !accessKeyId || !secretAccessKey) {
       const missing = [];

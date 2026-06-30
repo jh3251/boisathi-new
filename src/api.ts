@@ -171,7 +171,7 @@ export const api = {
         await fetch(`/api/upload/${deleteToken}`, { method: "DELETE" });
       } catch (e) {}
     },
-    compressImage: async (file: File): Promise<Blob> => {
+    compressImage: async (file: File): Promise<File> => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -186,7 +186,16 @@ export const api = {
             canvas.width = width;
             canvas.height = height;
             canvas.getContext('2d')?.drawImage(img, 0, 0, width, height);
-            canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('Compression failed')), 'image/jpeg', 0.8);
+            canvas.toBlob((blob) => {
+              if (blob) {
+                // Return as File to preserve name and add .jpg extension
+                const fileName = file.name.replace(/\.[^/.]+$/, "") + ".jpg";
+                const newFile = new File([blob], fileName, { type: 'image/jpeg' });
+                resolve(newFile);
+              } else {
+                reject(new Error('Compression failed'));
+              }
+            }, 'image/jpeg', 0.8);
           };
         };
       });

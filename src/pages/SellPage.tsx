@@ -129,8 +129,8 @@ const SellPage: React.FC<SellPageProps> = ({ user }) => {
   };
 
   const validate = () => {
-    if (!imagePreview && !formData.imageUrl) {
-      return lang === 'bn' ? "অনুগ্রহ করে বইয়ের একটি ছবি দিন।" : "Please upload at least one photo of the book.";
+    if (!formData.imageUrl) {
+      return lang === 'bn' ? "অনুগ্রহ করে বইয়ের একটি ছবি দিন (আপলোড সফল হতে হবে)।" : "Please upload at least one photo of the book (upload must succeed).";
     }
 
     if (!id && userListingCount >= 10) {
