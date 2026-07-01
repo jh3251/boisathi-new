@@ -2,7 +2,7 @@ import { Division, District, Upazila } from './types';
 
 // Centralized Branding Assets
 // To achieve "one domain", upload these to your Cloudinary account and update the URLs here.
-export const SITE_LOGO_URL = "https://res.cloudinary.com/dxbqn8ms0/image/upload/v1769621773/My%20Brand/book-Converted_etlhsv.png"; 
+export const SITE_LOGO_URL = "https://boisathi.com/book-Converted_etlhsv.png"; 
 export const GOOGLE_PLAY_ICON_URL = "https://res.cloudinary.com/dxbqn8ms0/image/upload/v1769986572/google-play-png-logo-3798_eo3q9g.png";
 
 export const DIVISIONS: Division[] = [

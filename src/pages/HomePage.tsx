@@ -76,17 +76,17 @@ const HomePage: React.FC = () => {
       />
       
       {/* Centered Vertical Hero Section */}
-      <section className="relative px-4 pt-8 md:pt-16 pb-6 overflow-hidden">
+      <section className="relative px-4 pt-12 md:pt-16 pb-6 overflow-hidden mt-6 md:mt-0">
         <div className="absolute inset-0 alpona-bg opacity-10 -z-10 scale-150 animate-float"></div>
-        <div className="max-w-6xl mx-auto text-center space-y-6 md:space-y-10">
+        <div className="max-w-6xl mx-auto text-center space-y-4 md:space-y-10">
           
-          <div className="space-y-4 md:space-y-8">
+          <div className="space-y-3 md:space-y-8">
             {/* Main Branding Title */}
             <div className="animate-reveal-up">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-black tracking-tighter leading-none mb-4">
-                <span className="text-accent drop-shadow-sm inline-block break-words">BoiSathi.com-</span>
+              <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-7xl font-serif font-black tracking-tighter leading-[1.1] mb-2 sm:mb-4">
+                <span className="text-accent drop-shadow-sm inline-block break-words animate-slide-up-down">BoiSathi.com-</span>
                 <br />
-                <span className="text-red-600 font-bn animate-pulse inline-block drop-shadow-md md:mt-2">
+                <span className="text-red-600 font-bn animate-slide-up-down inline-block drop-shadow-md md:mt-2 text-3xl sm:text-5xl lg:text-7xl">
                   বইসাথী
                 </span>
               </h1>
@@ -95,7 +95,7 @@ const HomePage: React.FC = () => {
             {/* NEW ANIMATED TEXT */}
             <div className="animate-reveal-up delay-200">
                <div className="inline-block relative">
-                 <p className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bn font-black text-slate-800 tracking-tight leading-tight px-2 sm:px-6 py-2">
+                 <p className="text-sm sm:text-base md:text-2xl lg:text-3xl font-bn font-black text-slate-800 tracking-tight leading-tight px-2 sm:px-6 py-2">
                    পুরোনো বই আর <span className="relative inline-block text-red-600 px-1 sm:px-2">
                      কেজি দরে নয়
                      <span className="absolute bottom-0 left-0 w-full h-1 bg-red-200/50 -rotate-1 translate-y-1 sm:translate-y-2"></span>
@@ -150,7 +150,7 @@ const HomePage: React.FC = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-5">
                <div className="space-y-1 md:space-y-2">
                   <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('division')}</label>
                   <select 

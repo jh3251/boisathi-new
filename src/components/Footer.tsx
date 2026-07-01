@@ -11,7 +11,7 @@ export default function Footer() {
            {/* Column 1: Brand & Info */}
            <div className="md:col-span-5 space-y-6">
               <Link to="/" className="flex items-center">
-                <div className="bg-white px-2 py-1 rounded-lg">
+                <div className="rounded-lg">
                   <img src={SITE_LOGO_URL} alt="BoiSathi" className="h-8 md:h-10 w-auto object-contain" />
                 </div>
               </Link>
