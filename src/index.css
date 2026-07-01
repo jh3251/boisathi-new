@@ -4,6 +4,9 @@
   --animate-float: float 4s ease-in-out infinite;
   --animate-slide-up-down: slideUpDown 3s ease-in-out infinite;
   --animate-reveal-up: revealUp 0.8s ease-out forwards;
+  --animate-typewriter-1: typewriter 1.5s steps(30, end) both;
+  --animate-typewriter-2: typewriter 1.5s steps(30, end) 1.5s both;
+  --animate-typewriter-loop: typewriterLoop 5s steps(30, end) infinite;
   
   @keyframes float {
     0%, 100% { transform: translateY(0); }
@@ -18,6 +21,17 @@
   @keyframes revealUp {
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes typewriter {
+    0% { clip-path: inset(0 100% 0 0); }
+    100% { clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes typewriterLoop {
+    0%, 20% { clip-path: inset(0 100% 0 0); }
+    40%, 80% { clip-path: inset(0 0 0 0); }
+    100% { clip-path: inset(0 100% 0 0); }
   }
 }
 

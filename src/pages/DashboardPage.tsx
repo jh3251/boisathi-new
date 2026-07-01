@@ -112,58 +112,56 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col lg:grid lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 mt-4 md:mt-8 pb-20">
+    <div className="flex flex-col lg:grid lg:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto px-4 mt-2 md:mt-8 pb-20">
       <aside className="lg:col-span-1">
-        <div className="bg-white rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-8 shadow-2xl shadow-emerald-900/5 border border-emerald-50">
-          <div className="flex items-center gap-4 mb-8 md:mb-10">
-            <div className="w-12 h-12 md:w-14 md:h-14 bg-emerald-100 rounded-2xl flex items-center justify-center font-black text-base md:text-xl text-black overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
+        <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-8 shadow-2xl shadow-emerald-900/5 border border-emerald-50">
+          <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-10">
+            <div className="w-10 h-10 md:w-14 md:h-14 bg-emerald-100 rounded-[10px] md:rounded-2xl flex items-center justify-center font-black text-sm md:text-xl text-black overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
               <span className="text-black font-black uppercase">{(name || user.displayName || 'A').charAt(0)}</span>
             </div>
             <div className="min-w-0">
-              <p className="font-black text-black leading-tight text-base md:text-lg truncate">{name || 'Anonymous'}</p>
-              <p className="text-[10px] text-accent font-black uppercase mt-0.5 truncate">MEMBER</p>
+              <p className="font-black text-black leading-tight text-sm md:text-lg truncate">{name || 'Anonymous'}</p>
+              <p className="text-[9px] md:text-[10px] text-accent font-black uppercase mt-0.5 truncate">MEMBER</p>
             </div>
           </div>
-
           <nav className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 md:gap-3 no-scrollbar pb-2 lg:pb-0">
-            <button onClick={() => setActiveTab('ads')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-4 p-4 font-black rounded-2xl transition text-[10px] md:text-xs uppercase ${activeTab === 'ads' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
-              <LayoutGrid className="w-4 h-4 md:w-5 md:h-5" /> Ads
+            <button onClick={() => setActiveTab('ads')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'ads' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+              <LayoutGrid className="w-3.5 h-3.5 md:w-5 md:h-5" /> Ads
             </button>
-            <button onClick={() => setActiveTab('messages')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-4 p-4 font-black rounded-2xl transition text-[10px] md:text-xs uppercase ${activeTab === 'messages' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
-              <MessageCircle className={`w-4 h-4 md:w-5 md:h-5 ${activeTab === 'messages' ? 'text-white' : 'text-accent'}`} /> Messages
+            <button onClick={() => setActiveTab('messages')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'messages' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+              <MessageCircle className={`w-3.5 h-3.5 md:w-5 md:h-5 ${activeTab === 'messages' ? 'text-white' : 'text-accent'}`} /> Messages
             </button>
-            <button onClick={() => setActiveTab('saved')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-4 p-4 font-black rounded-2xl transition text-[10px] md:text-xs uppercase ${activeTab === 'saved' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
-              <Heart className={`w-4 h-4 md:w-5 md:h-5 ${activeTab === 'saved' ? 'text-white' : 'text-accent'}`} /> Saved
+            <button onClick={() => setActiveTab('saved')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'saved' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+              <Heart className={`w-3.5 h-3.5 md:w-5 md:h-5 ${activeTab === 'saved' ? 'text-white' : 'text-accent'}`} /> Saved
             </button>
-            <button onClick={() => setActiveTab('account')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-4 p-4 font-black rounded-2xl transition text-[10px] md:text-xs uppercase ${activeTab === 'account' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
-              <Settings className={`w-4 h-4 md:w-5 md:h-5 ${activeTab === 'account' ? 'text-white' : 'text-accent'}`} /> Profile
+            <button onClick={() => setActiveTab('account')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'account' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+              <Settings className={`w-3.5 h-3.5 md:w-5 md:h-5 ${activeTab === 'account' ? 'text-white' : 'text-accent'}`} /> Profile
             </button>
           </nav>
         </div>
       </aside>
 
-      <main className="lg:col-span-3 space-y-6 md:space-y-8">
+      <main className="lg:col-span-3 space-y-4 md:space-y-8">
         {activeTab === 'ads' && (
           <>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#f0fdf4] p-6 md:p-8 rounded-[2rem] border border-emerald-100/50 gap-6">
-              <div className="flex items-center gap-4 md:gap-5">
-                <div className="p-3 bg-white rounded-xl md:rounded-2xl shadow-sm"><Package className="w-5 h-5 md:w-6 md:h-6 text-accent" /></div>
-                <div><h2 className="text-xl md:text-2xl font-serif font-black text-black leading-none">Your Ads</h2><p className="text-zinc-400 text-[9px] md:text-[10px] font-black uppercase mt-1.5">{listings.length} Items Live</p></div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#f0fdf4] p-4 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-emerald-100/50 gap-4 md:gap-6">
+              <div className="flex items-center gap-3 md:gap-5">
+                <div className="p-2.5 md:p-3 bg-white rounded-xl md:rounded-2xl shadow-sm"><Package className="w-5 h-5 md:w-6 md:h-6 text-accent" /></div>
+                <div><h2 className="text-lg md:text-2xl font-serif font-black text-black leading-none">Your Ads</h2><p className="text-zinc-400 text-[9px] md:text-[10px] font-black uppercase mt-1.5">{listings.length} Items Live</p></div>
               </div>
-              <Link to="/sell" className="w-full sm:w-auto flex items-center justify-center gap-3 bg-black text-white px-8 py-4 rounded-2xl hover:bg-zinc-800 transition text-[10px] font-black uppercase shadow-xl shadow-black/10"><PlusCircle className="w-4 h-4" /> New Ad</Link>
+              <Link to="/sell" className="w-full sm:w-auto flex items-center justify-center gap-2 md:gap-3 bg-black text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl hover:bg-zinc-800 transition text-[9px] md:text-[10px] font-black uppercase shadow-xl shadow-black/10"><PlusCircle className="w-4 h-4" /> New Ad</Link>
             </div>
-            {loading ? <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">{[...Array(2)].map((_, i) => (<div key={i} className="bg-white rounded-[2rem] h-64 animate-pulse border border-emerald-50"></div>))}</div> : listings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">{listings.map(book => (<BookCard key={book.id} book={book} showActions onDelete={(id) => setDeletingId(id)} onEdit={(id) => navigate(`/edit/${id}`)} />))}</div>) : (<div className="text-center py-20 bg-white rounded-[2.5rem] border-2 border-dashed border-emerald-100 shadow-sm px-6"><h3 className="text-xl font-black text-black mb-2">Nothing listed</h3><Link to="/sell" className="bg-accent text-white px-10 py-5 rounded-2xl font-black uppercase text-[10px]">Post New Ad</Link></div>)}
+            {loading ? <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{[...Array(2)].map((_, i) => (<div key={i} className="bg-white rounded-[1.5rem] md:rounded-[2rem] h-64 animate-pulse border border-emerald-50"></div>))}</div> : listings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{listings.map(book => (<BookCard key={book.id} book={book} showActions onDelete={(id) => setDeletingId(id)} onEdit={(id) => navigate(`/edit/${id}`)} />))}</div>) : (<div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border-2 border-dashed border-emerald-100 shadow-sm px-6"><h3 className="text-lg md:text-xl font-black text-black mb-2">Nothing listed</h3><Link to="/sell" className="bg-accent text-white px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase text-[10px]">Post New Ad</Link></div>)}
           </>
         )}
-
         {activeTab === 'messages' && (
           <>
-            <div className="flex items-center gap-4 bg-white p-6 rounded-[2rem] border border-emerald-50 shadow-sm mb-6">
-              <div className="p-3 bg-emerald-50 rounded-xl"><MessageCircle className="w-5 h-5 text-accent" /></div>
-              <div><h2 className="text-xl font-black text-black leading-none">Chats</h2><p className="text-zinc-400 text-[9px] font-black uppercase mt-1.5">{sortedConversations.length} Active Conversations</p></div>
+            <div className="flex items-center gap-3 md:gap-4 bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border border-emerald-50 shadow-sm mb-4 md:mb-6">
+              <div className="p-2.5 md:p-3 bg-emerald-50 rounded-xl"><MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-accent" /></div>
+              <div><h2 className="text-lg md:text-xl font-black text-black leading-none">Chats</h2><p className="text-zinc-400 text-[8px] md:text-[9px] font-black uppercase mt-1 md:mt-1.5">{sortedConversations.length} Active Conversations</p></div>
             </div>
             {sortedConversations.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {sortedConversations.map(conv => {
                   const otherId = conv.participants.find(p => p !== user.uid) || '';
                   const otherName = conv.participantNames[otherId];
@@ -171,34 +169,33 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     <Link 
                       key={conv.id} 
                       to={`/chat/${conv.id}`}
-                      className="flex items-center gap-4 bg-white p-4 md:p-6 rounded-[1.5rem] border border-emerald-50 hover:bg-zinc-50 transition shadow-sm group"
+                      className="flex items-center gap-3 md:gap-4 bg-white p-3 md:p-6 rounded-[1.2rem] md:rounded-[1.5rem] border border-emerald-50 hover:bg-zinc-50 transition shadow-sm group"
                     >
-                      <div className="w-12 h-12 md:w-16 md:h-16 bg-emerald-50 rounded-2xl flex items-center justify-center font-black text-accent shadow-sm flex-shrink-0">
-                        {conv.bookImageUrl ? <img src={conv.bookImageUrl} className="w-full h-full object-cover rounded-2xl" alt="" /> : <User className="w-6 h-6" />}
+                      <div className="w-10 h-10 md:w-16 md:h-16 bg-emerald-50 rounded-xl md:rounded-2xl flex items-center justify-center font-black text-accent shadow-sm flex-shrink-0">
+                        {conv.bookImageUrl ? <img src={conv.bookImageUrl} className="w-full h-full object-cover rounded-xl md:rounded-2xl" alt="" /> : <User className="w-5 h-5 md:w-6 md:h-6" />}
                       </div>
                       <div className="flex-grow min-w-0">
-                        <h3 className="font-black text-black text-base md:text-lg leading-tight truncate">{otherName}</h3>
-                        <p className="text-[10px] md:text-[11px] font-black text-accent uppercase tracking-wider mb-1">{conv.bookTitle}</p>
-                        <p className="text-[12px] md:text-sm text-zinc-400 font-medium truncate max-w-md">{conv.lastMessage || 'Start conversation...'}</p>
+                        <h3 className="font-black text-black text-sm md:text-lg leading-tight truncate">{otherName}</h3>
+                        <p className="text-[9px] md:text-[11px] font-black text-accent uppercase tracking-wider mb-0.5 md:mb-1">{conv.bookTitle}</p>
+                        <p className="text-[10px] md:text-sm text-zinc-400 font-medium truncate max-w-md">{conv.lastMessage || 'Start conversation...'}</p>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-zinc-300 group-hover:translate-x-1 transition-transform" />
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-zinc-300 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   );
                 })}
               </div>
             ) : (
-              <div className="text-center py-20 bg-white rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-xl font-black text-black">No messages yet</h3></div>
+              <div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-lg md:text-xl font-black text-black">No messages yet</h3></div>
             )}
           </>
         )}
-
         {activeTab === 'saved' && (
           <>
-            <div className="flex items-center gap-4 bg-white p-6 rounded-[2rem] border border-emerald-50 shadow-sm mb-6">
-              <div className="p-3 bg-red-50 rounded-xl"><Heart className="w-5 h-5 text-red-500 fill-current" /></div>
-              <div><h2 className="text-xl font-black text-black leading-none">Bookmarked</h2><p className="text-zinc-400 text-[9px] font-black uppercase mt-1.5">{savedListings.length} Saved Books</p></div>
+            <div className="flex items-center gap-3 md:gap-4 bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border border-emerald-50 shadow-sm mb-4 md:mb-6">
+              <div className="p-2.5 md:p-3 bg-red-50 rounded-xl"><Heart className="w-4 h-4 md:w-5 h-5 text-red-500 fill-current" /></div>
+              <div><h2 className="text-lg md:text-xl font-black text-black leading-none">Bookmarked</h2><p className="text-zinc-400 text-[8px] md:text-[9px] font-black uppercase mt-1 md:mt-1.5">{savedListings.length} Saved Books</p></div>
             </div>
-            {savedListings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">{savedListings.map(book => (<BookCard key={book.id} book={book} />))}</div>) : (<div className="text-center py-20 bg-white rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-xl font-black text-black">No saved items</h3><Link to="/" className="mt-10 inline-block bg-accent text-white px-10 py-4 rounded-xl font-black uppercase text-[10px]">Browse Feed</Link></div>)}
+            {savedListings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{savedListings.map(book => (<BookCard key={book.id} book={book} />))}</div>) : (<div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-lg md:text-xl font-black text-black">No saved items</h3><Link to="/" className="mt-6 md:mt-10 inline-block bg-accent text-white px-8 md:px-10 py-3 md:py-4 rounded-xl font-black uppercase text-[9px] md:text-[10px]">Browse Feed</Link></div>)}
           </>
         )}
 

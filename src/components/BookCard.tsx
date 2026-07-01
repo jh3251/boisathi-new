@@ -16,8 +16,8 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
   const { lang, t } = useTranslation();
 
   return (
-    <div className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-emerald-50 p-3 sm:p-4 flex flex-col sm:flex-row gap-3 sm:gap-5 hover:shadow-lg transition-all duration-300">
-      <div className="relative w-full sm:w-28 md:w-36 h-48 sm:h-36 md:h-44 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
+    <div className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-emerald-50 p-2 sm:p-4 flex flex-row gap-2 sm:gap-5 hover:shadow-lg transition-all duration-300">
+      <div className="relative w-20 h-20 sm:w-28 sm:h-36 md:w-36 md:h-44 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
         {book.imageUrl ? (
           <img 
             src={book.imageUrl} 
@@ -48,35 +48,35 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
              — {book.author || 'AUTHOR'}
           </p>
           
-          <div className="space-y-1.5 mt-2 sm:mt-3">
+          <div className="space-y-0.5 sm:space-y-1.5 mt-0.5 sm:mt-3">
              <div className="flex items-center gap-1.5">
                <div className="bg-emerald-50 p-1 rounded">
-                 <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-accent" />
+                 <MapPin className="w-2 h-2 sm:w-3 sm:h-3 text-accent" />
                </div>
-               <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
+               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
                  {book.location?.upazilaName}, {book.location?.districtName}
                </span>
              </div>
              <div className="flex items-center gap-1.5">
                <div className="bg-slate-100 p-1 rounded">
-                 <BookOpen className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-slate-500" />
+                 <BookOpen className="w-2 h-2 sm:w-3 sm:h-3 text-slate-500" />
                </div>
-               <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
+               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
                  {t(book.subject as any) || book.subject}
                </span>
              </div>
           </div>
         </div>
 
-        <div className="flex items-end justify-between mt-3 sm:mt-4">
+        <div className="flex items-end justify-between mt-1 sm:mt-4">
            <div>
              <div className="flex items-baseline gap-1">
-               <span className="font-bn text-accent font-black text-base sm:text-lg md:text-xl leading-none">৳</span>
-               <span className="font-black text-accent text-lg sm:text-xl md:text-2xl leading-none">{book.price === 0 ? (lang === 'bn' ? 'ফ্রি' : 'FREE') : book.price}</span>
+               <span className="font-bn text-accent font-black text-sm sm:text-lg md:text-xl leading-none">৳</span>
+               <span className="font-black text-accent text-base sm:text-xl md:text-2xl leading-none">{book.price === 0 ? (lang === 'bn' ? 'ফ্রি' : 'FREE') : book.price}</span>
              </div>
-             <div className="flex items-center gap-1 text-slate-400 mt-1">
-                <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest">
+             <div className="flex items-center gap-1 text-slate-400 mt-0.5">
+                <Clock className="w-2 h-2 sm:w-3 sm:h-3" />
+                <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-widest">
                    {new Date(book.createdAt).toLocaleDateString()}
                 </span>
              </div>
@@ -84,11 +84,11 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
 
           {!showActions ? (
              <div className="flex items-center gap-1.5 sm:gap-2">
-               <Link to={`/books/${book.id}`} className="bg-zinc-900 text-white px-3 sm:px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-widest hover:bg-black transition-colors flex items-center gap-1">
-                 DETAILS <ChevronRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+               <Link to={`/books/${book.id}`} className="bg-zinc-900 text-white px-2 sm:px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-[7px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-widest hover:bg-black transition-colors flex items-center gap-1">
+                 DETAILS <ChevronRight className="w-2 h-2 sm:w-3 sm:h-3" />
                </Link>
                <a href={`tel:${book.contactPhone || ''}`} className="bg-accent text-white p-1.5 sm:p-1.5 md:p-2 rounded-lg md:rounded-xl hover:bg-accent-hover transition-colors">
-                 <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                 <Phone className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                </a>
              </div>
           ) : (
