@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../api';
 import { BookListing, UserProfile, Conversation, Union } from '../types';
 import BookCard from '../components/BookCard';
-import { PlusCircle, Package, Heart, Settings, LayoutGrid, Trash2, Save, Loader2, CheckCircle2, Info, AlertTriangle, MessageCircle, ChevronRight, User, Sliders, Shield, Globe, Users, BarChart3, Copy, MapPin, Plus, X, ChevronLeft, Search, Folder, Map, Edit2, RotateCcw } from 'lucide-react';
+import { PlusCircle, Package, Heart, Settings, LayoutGrid, Trash2, Save, Loader2, CheckCircle2, Info, AlertTriangle, MessageCircle, ChevronRight, User, Sliders, Shield, Globe, Users, BarChart3, Copy, MapPin, Plus, X, ChevronLeft, Search, Folder, Map, Edit2, RotateCcw, Key, Code } from 'lucide-react';
 import { DIVISIONS, DISTRICTS, UPAZILAS, UNIONS, saveLocationsToStorage, syncLocationsWithStorage } from '../constants';
 import { useTranslation } from '../App';
 
@@ -19,7 +19,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
   const [allListings, setAllListings] = useState<BookListing[]>([]);
   const [totalConvs, setTotalConvs] = useState<number>(0);
   const [adminLoading, setAdminLoading] = useState(false);
-  const [adminTab, setAdminTab] = useState<'listings' | 'users' | 'seo' | 'locations'>('listings');
+  const [adminTab, setAdminTab] = useState<'listings' | 'users' | 'seo' | 'locations' | 'secrets' | 'adsense'>('listings');
   const [copiedSitemap, setCopiedSitemap] = useState(false);
   const [adminSearch, setAdminSearch] = useState('');
 
@@ -136,6 +136,104 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
   const [newUnionUpaId, setNewUnionUpaId] = useState('');
   const [newUnionName, setNewUnionName] = useState('');
   const [newUnionNameBn, setNewUnionNameBn] = useState('');
+
+  // Secrets and Google AdSense state and handlers
+  const [secretsList, setSecretsList] = useState<{ id: string; key: string; value: string; description?: string }[]>(() => {
+    const defaultSecrets = [
+      { id: '1', key: 'ADMIN_ACCESS_CODE', value: 'BoiSathi2026', description: 'Master passcode for admin functions' },
+      { id: '2', key: 'GEMINI_KEY_SANDBOX', value: 'AI_STUDIO_KEY_TEMP', description: 'Sandbox developer key for AI services' },
+      { id: 'seed_1', key: 'VITE_SUPABASE_URL', value: 'https://your-project.supabase.co', description: 'Supabase Database API URL' },
+      { id: 'seed_2', key: 'VITE_SUPABASE_ANON_KEY', value: 'your-supabase-anon-key', description: 'Supabase Anonymous API Key' },
+      { id: 'seed_3', key: 'B2_KEY_ID', value: 'your-backblaze-b2-key-id', description: 'Backblaze B2 Application Key ID' },
+      { id: 'seed_4', key: 'B2_APP_KEY', value: 'your-backblaze-b2-app-key', description: 'Backblaze B2 Application Key' },
+      { id: 'seed_5', key: 'B2_BUCKET_NAME', value: 'your-b2-bucket-name', description: 'Backblaze B2 Storage Bucket Name' },
+      { id: 'seed_6', key: 'S3_BUCKET_NAME', value: 'your-s3-bucket-name', description: 'S3-compatible Storage Bucket Name' },
+      { id: 'seed_7', key: 'S3_ACCESS_KEY_ID', value: 'your-s3-access-key-id', description: 'S3-compatible Storage Access Key ID' },
+      { id: 'seed_8', key: 'S3_SECRET_ACCESS_KEY', value: 'your-s3-secret-access-key', description: 'S3-compatible Storage Secret Access Key' },
+      { id: 'seed_9', key: 'S3_ENDPOINT', value: 'https://your-s3-endpoint.com', description: 'S3-compatible API endpoint URL' },
+      { id: 'seed_10', key: 'S3_PUBLIC_DOMAIN', value: 'https://cdn.your-domain.com', description: 'S3-compatible Storage CDN Public Domain' }
+    ];
+
+    const saved = localStorage.getItem('bk_secrets_list');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as { id: string; key: string; value: string; description?: string }[];
+        const existingKeys = new Set(parsed.map(item => item.key));
+        const missingDefaults = defaultSecrets.filter(item => !existingKeys.has(item.key));
+        return [...parsed, ...missingDefaults];
+      } catch (e) {
+        // Fallback
+      }
+    }
+    return defaultSecrets;
+  });
+
+  const [newSecretKey, setNewSecretKey] = useState('');
+  const [newSecretValue, setNewSecretValue] = useState('');
+  const [newSecretDesc, setNewSecretDesc] = useState('');
+  const [editingSecretId, setEditingSecretId] = useState<string | null>(null);
+  const [revealedSecrets, setRevealedSecrets] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    localStorage.setItem('bk_secrets_list', JSON.stringify(secretsList));
+  }, [secretsList]);
+
+  const [adsenseCode, setAdsenseCode] = useState<string>(() => {
+    return localStorage.getItem('bk_adsense_code') || '';
+  });
+
+  const [adsenseEnabled, setAdsenseEnabled] = useState<boolean>(() => {
+    return localStorage.getItem('bk_adsense_enabled') !== 'false';
+  });
+
+  const handleSaveAdsense = (code: string) => {
+    setAdsenseCode(code);
+    localStorage.setItem('bk_adsense_code', code);
+    window.dispatchEvent(new Event('bk_adsense_updated'));
+  };
+
+  const handleToggleAdsense = (enabled: boolean) => {
+    setAdsenseEnabled(enabled);
+    localStorage.setItem('bk_adsense_enabled', enabled ? 'true' : 'false');
+    window.dispatchEvent(new Event('bk_adsense_updated'));
+  };
+
+  const handleSaveSecret = () => {
+    if (!newSecretKey || !newSecretValue) {
+      showToast(lang === 'bn' ? 'কী এবং মান উভয়ই আবশ্যক!' : 'Both secret key and value are required!', 'error');
+      return;
+    }
+
+    if (editingSecretId) {
+      setSecretsList(prev => prev.map(sec => 
+        sec.id === editingSecretId 
+          ? { ...sec, key: newSecretKey, value: newSecretValue, description: newSecretDesc }
+          : sec
+      ));
+      setEditingSecretId(null);
+      showToast(lang === 'bn' ? 'সিক্রেট সফলভাবে আপডেট করা হয়েছে!' : 'Secret updated successfully!', 'success');
+    } else {
+      const newSec = {
+        id: Date.now().toString(),
+        key: newSecretKey,
+        value: newSecretValue,
+        description: newSecretDesc
+      };
+      setSecretsList(prev => [...prev, newSec]);
+      showToast(lang === 'bn' ? 'সিক্রেট সফলভাবে যোগ করা হয়েছে!' : 'Secret added successfully!', 'success');
+    }
+
+    setNewSecretKey('');
+    setNewSecretValue('');
+    setNewSecretDesc('');
+  };
+
+  const handleDeleteSecret = (id: string) => {
+    if (confirm(lang === 'bn' ? 'আপনি কি নিশ্চিত যে আপনি এটি মুছে ফেলতে চান?' : 'Are you sure you want to delete this secret?')) {
+      setSecretsList(prev => prev.filter(sec => sec.id !== id));
+      showToast(lang === 'bn' ? 'সিক্রেট মুছে ফেলা হয়েছে!' : 'Secret deleted successfully!', 'info');
+    }
+  };
 
   const handleAddDivision = (e: React.FormEvent) => {
     e.preventDefault();
@@ -794,7 +892,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#f0fdf4] p-4 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-emerald-100/50 gap-4 md:gap-6">
               <div className="flex items-center gap-3 md:gap-5">
                 <div className="p-2.5 md:p-3 bg-white rounded-xl md:rounded-2xl shadow-sm"><Package className="w-5 h-5 md:w-6 md:h-6 text-accent" /></div>
-                <div><h2 className="text-lg md:text-2xl font-serif font-black text-black leading-none">Your Ads</h2><p className="text-zinc-400 text-[9px] md:text-[10px] font-black uppercase mt-1.5">{listings.length} Items Live</p></div>
+                <div><h2 className="text-lg md:text-2xl font-sans font-black text-black leading-none">Your Ads</h2><p className="text-zinc-400 text-[9px] md:text-[10px] font-black uppercase mt-1.5">{listings.length} Items Live</p></div>
               </div>
               <Link to="/sell" className="w-full sm:w-auto flex items-center justify-center gap-2 md:gap-3 bg-black text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl hover:bg-zinc-800 transition text-[9px] md:text-[10px] font-black uppercase shadow-xl shadow-black/10"><PlusCircle className="w-4 h-4" /> New Ad</Link>
             </div>
@@ -848,7 +946,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
         {activeTab === 'account' && (
           <div className="bg-white rounded-[2rem] p-6 md:p-10 shadow-2xl shadow-emerald-900/5 border border-emerald-50">
-            <h2 className="text-3xl font-serif font-black text-black mb-8">Profile Settings</h2>
+            <h2 className="text-3xl font-sans font-black text-black mb-8">Profile Settings</h2>
             <form onSubmit={handleUpdateProfile} className="space-y-10 max-w-xl">
               {updateError && (
                 <div className="p-4 bg-red-50 text-red-600 rounded-2xl text-[13px] font-semibold border border-red-100 flex items-center gap-3 animate-in fade-in duration-300">
@@ -916,7 +1014,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       SUPER ADMIN PANEL
                     </span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-serif font-black text-black mt-2">
+                  <h2 className="text-2xl md:text-3xl font-sans font-black text-black mt-2">
                     {lang === 'bn' ? 'সুপার অ্যাডমিন সেটিংস' : 'Super Admin Settings'}
                   </h2>
                   <p className="text-zinc-500 font-bold text-xs mt-1">
@@ -925,9 +1023,30 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       : 'Site-wide moderation, user management, and SEO sitemap controls.'}
                   </p>
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 text-emerald-800 rounded-xl font-black text-xs">
-                  <Shield className="w-4 h-4 text-emerald-600" />
-                  SECURE ACCESS
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  {/* Quick AdSense Toggle */}
+                  <div className="flex items-center gap-3 bg-zinc-50 border border-zinc-100 rounded-2xl p-3 shadow-sm">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-2 h-2 rounded-full ${adsenseEnabled ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-300'}`} />
+                      <span className="font-sans font-black text-[10px] md:text-xs uppercase text-zinc-700 tracking-wider">
+                        {lang === 'bn' ? 'গুগল বিজ্ঞাপন' : 'Google Ads'}
+                      </span>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={adsenseEnabled}
+                        onChange={(e) => handleToggleAdsense(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-9 h-5 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:bg-accent after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4 relative shadow-sm"></div>
+                    </label>
+                  </div>
+
+                  <div className="flex items-center gap-2 px-4 py-3 bg-emerald-50 text-emerald-800 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-wider shadow-sm">
+                    <Shield className="w-4 h-4 text-emerald-600" />
+                    SECURE ACCESS
+                  </div>
                 </div>
               </div>
             </div>
@@ -939,7 +1058,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                   <p className="text-zinc-400 font-black text-[10px] uppercase tracking-wider">
                     {lang === 'bn' ? 'মোট লিস্টিং' : 'Total Listings'}
                   </p>
-                  <p className="text-2xl md:text-3xl font-serif font-black text-black mt-1">
+                  <p className="text-2xl md:text-3xl font-sans font-black text-black mt-1">
                     {allListings.length}
                   </p>
                 </div>
@@ -953,7 +1072,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                   <p className="text-zinc-400 font-black text-[10px] uppercase tracking-wider">
                     {lang === 'bn' ? 'মোট ব্যবহারকারী' : 'Total Users'}
                   </p>
-                  <p className="text-2xl md:text-3xl font-serif font-black text-black mt-1">
+                  <p className="text-2xl md:text-3xl font-sans font-black text-black mt-1">
                     {allUsers.length || 1}
                   </p>
                 </div>
@@ -967,7 +1086,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                   <p className="text-zinc-400 font-black text-[10px] uppercase tracking-wider">
                     {lang === 'bn' ? 'মোট চ্যাট' : 'Total Chats'}
                   </p>
-                  <p className="text-2xl md:text-3xl font-serif font-black text-black mt-1">
+                  <p className="text-2xl md:text-3xl font-sans font-black text-black mt-1">
                     {totalConvs}
                   </p>
                 </div>
@@ -1016,6 +1135,24 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                   <Globe className="w-4 h-4" />
                   Sitemap & SEO
                 </button>
+                <button
+                  onClick={() => { setAdminTab('secrets'); setAdminSearch(''); }}
+                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                    adminTab === 'secrets' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
+                  }`}
+                >
+                  <Key className="w-4 h-4" />
+                  {lang === 'bn' ? 'সিক্রেট কোড' : 'Secret Code'}
+                </button>
+                <button
+                  onClick={() => { setAdminTab('adsense'); setAdminSearch(''); }}
+                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                    adminTab === 'adsense' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
+                  }`}
+                >
+                  <Code className="w-4 h-4" />
+                  {lang === 'bn' ? 'গুগল অ্যাডসেন্স' : 'Google AdSense'}
+                </button>
               </div>
 
               {/* Sub Tab Contents */}
@@ -1026,7 +1163,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
               ) : (
                 <>
                   {/* SEARCH FIELD for listings and users */}
-                  {adminTab !== 'seo' && adminTab !== 'locations' && (
+                  {adminTab !== 'seo' && adminTab !== 'locations' && adminTab !== 'secrets' && adminTab !== 'adsense' && (
                     <div className="relative">
                       <input
                         type="text"
@@ -1227,7 +1364,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       {/* Search Filter Availability Config */}
                       <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                         <div className="space-y-1">
-                          <h4 className="font-serif font-black text-black text-base">
+                          <h4 className="font-sans font-black text-black text-base">
                             {lang === 'bn' ? 'সার্চ ফিল্টারিং অপশনস নিয়ন্ত্রণ' : 'Search Filtering Options Control'}
                           </h4>
                           <p className="text-zinc-500 font-bold text-xs">
@@ -1628,6 +1765,339 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                 </div>
                               )}
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tab 5: Secret Codes */}
+                  {adminTab === 'secrets' && (
+                    <div className="space-y-6 animate-in fade-in duration-300">
+                      <div className="bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div className="space-y-1 max-w-xl">
+                          <h4 className="font-black text-black text-base">
+                            {lang === 'bn' ? 'সিক্রেট কোড ভল্ট' : 'Secret Codes Vault'}
+                          </h4>
+                          <p className="text-zinc-500 font-medium text-xs leading-relaxed">
+                            {lang === 'bn'
+                              ? 'আপনার অ্যাপ্লিকেশনের সমস্ত সিক্রেট এবং এপিআই কি এখানে নিরাপদে সংরক্ষণ ও পরিবর্তন করুন।'
+                              : 'Securely store and manage your application API keys, passcodes, and environment secrets.'}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 text-emerald-800 rounded-xl font-black text-xs uppercase tracking-wider">
+                          <Shield className="w-4 h-4 text-emerald-600" />
+                          {lang === 'bn' ? 'নিরাপদ স্টোরেজ' : 'SECURE VAULT'}
+                        </div>
+                      </div>
+
+                      {/* Add/Edit Secret Form */}
+                      <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-6 space-y-4">
+                        <h4 className="font-sans font-black text-black text-sm uppercase tracking-wider">
+                          {editingSecretId 
+                            ? (lang === 'bn' ? 'সিক্রেট পরিবর্তন করুন' : 'Edit Secret Key') 
+                            : (lang === 'bn' ? 'নতুন সিক্রেট যোগ করুন' : 'Add New Secret Key')}
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1">
+                              {lang === 'bn' ? 'কী বা নাম' : 'Secret Key / Name'}
+                            </label>
+                            <input
+                              type="text"
+                              value={newSecretKey}
+                              onChange={(e) => setNewSecretKey(e.target.value.toUpperCase().replace(/\s+/g, '_'))}
+                              placeholder="e.g. STRIPE_API_KEY"
+                              className="w-full px-4 py-3 bg-white border border-zinc-100 rounded-xl outline-none text-xs font-mono font-bold text-slate-900"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1">
+                              {lang === 'bn' ? 'মান বা কোড' : 'Secret Value'}
+                            </label>
+                            <input
+                              type="text"
+                              value={newSecretValue}
+                              onChange={(e) => setNewSecretValue(e.target.value)}
+                              placeholder="e.g. sk_live_51N..."
+                              className="w-full px-4 py-3 bg-white border border-zinc-100 rounded-xl outline-none text-xs font-mono font-bold text-slate-900"
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1">
+                              {lang === 'bn' ? 'বিবরণ (ঐচ্ছিক)' : 'Description (Optional)'}
+                            </label>
+                            <input
+                              type="text"
+                              value={newSecretDesc}
+                              onChange={(e) => setNewSecretDesc(e.target.value)}
+                              placeholder="e.g. Production Payment Key"
+                              className="w-full px-4 py-3 bg-white border border-zinc-100 rounded-xl outline-none text-xs font-bold text-slate-900"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex justify-end gap-3 pt-2">
+                          {editingSecretId && (
+                            <button
+                              onClick={() => {
+                                setEditingSecretId(null);
+                                setNewSecretKey('');
+                                setNewSecretValue('');
+                                setNewSecretDesc('');
+                              }}
+                              className="px-5 py-2.5 bg-zinc-200 text-zinc-700 rounded-xl font-bold text-xs uppercase"
+                            >
+                              {lang === 'bn' ? 'বাতিল' : 'Cancel'}
+                            </button>
+                          )}
+                          <button
+                            onClick={handleSaveSecret}
+                            className="px-6 py-2.5 bg-black text-white rounded-xl font-black text-xs uppercase flex items-center gap-2 hover:opacity-95 shadow-md active:scale-95 transition"
+                          >
+                            <Save className="w-4 h-4" />
+                            {editingSecretId 
+                              ? (lang === 'bn' ? 'হালনাগাদ করুন' : 'Update Secret') 
+                              : (lang === 'bn' ? 'সংরক্ষণ করুন' : 'Save Secret')}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Secrets List Table */}
+                      <div className="border border-zinc-100 rounded-[2rem] overflow-hidden bg-white shadow-xl shadow-emerald-900/5">
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left border-collapse">
+                            <thead>
+                              <tr className="bg-zinc-50 border-b border-zinc-100">
+                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'সিক্রেট কী' : 'Secret Key'}</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'মান' : 'Value'}</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'বিবরণ' : 'Description'}</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400 text-right">{lang === 'bn' ? 'অ্যাকশন' : 'Actions'}</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-zinc-50">
+                              {secretsList.length === 0 ? (
+                                <tr>
+                                  <td colSpan={4} className="px-6 py-12 text-center text-zinc-400 font-bold text-xs">
+                                    {lang === 'bn' ? 'কোনো সিক্রেট পাওয়া যায়নি।' : 'No secrets added yet.'}
+                                  </td>
+                                </tr>
+                              ) : (
+                                secretsList.map((sec) => {
+                                  const isRevealed = !!revealedSecrets[sec.id];
+                                  return (
+                                    <tr key={sec.id} className="hover:bg-zinc-50/50 transition">
+                                      <td className="px-6 py-4 font-mono font-bold text-xs text-black">
+                                        {sec.key}
+                                      </td>
+                                      <td className="px-6 py-4 font-mono text-xs">
+                                        <div className="flex items-center gap-2">
+                                          <span className="text-zinc-600">
+                                            {isRevealed ? sec.value : '••••••••••••••••'}
+                                          </span>
+                                          <button
+                                            onClick={() => setRevealedSecrets(prev => ({ ...prev, [sec.id]: !prev[sec.id] }))}
+                                            className="text-zinc-400 hover:text-black text-[10px] font-bold underline cursor-pointer"
+                                          >
+                                            {isRevealed ? (lang === 'bn' ? 'লুকান' : 'Hide') : (lang === 'bn' ? 'দেখুন' : 'Show')}
+                                          </button>
+                                        </div>
+                                      </td>
+                                      <td className="px-6 py-4 text-xs font-bold text-zinc-500">
+                                        {sec.description || '—'}
+                                      </td>
+                                      <td className="px-6 py-4 text-right space-x-2">
+                                        <button
+                                          onClick={() => {
+                                            setEditingSecretId(sec.id);
+                                            setNewSecretKey(sec.key);
+                                            setNewSecretValue(sec.value);
+                                            setNewSecretDesc(sec.description || '');
+                                          }}
+                                          className="p-1.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg inline-flex"
+                                        >
+                                          <Edit2 className="w-3.5 h-3.5" />
+                                        </button>
+                                        <button
+                                          onClick={() => handleDeleteSecret(sec.id)}
+                                          className="p-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg inline-flex"
+                                        >
+                                          <Trash2 className="w-3.5 h-3.5" />
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  );
+                                })
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tab 6: Google AdSense */}
+                  {adminTab === 'adsense' && (
+                    <div className="space-y-6 animate-in fade-in duration-300">
+                      <div className="bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div className="space-y-1 max-w-xl">
+                          <h4 className="font-black text-black text-base">
+                            {lang === 'bn' ? 'গুটল অ্যাডসেন্স ইন্টিগ্রেশন' : 'Google AdSense Integration'}
+                          </h4>
+                          <p className="text-zinc-500 font-medium text-xs leading-relaxed">
+                            {lang === 'bn'
+                              ? 'আপনার গুগল অ্যাডসেন্স কোডটি নিচে পেস্ট করুন। এটি আপনার সাইটের নির্ধারিত বিজ্ঞাপন ব্যানারে স্বয়ংক্রিয়ভাবে প্রদর্শিত হবে।'
+                              : 'Paste your Google AdSense script code below. It will automatically load and display ads inside the dedicated ad banners across the marketplace.'}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-800 rounded-xl font-black text-xs uppercase tracking-wider">
+                          <BarChart3 className="w-4 h-4 text-amber-600" />
+                          {lang === 'bn' ? 'উপার্জন' : 'MONETIZATION'}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Settings Form */}
+                        <div className="lg:col-span-2 bg-zinc-50 border border-zinc-100 rounded-3xl p-6 space-y-4">
+                          <div className="flex items-center justify-between">
+                            <h4 className="font-sans font-black text-black text-sm uppercase tracking-wider">
+                              {lang === 'bn' ? 'বিজ্ঞাপন কোড বসান' : 'Paste AdSense Code'}
+                            </h4>
+                            {adsenseCode && (
+                              <span className={`px-2.5 py-0.5 text-[9px] font-bold rounded-full uppercase tracking-wider ${
+                                adsenseEnabled ? 'bg-emerald-100 text-emerald-800' : 'bg-zinc-200 text-zinc-600'
+                              }`}>
+                                {adsenseEnabled 
+                                  ? (lang === 'bn' ? 'সক্রিয়' : 'Active')
+                                  : (lang === 'bn' ? 'নিষ্ক্রিয়' : 'Disabled')}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* AdSense Switch Toggle */}
+                          <div className="flex items-center justify-between p-4 bg-white border border-zinc-100 rounded-2xl shadow-sm">
+                            <div className="space-y-0.5">
+                              <span className="block text-xs font-black text-black uppercase tracking-wider">
+                                {lang === 'bn' ? 'গুগল অ্যাডসেন্স অন / অফ' : 'Google AdSense On / Off'}
+                              </span>
+                              <span className="block text-[10px] text-zinc-400 font-bold">
+                                {lang === 'bn'
+                                  ? 'অন থাকলে সাইটে বিজ্ঞাপন প্রদর্শিত হবে, অফ থাকলে বিজ্ঞাপন বন্ধ থাকবে।'
+                                  : 'Turn Google Ads display on or off across the entire marketplace.'}
+                              </span>
+                            </div>
+                            <label className="relative inline-flex items-center cursor-pointer select-none">
+                              <input
+                                type="checkbox"
+                                checked={adsenseEnabled}
+                                onChange={(e) => handleToggleAdsense(e.target.checked)}
+                                className="sr-only peer"
+                              />
+                              <div className="w-11 h-6 bg-zinc-200 peer-focus:outline-none rounded-full peer peer-checked:bg-accent after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-5 relative shadow-sm"></div>
+                            </label>
+                          </div>
+                          
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1">
+                              {lang === 'bn' ? 'এইচটিএমএল / স্ক্রিপ্ট কোড' : 'HTML / Script Code'}
+                            </label>
+                            <textarea
+                              rows={10}
+                              value={adsenseCode}
+                              onChange={(e) => setAdsenseCode(e.target.value)}
+                              placeholder={`<!-- Google AdSense Code -->\n<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1234567890" crossorigin="anonymous"></script>\n<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1234567890" data-ad-slot="9876543210" data-ad-format="auto" data-full-width-responsive="true"></ins>\n<script>\n     (adsbygoogle = window.adsbygoogle || []).push({});\n</script>`}
+                              className="w-full px-4 py-3 bg-white border border-zinc-100 rounded-2xl outline-none text-xs font-mono font-medium text-slate-800 focus:border-accent focus:ring-1 focus:ring-accent leading-relaxed"
+                            />
+                          </div>
+
+                          <div className="flex justify-end gap-3 pt-2">
+                            {adsenseCode && (
+                              <button
+                                onClick={() => {
+                                  if (confirm(lang === 'bn' ? 'আপনি কি নিশ্চিত যে আপনি কোডটি মুছে ফেলতে চান?' : 'Are you sure you want to remove the AdSense code?')) {
+                                    handleSaveAdsense('');
+                                  }
+                                }}
+                                className="px-5 py-2.5 bg-red-50 text-red-600 rounded-xl font-bold text-xs uppercase hover:bg-red-100"
+                              >
+                                {lang === 'bn' ? 'মুছে ফেলুন' : 'Remove Code'}
+                              </button>
+                            )}
+                            <button
+                              onClick={() => {
+                                handleSaveAdsense(adsenseCode);
+                                alert(lang === 'bn' ? 'অ্যাডসেন্স কোড সফলভাবে সংরক্ষণ করা হয়েছে!' : 'AdSense code saved successfully!');
+                              }}
+                              className="px-6 py-2.5 bg-black text-white rounded-xl font-black text-xs uppercase flex items-center gap-2 hover:opacity-95 shadow-md active:scale-95 transition"
+                            >
+                              <Save className="w-4 h-4" />
+                              {lang === 'bn' ? 'কোড সংরক্ষণ করুন' : 'Save AdSense Code'}
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Live Sandbox Preview */}
+                        <div className="bg-white border border-zinc-100 rounded-3xl p-6 space-y-4 shadow-xl shadow-emerald-900/5 flex flex-col justify-between">
+                          <div className="space-y-1">
+                            <h4 className="font-sans font-black text-black text-sm uppercase tracking-wider">
+                              {lang === 'bn' ? 'লাইভ ব্যানার প্রিভিউ' : 'Live Banner Preview'}
+                            </h4>
+                            <p className="text-zinc-400 font-bold text-[10px] leading-relaxed">
+                              {lang === 'bn'
+                                ? 'সংরক্ষিত গুগল অ্যাডসেন্স কোডটি কীভাবে প্ল্যাটফর্মে রেন্ডার হবে তা নিচে দেখুন।'
+                                : 'See how your configured Google AdSense slot renders inside the active layout below.'}
+                            </p>
+                          </div>
+
+                          <div className="flex-grow flex items-center justify-center my-4 border-2 border-dashed border-zinc-100 rounded-2xl bg-zinc-50 p-3 min-h-[150px]">
+                            {!adsenseEnabled ? (
+                              <div className="text-center space-y-2">
+                                <div className="text-zinc-300 font-black text-3xl">⏸</div>
+                                <p className="text-zinc-400 font-bold text-xs">
+                                  {lang === 'bn' ? 'বিজ্ঞাপন বন্ধ রয়েছে' : 'Google Ads are OFF'}
+                                </p>
+                              </div>
+                            ) : adsenseCode ? (
+                              <div className="w-full h-full relative">
+                                <span className="absolute -top-3 left-2 px-2 py-0.5 bg-zinc-900 text-white text-[8px] font-bold rounded uppercase tracking-wider">
+                                  Sandbox Frame
+                                </span>
+                                <iframe
+                                  srcDoc={`
+                                    <html>
+                                      <head>
+                                        <style>
+                                          body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background: #fafafa; font-family: sans-serif; color: #71717a; font-size: 11px; height: 100vh; text-align: center; }
+                                        </style>
+                                      </head>
+                                      <body>
+                                        <div style="padding: 10px; border: 1px solid #e4e4e7; border-radius: 8px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                          \${adsenseCode}
+                                          <div style="font-size: 9px; font-weight: bold; color: #a1a1aa; margin-top: 6px; text-transform: uppercase; tracking: 0.1em;">Google AdSense Frame Loaded</div>
+                                        </div>
+                                      </body>
+                                    </html>
+                                  `}
+                                  style={{ width: '100%', height: '140px', border: 'none' }}
+                                  title="Google AdSense Sandbox Frame"
+                                />
+                              </div>
+                            ) : (
+                              <div className="text-center space-y-2">
+                                <div className="text-zinc-300 font-black text-3xl">∅</div>
+                                <p className="text-zinc-400 font-bold text-xs">
+                                  {lang === 'bn' ? 'কোনো কোড নেই' : 'No Code Active'}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="bg-zinc-50 p-3 rounded-2xl border border-zinc-100 flex items-center gap-2">
+                            <Info className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                            <p className="text-[9px] font-medium text-zinc-500 leading-normal">
+                              {lang === 'bn'
+                                ? 'অ্যাডসেন্স কোডটি আইফ্রেম স্যান্ডবক্সের ভেতর সুরক্ষিতভাবে চালিত হয়।'
+                                : 'AdSense code executes inside a secured, sandboxed iframe container for security.'}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -2231,7 +2701,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             {confirmModal.isOpen && (
               <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-[90] animate-in fade-in duration-200">
                 <div className="bg-white rounded-[2rem] max-w-md w-full p-6 md:p-8 shadow-2xl border border-zinc-100 animate-in zoom-in-95 duration-200">
-                  <h3 className="text-xl md:text-2xl font-serif font-black text-black">
+                  <h3 className="text-xl md:text-2xl font-sans font-black text-black">
                     {confirmModal.title}
                   </h3>
                   <p className="text-zinc-500 font-bold text-xs mt-3 leading-relaxed">

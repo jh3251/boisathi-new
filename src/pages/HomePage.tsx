@@ -7,6 +7,7 @@ import { Search, MapPin, X, PlusCircle, ArrowRight, ChevronRight, ChevronLeft, H
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../App';
 import SEO from '../components/SEO';
+import AdBanner from '../components/AdBanner';
 
 const HomePage: React.FC = () => {
   const [listings, setListings] = useState<BookListing[]>([]);
@@ -143,7 +144,7 @@ const HomePage: React.FC = () => {
           <div className="space-y-3 md:space-y-8">
             {/* Main Branding Title */}
             <div className="animate-reveal-up">
-              <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-7xl font-serif font-black tracking-tighter leading-[1.1] mb-2 sm:mb-4 flex flex-col items-center gap-2 sm:gap-4">
+              <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-7xl font-sans font-bold tracking-tighter leading-[1.1] mb-2 sm:mb-4 flex flex-col items-center gap-2 sm:gap-4">
                 <span className="text-accent drop-shadow-sm inline-block break-words animate-slide-up-down">BoiSathi.com</span>
                 <span className="text-red-600 font-bn animate-slide-up-down inline-block drop-shadow-md text-3xl sm:text-5xl lg:text-7xl">
                   বইসাথী
@@ -154,7 +155,7 @@ const HomePage: React.FC = () => {
             {/* NEW ANIMATED TEXT */}
             <div className="animate-reveal-up delay-200">
                <div className="inline-block relative">
-                 <p className="text-sm sm:text-base md:text-2xl lg:text-3xl font-bn font-black text-slate-800 tracking-tight leading-tight px-2 sm:px-6 pt-2 pb-4 md:pb-6 animate-typewriter-loop whitespace-nowrap">
+                 <p className="text-sm sm:text-base md:text-2xl lg:text-3xl font-bn font-bold text-slate-800 tracking-tight leading-tight px-2 sm:px-6 pt-2 pb-4 md:pb-6 animate-typewriter-loop whitespace-nowrap">
                    পুরোনো বই আর <span className="relative inline-block text-red-600 px-1 sm:px-2">
                      কেজি দরে নয়
                      <span className="absolute bottom-1 md:bottom-2 left-0 w-full h-1 md:h-2 bg-red-200/50 -rotate-1 translate-y-1 sm:translate-y-2"></span>
@@ -182,7 +183,7 @@ const HomePage: React.FC = () => {
               </div>
               <button 
                 onClick={() => document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' })} 
-                className="w-full sm:w-auto flex-shrink-0 px-4 sm:px-10 py-3 sm:py-4 md:py-5 bg-[#0f172a] text-white rounded-full font-black text-[10px] sm:text-xs md:text-sm uppercase flex items-center justify-center gap-1.5 sm:gap-3 hover:bg-black transition-all shadow-2xl active:scale-95 tracking-widest sm:tracking-[0.2em]"
+                className="w-full sm:w-auto flex-shrink-0 px-4 sm:px-10 py-3 sm:py-4 md:py-5 bg-[#0f172a] text-white rounded-full font-bold text-[10px] sm:text-xs md:text-sm uppercase flex items-center justify-center gap-1.5 sm:gap-3 hover:bg-black transition-all shadow-2xl active:scale-95 tracking-widest sm:tracking-[0.2em]"
               >
                 <PlusCircle className="w-3 h-3 sm:w-4 sm:h-4 text-white/50" />
                 <span>{lang === 'bn' ? 'খুঁজুন' : 'SEARCH'}</span>
@@ -190,22 +191,19 @@ const HomePage: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Bento-Style Filter Grid */}
-      <section className="container mx-auto max-w-7xl px-4 animate-reveal-up delay-700">
-        <div className="bg-white rounded-[1.5rem] md:rounded-[3rem] p-3 md:p-8 border border-emerald-50 relative shadow-sm">
-           <div className="flex justify-between items-center mb-4 md:mb-6">
+          
+        <div className="bg-white/80 backdrop-blur-md p-4 md:p-8 rounded-[1.5rem] md:rounded-[3rem] border border-emerald-50 shadow-[0_20px_80px_-20px_rgba(0,0,0,0.08)]">
+            <div className="flex justify-between items-center mb-4 md:mb-6">
               <div className="flex items-center gap-2 md:gap-3">
                 <div className="p-1.5 md:p-2 bg-emerald-50 rounded-xl">
                   <MapPin className="w-4 h-4 md:w-5 md:h-5 text-accent" />
                 </div>
-                <h3 className="text-[9px] md:text-xs font-black text-slate-500 uppercase tracking-widest">
+                <h3 className="text-[9px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">
                   {lang === 'bn' ? 'স্থান ও শ্রেণী' : 'LOCATION & FILTERS'}
                 </h3>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={clearFilters} className="text-[8px] md:text-[10px] font-black text-white hover:bg-red-600 transition-colors uppercase bg-red-500 px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl active:scale-95">
+                <button onClick={clearFilters} className="text-[8px] md:text-[10px] font-bold text-white hover:bg-red-600 transition-colors uppercase bg-red-500 px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl active:scale-95">
                   {t('reset')}
                 </button>
               </div>
@@ -214,14 +212,14 @@ const HomePage: React.FC = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-4">
                {savedSwitches.division !== false && (
                  <div className="space-y-1 md:space-y-2">
-                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('division')}</label>
+                    <label className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">{t('division')}</label>
                     <select 
                       value={location.divisionId}
                       onChange={(e) => {
                         setLocation({...location, divisionId: e.target.value, districtId: '', upazilaId: '', unionId: ''});
                         setCurrentPage(0);
                       }}
-                      className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
+                      className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-bold text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
                     >
                       <option value="">{t('selectDivision')}</option>
                       {DIVISIONS.map(d => <option key={d.id} value={d.id}>{lang === 'bn' ? d.nameBn : d.name}</option>)}
@@ -231,7 +229,7 @@ const HomePage: React.FC = () => {
 
                {savedSwitches.district !== false && (
                  <div className="space-y-1 md:space-y-2">
-                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('district')}</label>
+                    <label className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">{t('district')}</label>
                     <select 
                       disabled={savedSwitches.division !== false && !location.divisionId}
                       value={location.districtId}
@@ -239,7 +237,7 @@ const HomePage: React.FC = () => {
                         setLocation({...location, districtId: e.target.value, upazilaId: '', unionId: ''});
                         setCurrentPage(0);
                       }}
-                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.division !== false && !location.divisionId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
+                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-bold text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.division !== false && !location.divisionId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
                     >
                       <option value="">{t('selectDistrict')}</option>
                       {DISTRICTS.filter(d => !location.divisionId || d.divisionId === location.divisionId).map(d => <option key={d.id} value={d.id}>{lang === 'bn' ? d.nameBn : d.name}</option>)}
@@ -249,7 +247,7 @@ const HomePage: React.FC = () => {
 
                {savedSwitches.upazila !== false && (
                  <div className="space-y-1 md:space-y-2">
-                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('upazilaThana')}</label>
+                    <label className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">{t('upazilaThana')}</label>
                     <select 
                       disabled={savedSwitches.district !== false && !location.districtId}
                       value={location.upazilaId}
@@ -257,7 +255,7 @@ const HomePage: React.FC = () => {
                         setLocation({...location, upazilaId: e.target.value, unionId: ''});
                         setCurrentPage(0);
                       }}
-                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.district !== false && !location.districtId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
+                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-bold text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.district !== false && !location.districtId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
                     >
                       <option value="">{t('selectUpazila')}</option>
                       {UPAZILAS.filter(u => !location.districtId || u.districtId === location.districtId).map(u => <option key={u.id} value={u.id}>{lang === 'bn' ? u.nameBn : u.name}</option>)}
@@ -267,7 +265,7 @@ const HomePage: React.FC = () => {
 
                {savedSwitches.union !== false && (
                  <div className="space-y-1 md:space-y-2">
-                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('union')}</label>
+                    <label className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">{t('union')}</label>
                     <select 
                       disabled={savedSwitches.upazila !== false && !location.upazilaId}
                       value={location.unionId}
@@ -275,7 +273,7 @@ const HomePage: React.FC = () => {
                         setLocation({...location, unionId: e.target.value});
                         setCurrentPage(0);
                       }}
-                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.upazila !== false && !location.upazilaId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
+                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-bold text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.upazila !== false && !location.upazilaId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
                     >
                       <option value="">{t('selectUnion')}</option>
                       {UNIONS.filter(u => !location.upazilaId || u.upazilaId === location.upazilaId).map(u => <option key={u.id} value={u.id}>{lang === 'bn' ? u.nameBn : u.name}</option>)}
@@ -284,14 +282,14 @@ const HomePage: React.FC = () => {
                )}
 
                <div className="space-y-1 md:space-y-2">
-                  <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('classLevel')}</label>
+                  <label className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">{t('classLevel')}</label>
                   <select 
                     value={selectedClass}
                     onChange={(e) => {
                       setSelectedClass(e.target.value);
                       setCurrentPage(0);
                     }}
-                    className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
+                    className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-bold text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
                   >
                     <option value="">{t('allClasses')}</option>
                     {CLASSES.map(c => <option key={c} value={c}>{t(c as any)}</option>)}
@@ -299,14 +297,14 @@ const HomePage: React.FC = () => {
                </div>
 
                <div className="hidden sm:block space-y-1 md:space-y-2">
-                  <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{lang === 'bn' ? 'অবস্থা' : 'CONDITION'}</label>
+                  <label className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">{lang === 'bn' ? 'অবস্থা' : 'CONDITION'}</label>
                   <select 
                     value={selectedCondition}
                     onChange={(e) => {
                       setSelectedCondition(e.target.value);
                       setCurrentPage(0);
                     }}
-                    className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
+                    className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-bold text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
                   >
                     <option value="">{t('allConditions')}</option>
                     {CONDITIONS.map(c => <option key={c} value={c}>{t(c as any)}</option>)}
@@ -314,7 +312,7 @@ const HomePage: React.FC = () => {
                </div>
 
                <div className="col-span-2 sm:col-span-1 lg:col-span-1 flex items-end mt-1 lg:mt-0">
-                  <button onClick={() => document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' })} className="w-full px-6 py-3 md:px-10 md:py-4 bg-accent text-white rounded-xl md:rounded-2xl font-black text-[10px] md:text-xs uppercase hover:bg-accent-hover shadow-xl active:scale-95 transition-all tracking-widest">
+                  <button onClick={() => document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' })} className="w-full px-6 py-3 md:px-10 md:py-4 bg-accent text-white rounded-xl md:rounded-2xl font-bold text-[10px] md:text-xs uppercase hover:bg-accent-hover shadow-xl active:scale-95 transition-all tracking-widest">
                     {t('find')}
                   </button>
                </div>
@@ -322,22 +320,27 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Ad placement */}
+      <div className="container mx-auto max-w-7xl px-4">
+        <AdBanner />
+      </div>
+
       {/* Results Section - Extremely Tight Gaps */}
       <section id="results-section" className="container mx-auto max-w-7xl px-4 space-y-4 pb-12">
         <div className="flex flex-row items-center justify-between gap-2 md:gap-4">
           <div className="space-y-1">
-            <h2 className="text-xl sm:text-3xl md:text-5xl font-serif font-black text-slate-900 tracking-tight leading-none">
+            <h2 className="text-xl sm:text-3xl md:text-5xl font-sans font-bold text-slate-900 tracking-tight leading-none">
               {t('availableBooks')}
             </h2>
             <div className="flex items-center gap-1 md:gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-accent"></div>
-              <p className="text-zinc-400 font-black uppercase text-[8px] md:text-xs tracking-widest">
+              <p className="text-zinc-400 font-bold uppercase text-[8px] md:text-xs tracking-widest">
                 {filteredListings.length} {lang === 'bn' ? 'টি বই পাওয়া গেছে' : 'RESULTS FOUND'}
               </p>
             </div>
           </div>
           
-          <Link to="/sell" className="group flex items-center justify-center gap-1.5 md:gap-3 bg-emerald-50 text-accent px-3 py-2 md:px-6 md:py-3 rounded-xl font-black text-[9px] md:text-xs uppercase shadow-sm border border-emerald-100 hover:bg-accent hover:text-white transition-all duration-300 whitespace-nowrap">
+          <Link to="/sell" className="group flex items-center justify-center gap-1.5 md:gap-3 bg-emerald-50 text-accent px-3 py-2 md:px-6 md:py-3 rounded-xl font-bold text-[9px] md:text-xs uppercase shadow-sm border border-emerald-100 hover:bg-accent hover:text-white transition-all duration-300 whitespace-nowrap">
             <PlusCircle className="w-3 h-3 md:w-4 md:h-4 group-hover:rotate-90 transition-transform duration-500" />
             {lang === 'bn' ? 'বিজ্ঞাপন দিন' : 'POST FREE AD'}
           </Link>
@@ -362,7 +365,7 @@ const HomePage: React.FC = () => {
             {totalPages > 1 && (
               <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 pt-8">
                 {hasPrevious && (
-                  <button onClick={handlePrevious} className="px-6 py-3 bg-white text-zinc-900 border border-zinc-100 rounded-xl font-black text-[10px] uppercase shadow-sm hover:bg-zinc-50 active:scale-95 transition-all">
+                  <button onClick={handlePrevious} className="px-6 py-3 bg-white text-zinc-900 border border-zinc-100 rounded-xl font-bold text-[10px] uppercase shadow-sm hover:bg-zinc-50 active:scale-95 transition-all">
                     <ChevronLeft className="w-4 h-4 mr-2 inline" /> {lang === 'bn' ? 'আগে' : 'Prev'}
                   </button>
                 )}
@@ -371,14 +374,14 @@ const HomePage: React.FC = () => {
                     <button
                       key={i}
                       onClick={() => { setCurrentPage(i); document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' }); }}
-                      className={`w-10 h-10 rounded-xl text-[11px] font-black transition-all flex items-center justify-center border ${currentPage === i ? 'bg-zinc-900 text-white border-zinc-900 shadow-lg' : 'bg-white text-zinc-400 border-zinc-100'}`}
+                      className={`w-10 h-10 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center border ${currentPage === i ? 'bg-zinc-900 text-white border-zinc-900 shadow-lg' : 'bg-white text-zinc-400 border-zinc-100'}`}
                     >
                       {i + 1}
                     </button>
                   ))}
                 </div>
                 {hasMore && (
-                  <button onClick={handleNext} className="px-6 py-3 bg-zinc-900 text-white rounded-xl font-black text-[10px] uppercase shadow-sm hover:bg-black active:scale-95 transition-all">
+                  <button onClick={handleNext} className="px-6 py-3 bg-zinc-900 text-white rounded-xl font-bold text-[10px] uppercase shadow-sm hover:bg-black active:scale-95 transition-all">
                     {lang === 'bn' ? 'পরে' : 'Next'} <ChevronRight className="w-4 h-4 ml-2 inline" />
                   </button>
                 )}
@@ -390,8 +393,8 @@ const HomePage: React.FC = () => {
              <div className="w-20 h-20 bg-emerald-100 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
                <BookOpenCheck className="w-8 h-8 text-accent" />
              </div>
-            <h3 className="text-2xl font-serif font-black text-black mb-4">{t('noBooksFound')}</h3>
-            <button onClick={clearFilters} className="bg-accent text-white px-10 py-4 rounded-2xl font-black uppercase text-xs active:scale-95 shadow-2xl tracking-widest">{t('showEverything')}</button>
+            <h3 className="text-2xl font-sans font-bold text-black mb-4">{t('noBooksFound')}</h3>
+            <button onClick={clearFilters} className="bg-accent text-white px-10 py-4 rounded-2xl font-bold uppercase text-xs active:scale-95 shadow-2xl tracking-widest">{t('showEverything')}</button>
           </div>
         )}
       </section>
@@ -402,15 +405,15 @@ const HomePage: React.FC = () => {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6 mb-6 md:mb-8">
             <div className="flex items-center gap-3 md:gap-4">
               <div className="p-2.5 md:p-3 bg-emerald-50 rounded-xl md:rounded-2xl">
-                <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+                <HelpCircle className="w-5 h-5 md:w-6 md:h-6 text-accent" />
               </div>
               <div>
-                <h2 className="text-xl md:text-3xl font-serif font-black text-black leading-none">{t('howItWorks')}</h2>
+                <h2 className="text-xl md:text-3xl font-sans font-bold text-black leading-none">{t('howItWorks')}</h2>
               </div>
             </div>
             <div className="bg-zinc-100 p-1 rounded-full flex gap-1 md:gap-2 self-stretch md:self-auto overflow-x-auto">
-               <button onClick={() => setHowToTab('buy')} className={`px-4 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-black uppercase transition-all whitespace-nowrap flex-1 md:flex-none ${howToTab === 'buy' ? 'bg-accent text-white shadow-xl' : 'text-zinc-400'}`}>{t('buyABook')}</button>
-               <button onClick={() => setHowToTab('sell')} className={`px-4 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-black uppercase transition-all whitespace-nowrap flex-1 md:flex-none ${howToTab === 'sell' ? 'bg-accent text-white shadow-xl' : 'text-zinc-400'}`}>{t('sellABookTitle')}</button>
+               <button onClick={() => setHowToTab('buy')} className={`px-4 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold uppercase transition-all whitespace-nowrap flex-1 md:flex-none ${howToTab === 'buy' ? 'bg-accent text-white shadow-xl' : 'text-zinc-400'}`}>{t('buyABook')}</button>
+               <button onClick={() => setHowToTab('sell')} className={`px-4 md:px-6 py-2 rounded-full text-[9px] md:text-[10px] font-bold uppercase transition-all whitespace-nowrap flex-1 md:flex-none ${howToTab === 'sell' ? 'bg-accent text-white shadow-xl' : 'text-zinc-400'}`}>{t('sellABookTitle')}</button>
             </div>
           </div>
 
@@ -419,22 +422,22 @@ const HomePage: React.FC = () => {
               <>
                 <div className="space-y-3 md:space-y-4 animate-reveal-up">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-black">1</div>
-                    <h4 className="font-black text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'বই খুঁজুন' : 'FIND BOOKS'}</h4>
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-bold">1</div>
+                    <h4 className="font-bold text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'বই খুঁজুন' : 'FIND BOOKS'}</h4>
                   </div>
                   <p className="text-zinc-500 text-xs md:text-base font-medium leading-relaxed">{t('buyStep1')}</p>
                 </div>
                 <div className="space-y-3 md:space-y-4 animate-reveal-up delay-100">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-black">2</div>
-                    <h4 className="font-black text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'যোগাযোগ করুন' : 'CONTACT'}</h4>
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-bold">2</div>
+                    <h4 className="font-bold text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'যোগাযোগ করুন' : 'CONTACT'}</h4>
                   </div>
                   <p className="text-zinc-500 text-xs md:text-base font-medium leading-relaxed">{t('buyStep2')}</p>
                 </div>
                 <div className="space-y-3 md:space-y-4 animate-reveal-up delay-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-black">3</div>
-                    <h4 className="font-black text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'সংগ্রহ করুন' : 'COLLECT'}</h4>
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-bold">3</div>
+                    <h4 className="font-bold text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'সংগ্রহ করুন' : 'COLLECT'}</h4>
                   </div>
                   <p className="text-zinc-500 text-xs md:text-base font-medium leading-relaxed">{t('buyStep3')}</p>
                 </div>
@@ -443,22 +446,22 @@ const HomePage: React.FC = () => {
               <>
                 <div className="space-y-3 md:space-y-4 animate-reveal-up">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-black">1</div>
-                    <h4 className="font-black text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'অ্যাকাউন্ট' : 'SIGN UP'}</h4>
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-bold">1</div>
+                    <h4 className="font-bold text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'অ্যাকাউন্ট' : 'SIGN UP'}</h4>
                   </div>
                   <p className="text-zinc-500 text-xs md:text-base font-medium leading-relaxed">{t('sellStep1')}</p>
                 </div>
                 <div className="space-y-3 md:space-y-4 animate-reveal-up delay-100">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-black">2</div>
-                    <h4 className="font-black text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'বই দিন' : 'UPLOAD'}</h4>
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-bold">2</div>
+                    <h4 className="font-bold text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'বই দিন' : 'UPLOAD'}</h4>
                   </div>
                   <p className="text-zinc-500 text-xs md:text-base font-medium leading-relaxed">{t('sellStep2')}</p>
                 </div>
                 <div className="space-y-3 md:space-y-4 animate-reveal-up delay-200">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-black">3</div>
-                    <h4 className="font-black text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'বিক্রি করুন' : 'SELL'}</h4>
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-zinc-900 text-white rounded-[10px] md:rounded-xl flex items-center justify-center text-[10px] md:text-xs font-bold">3</div>
+                    <h4 className="font-bold text-black text-[10px] md:text-xs uppercase tracking-widest">{lang === 'bn' ? 'বিক্রি করুন' : 'SELL'}</h4>
                   </div>
                   <p className="text-zinc-500 text-xs md:text-base font-medium leading-relaxed">{t('sellStep3')}</p>
                 </div>
@@ -475,9 +478,9 @@ const HomePage: React.FC = () => {
             <div className="space-y-3 md:space-y-4 max-w-2xl">
               <div className="flex items-center justify-center lg:justify-start gap-2">
                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent animate-pulse"></div>
-                 <span className="text-accent font-black text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em]">Student Utilities</span>
+                 <span className="text-accent font-bold text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em]">Student Utilities</span>
               </div>
-              <h2 className="text-2xl md:text-5xl font-serif font-black text-white leading-tight">
+              <h2 className="text-2xl md:text-5xl font-sans font-bold text-white leading-tight">
                 Supercharge your <span className="text-accent italic">Workflow.</span>
               </h2>
               <p className="text-slate-400 text-xs md:text-base font-medium leading-relaxed">
@@ -488,7 +491,7 @@ const HomePage: React.FC = () => {
               href="https://toolsybro.com" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="bg-white text-slate-900 px-6 py-3 md:px-10 md:py-5 rounded-full font-black text-[10px] md:text-sm uppercase hover:bg-accent hover:text-white transition-all shadow-2xl active:scale-95 flex-shrink-0 flex items-center gap-2 md:gap-3 tracking-[0.1em] md:tracking-[0.2em]"
+              className="bg-white text-slate-900 px-6 py-3 md:px-10 md:py-5 rounded-full font-bold text-[10px] md:text-sm uppercase hover:bg-accent hover:text-white transition-all shadow-2xl active:scale-95 flex-shrink-0 flex items-center gap-2 md:gap-3 tracking-[0.1em] md:tracking-[0.2em]"
             >
               Visit toolsybro.com <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
             </a>
@@ -498,14 +501,14 @@ const HomePage: React.FC = () => {
       {/* Bottom CTA Section */}
       <section className="container mx-auto max-w-7xl px-4 py-6 md:py-8">
         <div className="bg-white rounded-[1.5rem] md:rounded-[3rem] p-6 md:p-16 border border-emerald-50 shadow-[0_10px_50px_-20px_rgba(0,0,0,0.05)] text-center space-y-6 md:space-y-8">
-          <h2 className="text-xl md:text-3xl lg:text-4xl font-serif font-black text-slate-900 max-w-3xl mx-auto leading-tight">
+          <h2 className="text-xl md:text-3xl lg:text-4xl font-sans font-bold text-slate-900 max-w-3xl mx-auto leading-tight">
              Find your study companion or help others by sharing your pre-loved books today.
           </h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
-            <button onClick={() => { document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' }) }} className="w-full sm:w-auto bg-accent text-white px-8 py-3 rounded-full font-black text-[10px] uppercase shadow-lg hover:bg-accent-hover transition-all tracking-widest">
+            <button onClick={() => { document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' }) }} className="w-full sm:w-auto bg-accent text-white px-8 py-3 rounded-full font-bold text-[10px] uppercase shadow-lg hover:bg-accent-hover transition-all tracking-widest">
               BROWSE
             </button>
-            <Link to="/sell" className="w-full sm:w-auto bg-zinc-900 text-white px-8 py-3 rounded-full font-black text-[10px] uppercase shadow-lg hover:bg-black transition-all tracking-widest">
+            <Link to="/sell" className="w-full sm:w-auto bg-zinc-900 text-white px-8 py-3 rounded-full font-bold text-[10px] uppercase shadow-lg hover:bg-black transition-all tracking-widest">
               SELL A BOOK
             </Link>
           </div>

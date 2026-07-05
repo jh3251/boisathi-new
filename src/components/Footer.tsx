@@ -32,8 +32,8 @@ export default function Footer() {
                  <a href="#" className="inline-flex items-center gap-3 md:gap-4 bg-[#0f172a] border border-zinc-800 px-4 py-2 md:px-5 md:py-3 rounded-xl md:rounded-2xl hover:bg-zinc-900 transition-colors w-full sm:w-auto justify-center sm:justify-start">
                     <img src={GOOGLE_PLAY_ICON_URL} alt="Google Play" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
                     <div>
-                      <div className="text-[7px] md:text-[8px] font-black text-zinc-400 uppercase tracking-widest">GET THE APP</div>
-                      <div className="text-white font-black text-xs md:text-sm flex items-center gap-2">
+                      <div className="text-[7px] md:text-[8px] font-bold text-zinc-400 uppercase tracking-widest">GET THE APP</div>
+                      <div className="text-white font-bold text-xs md:text-sm flex items-center gap-2">
                         Android App <span className="bg-accent text-white text-[6px] md:text-[7px] px-1.5 py-0.5 rounded-full">SOON</span>
                       </div>
                     </div>
@@ -43,30 +43,30 @@ export default function Footer() {
 
            {/* Column 2: Quick Navigation */}
            <div className="md:col-span-3 space-y-4 md:space-y-6">
-             <h4 className="font-black text-white text-[10px] uppercase tracking-widest">QUICK NAVIGATION</h4>
+             <h4 className="font-bold text-white text-[10px] uppercase tracking-widest">QUICK NAVIGATION</h4>
              <div className="grid grid-cols-2 md:flex md:flex-col gap-2 md:gap-3">
-               <Link to="/about" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors">ABOUT US</Link>
-               <Link to="/contact" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors">CONTACT US</Link>
-               <Link to="/privacy" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors">PRIVACY POLICY</Link>
-               <Link to="/terms" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors">TERMS OF USE</Link>
+               <Link to="/about" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors">ABOUT US</Link>
+               <Link to="/contact" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors">CONTACT US</Link>
+               <Link to="/privacy" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors">PRIVACY POLICY</Link>
+               <Link to="/terms" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors">TERMS OF USE</Link>
              </div>
            </div>
 
            {/* Column 3: Student Support */}
            <div className="md:col-span-4 space-y-4 md:space-y-6 md:pl-10">
-             <h4 className="font-black text-white text-[10px] uppercase tracking-widest">STUDENT SUPPORT</h4>
+             <h4 className="font-bold text-white text-[10px] uppercase tracking-widest">STUDENT SUPPORT</h4>
              <div className="grid grid-cols-2 md:flex md:flex-col gap-2 md:gap-3">
-               <Link to="/" className="bg-accent text-center text-white py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-black uppercase tracking-widest hover:bg-accent-hover transition-colors">BROWSE</Link>
-               <Link to="/sell" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-black uppercase tracking-widest hover:bg-zinc-800 transition-colors">SELL A BOOK</Link>
+               <Link to="/" className="bg-accent text-center text-white py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-accent-hover transition-colors">BROWSE</Link>
+               <Link to="/sell" className="bg-[#1a1a1a] text-center text-zinc-300 py-2 md:py-3 rounded-lg md:rounded-xl text-[8px] md:text-[9px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors">SELL A BOOK</Link>
              </div>
            </div>
         </div>
 
         <div className="border-t border-zinc-900 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-zinc-500 text-[8px] font-black uppercase tracking-widest">
+          <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest">
             &copy; {new Date().getFullYear()} BOISATHI.COM. ALL RIGHTS RESERVED.
           </p>
-          <p className="text-zinc-500 text-[8px] font-black uppercase tracking-widest">
+          <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest">
             CRAFTED FOR <span className="text-accent">KNOWLEDGE EXCHANGE</span>
           </p>
         </div>

@@ -7,6 +7,7 @@ import { useTranslation } from '../App';
 import { DIVISIONS, DISTRICTS, UPAZILAS, UNIONS } from '../constants';
 import LoadingScreen from '../components/LoadingScreen';
 import SEO from '../components/SEO';
+import AdBanner from '../components/AdBanner';
 
 const BookDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -177,7 +178,7 @@ const BookDetailsPage: React.FC = () => {
         <div className="bg-emerald-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto">
           <ChevronLeft className="w-10 h-10 text-emerald-200" />
         </div>
-        <h2 className="text-3xl font-bold font-serif text-black">Listing not found</h2>
+        <h2 className="text-3xl font-bold font-sans text-black">Listing not found</h2>
         <button onClick={() => navigate('/')} className="bg-accent text-white px-10 py-4 rounded-xl font-semibold uppercase text-xs shadow-xl">Return to Feed</button>
       </div>
     );
@@ -237,7 +238,7 @@ const BookDetailsPage: React.FC = () => {
           </div>
 
           <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-emerald-50 space-y-6">
-            <h2 className="text-2xl font-serif font-bold text-black border-b border-emerald-50 pb-4">{lang === 'bn' ? 'বইটি সম্পর্কে' : 'About this book'}</h2>
+            <h2 className="text-2xl font-sans font-bold text-black border-b border-emerald-50 pb-4">{lang === 'bn' ? 'বইটি সম্পর্কে' : 'About this book'}</h2>
             <div className="text-black text-lg leading-relaxed whitespace-pre-wrap font-medium">
               {book.description || (lang === 'bn' ? "বিক্রেতা এই বইটির জন্য কোনো বিস্তারিত বিবরণ প্রদান করেননি। আরও তথ্যের জন্য সরাসরি তাদের সাথে যোগাযোগ করুন।" : "The seller hasn't provided a detailed description for this book. Please contact them directly for more information.")}
             </div>
@@ -250,7 +251,7 @@ const BookDetailsPage: React.FC = () => {
               <span className="text-[10px] font-black text-accent uppercase bg-[#f0fdf4] px-4 py-1.5 rounded-full border border-emerald-100">
                 {t(book.subject as any)}
               </span>
-              <h1 className={`text-4xl font-serif font-black text-black mt-5 mb-1.5 leading-tight ${lang === 'bn' ? 'font-bn' : ''}`}>{book.title}</h1>
+              <h1 className={`text-4xl font-sans font-black text-black mt-5 mb-1.5 leading-tight ${lang === 'bn' ? 'font-bn' : ''}`}>{book.title}</h1>
               
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50/50 rounded-full border border-emerald-100/50">
                 <span className="text-xs font-bold text-zinc-400">{t('by')}</span>
@@ -364,6 +365,10 @@ const BookDetailsPage: React.FC = () => {
         </div>
       </div>
 
+      <div className="mt-8 max-w-7xl mx-auto">
+        <AdBanner />
+      </div>
+
       {showShareModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div 
@@ -374,7 +379,7 @@ const BookDetailsPage: React.FC = () => {
              <button onClick={() => setShowShareModal(false)} className="absolute top-8 right-8 p-2 text-zinc-300 hover:text-black transition">
                <X className="w-6 h-6" />
              </button>
-             <h3 className="text-2xl font-serif font-black text-black mb-8 text-center">{lang === 'bn' ? 'বইটি শেয়ার করুন' : 'Share this Book'}</h3>
+             <h3 className="text-2xl font-sans font-black text-black mb-8 text-center">{lang === 'bn' ? 'বইটি শেয়ার করুন' : 'Share this Book'}</h3>
              <div className="space-y-4">
                 <button onClick={shareWhatsApp} className="w-full flex items-center justify-between p-5 bg-[#25D366]/10 text-[#25D366] rounded-2xl font-black text-xs uppercase border border-[#25D366]/20 hover:bg-[#25D366]/20 transition">
                   <span className="pl-2">WhatsApp</span>

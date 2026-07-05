@@ -12,7 +12,7 @@ export default function LoadingScreen() {
           <img src={SITE_LOGO_URL} alt="Loading..." className="h-10 md:h-12 w-auto" />
         </div>
       </div>
-      <p className="mt-12 text-[10px] md:text-xs font-black text-accent uppercase tracking-[0.3em] animate-pulse">Loading...</p>
+      <p className="mt-12 text-[10px] md:text-xs font-bold text-accent uppercase tracking-[0.3em] animate-pulse">Loading...</p>
     </div>
   );
 }

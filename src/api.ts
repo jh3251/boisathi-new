@@ -330,6 +330,10 @@ export const api = {
         
       return () => { supabase.removeChannel(channel); };
     },
+    getMessages: async (conversationId: string): Promise<ChatMessage[]> => {
+      const { data } = await supabase.from('messages').select('*').eq('conversationId', conversationId).order('createdAt', { ascending: true });
+      return (data || []) as ChatMessage[];
+    },
     sendMessage: async (conversationId: string, senderId: string, text: string) => {
       try {
         const { data: { user } } = await supabase.auth.getUser();

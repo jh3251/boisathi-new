@@ -31,11 +31,11 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center text-slate-300">
             <BookOpen className="w-6 h-6 sm:w-8 sm:h-8 mb-2" />
-            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider">No Image</span>
+            <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider">No Image</span>
           </div>
         )}
         {Number(book.price) === 0 && (
-          <div className="absolute top-2 left-2 bg-orange-500 text-white text-[8px] sm:text-[9px] font-black uppercase px-2 py-1 rounded-md shadow-md tracking-wider">
+          <div className="absolute top-2 left-2 bg-orange-500 text-white text-[8px] sm:text-[9px] font-bold uppercase px-2 py-1 rounded-md shadow-md tracking-wider">
             FREE
           </div>
         )}
@@ -43,8 +43,8 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
 
       <div className="flex-grow flex flex-col justify-between py-1">
         <div>
-          <h3 className="font-serif font-black text-slate-900 text-base sm:text-lg md:text-xl leading-tight line-clamp-1">{book.title}</h3>
-          <p className="text-slate-400 text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-widest mt-0.5 sm:mt-1 line-clamp-1">
+          <h3 className="font-sans font-bold text-slate-900 text-base sm:text-lg md:text-xl leading-tight line-clamp-1">{book.title}</h3>
+          <p className="text-slate-400 text-[8px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-widest mt-0.5 sm:mt-1 line-clamp-1">
              — {book.author || 'AUTHOR'}
           </p>
           
@@ -53,7 +53,7 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
                <div className="bg-emerald-50 p-1 rounded">
                  <MapPin className="w-2 h-2 sm:w-3 sm:h-3 text-accent" />
                </div>
-               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
+               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
                  {book.location?.unionName ? `${book.location.unionName}, ` : ''}{book.location?.upazilaName}, {book.location?.districtName}
                </span>
              </div>
@@ -61,7 +61,7 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
                <div className="bg-slate-100 p-1 rounded">
                  <BookOpen className="w-2 h-2 sm:w-3 sm:h-3 text-slate-500" />
                </div>
-               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
+               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
                  {t(book.subject as any) || book.subject}
                </span>
              </div>
@@ -71,12 +71,12 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
         <div className="flex items-end justify-between mt-1 sm:mt-4">
            <div>
              <div className="flex items-baseline gap-1">
-               <span className="font-bn text-accent font-black text-sm sm:text-lg md:text-xl leading-none">৳</span>
-               <span className="font-black text-accent text-base sm:text-xl md:text-2xl leading-none">{book.price === 0 ? (lang === 'bn' ? 'ফ্রি' : 'FREE') : book.price}</span>
+               <span className="font-bn text-accent font-bold text-sm sm:text-lg md:text-xl leading-none">৳</span>
+               <span className="font-bold text-accent text-base sm:text-xl md:text-2xl leading-none">{book.price === 0 ? (lang === 'bn' ? 'ফ্রি' : 'FREE') : book.price}</span>
              </div>
              <div className="flex items-center gap-1 text-slate-400 mt-0.5">
                 <Clock className="w-2 h-2 sm:w-3 sm:h-3" />
-                <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-widest">
+                <span className="text-[7px] sm:text-[9px] font-bold uppercase tracking-widest">
                    {new Date(book.createdAt).toLocaleDateString()}
                 </span>
              </div>
@@ -84,7 +84,7 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
 
           {!showActions ? (
              <div className="flex items-center gap-1.5 sm:gap-2">
-               <Link to={`/books/${book.id}`} className="bg-zinc-900 text-white px-2 sm:px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-[7px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-widest hover:bg-black transition-colors flex items-center gap-1">
+               <Link to={`/books/${book.id}`} className="bg-zinc-900 text-white px-2 sm:px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-[7px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-colors flex items-center gap-1">
                  DETAILS <ChevronRight className="w-2 h-2 sm:w-3 sm:h-3" />
                </Link>
                <a href={`tel:${book.contactPhone || ''}`} className="bg-accent text-white p-1.5 sm:p-1.5 md:p-2 rounded-lg md:rounded-xl hover:bg-accent-hover transition-colors">
@@ -93,8 +93,8 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
              </div>
           ) : (
             <div className="flex gap-1.5 sm:gap-2">
-              <button onClick={() => onEdit?.(book.id)} className="bg-zinc-100 text-slate-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[8px] sm:text-[9px] font-black uppercase hover:bg-zinc-200">Edit</button>
-              <button onClick={() => onDelete?.(book.id)} className="bg-red-50 text-red-600 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[8px] sm:text-[9px] font-black uppercase hover:bg-red-100">Delete</button>
+              <button onClick={() => onEdit?.(book.id)} className="bg-zinc-100 text-slate-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[8px] sm:text-[9px] font-bold uppercase hover:bg-zinc-200">Edit</button>
+              <button onClick={() => onDelete?.(book.id)} className="bg-red-50 text-red-600 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[8px] sm:text-[9px] font-bold uppercase hover:bg-red-100">Delete</button>
             </div>
           )}
         </div>

@@ -115,11 +115,11 @@ export default function LocationSelector({ value, onChange }: LocationSelectorPr
       {/* Division */}
       {switches.division !== false && (
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-zinc-400 uppercase tracking-wider">
+          <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
             {t('division' as any) || (lang === 'bn' ? 'বিভাগ' : 'Division')}
           </label>
           <select 
-            className="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none font-bold text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all"
+            className="w-full px-4 py-3 md:px-5 md:py-4 bg-zinc-50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none font-bold text-xs md:text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all"
             value={value.divisionId || ''} 
             onChange={handleDivChange}
           >
@@ -136,11 +136,11 @@ export default function LocationSelector({ value, onChange }: LocationSelectorPr
       {/* District */}
       {switches.district !== false && (
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-zinc-400 uppercase tracking-wider">
+          <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
             {t('district' as any) || (lang === 'bn' ? 'জেলা' : 'District')}
           </label>
           <select 
-            className="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none font-bold text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 md:px-5 md:py-4 bg-zinc-50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none font-bold text-xs md:text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             value={value.districtId || ''} 
             onChange={handleDistChange} 
             disabled={switches.division !== false && !value.divisionId}
@@ -158,11 +158,11 @@ export default function LocationSelector({ value, onChange }: LocationSelectorPr
       {/* Upazila */}
       {switches.upazila !== false && (
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-zinc-400 uppercase tracking-wider">
+          <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
             {t('upazilaThana' as any) || (lang === 'bn' ? 'উপজেলা/থানা' : 'Upazila/Thana')}
           </label>
           <select 
-            className="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none font-bold text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 md:px-5 md:py-4 bg-zinc-50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none font-bold text-xs md:text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             value={value.upazilaId || ''} 
             onChange={handleUpaChange} 
             disabled={switches.district !== false && !value.districtId}
@@ -180,11 +180,11 @@ export default function LocationSelector({ value, onChange }: LocationSelectorPr
       {/* Union */}
       {switches.union !== false && (
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-zinc-400 uppercase tracking-wider">
+          <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
             {t('union' as any) || (lang === 'bn' ? 'ইউনিয়ন' : 'Union')}
           </label>
           <select 
-            className="w-full px-5 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none font-bold text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full px-4 py-3 md:px-5 md:py-4 bg-zinc-50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none font-bold text-xs md:text-sm text-black appearance-none cursor-pointer focus:bg-white focus:border-accent transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             value={value.unionId || ''} 
             onChange={handleUnionChange} 
             disabled={switches.upazila !== false && !value.upazilaId}

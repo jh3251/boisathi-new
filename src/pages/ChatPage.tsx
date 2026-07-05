@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../api';
 import { UserProfile, Conversation, ChatMessage } from '../types';
-import { Send, ArrowLeft, Loader2, User } from 'lucide-react';
+import { Send, ArrowLeft, Loader2, User, MessageSquare } from 'lucide-react';
 import { useTranslation } from '../App';
 
 interface ChatPageProps {
@@ -52,10 +52,26 @@ const ChatPage: React.FC<ChatPageProps> = ({ user }) => {
     
     const msg = newMessage;
     setNewMessage('');
+
+    // Optimistic UI updates
+    const tempId = 'temp-' + Date.now();
+    const optimisticMessage: ChatMessage = {
+      id: tempId,
+      senderId: user.uid,
+      text: msg,
+      createdAt: Date.now()
+    };
+    setMessages(prev => [...prev, optimisticMessage]);
+
     try {
       await api.db.sendMessage(conversationId, user.uid, msg);
+      // Fetch latest messages from Supabase directly to sync
+      const latestMsgs = await api.db.getMessages(conversationId);
+      setMessages(latestMsgs);
     } catch (err) {
       console.error(err);
+      // Revert optimistic message and restore input
+      setMessages(prev => prev.filter(m => m.id !== tempId));
       setNewMessage(msg);
     }
   };
@@ -89,24 +105,44 @@ const ChatPage: React.FC<ChatPageProps> = ({ user }) => {
       </div>
 
       {/* Messages */}
-      <div className="flex-grow overflow-y-auto bg-zinc-50/50 p-4 md:p-8 space-y-4 border-x border-emerald-50">
-        {messages.map((msg) => {
-          const isMine = msg.senderId === user.uid;
-          return (
-            <div key={msg.id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] p-4 rounded-2xl shadow-sm ${
-                isMine 
-                  ? 'bg-zinc-900 text-white rounded-br-none' 
-                  : 'bg-white text-black border border-emerald-50 rounded-bl-none'
-              }`}>
-                <p className="text-sm md:text-base font-medium leading-relaxed">{msg.text}</p>
-                <p className={`text-[9px] font-black uppercase mt-1.5 ${isMine ? 'text-zinc-500' : 'text-zinc-300'}`}>
-                  {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
-              </div>
+      <div className="flex-grow overflow-y-auto bg-zinc-50/50 p-4 md:p-8 border-x border-emerald-50 flex flex-col">
+        {messages.length === 0 ? (
+          <div className="flex-grow flex flex-col items-center justify-center text-center p-6 space-y-4">
+            <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-accent shadow-sm">
+              <MessageSquare className="w-8 h-8" />
             </div>
-          );
-        })}
+            <div>
+              <h3 className="font-sans font-black text-black text-lg">
+                {lang === 'bn' ? 'কথপোকথন শুরু করুন' : 'Start the Conversation'}
+              </h3>
+              <p className="text-zinc-500 font-bold text-xs mt-1.5 max-w-sm leading-relaxed">
+                {lang === 'bn' 
+                  ? 'এখনো কোনো বার্তা আদান-প্রদান করা হয়নি। বিক্রেতার সাথে যোগাযোগ করতে নিচে একটি বার্তা পাঠান!' 
+                  : 'No messages exchanged yet. Send a friendly greeting below to start communicating with the seller!'}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4 flex-grow">
+            {messages.map((msg) => {
+              const isMine = msg.senderId === user.uid;
+              return (
+                <div key={msg.id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] p-4 rounded-2xl shadow-sm ${
+                    isMine 
+                      ? 'bg-zinc-900 text-white rounded-br-none' 
+                      : 'bg-white text-black border border-emerald-50 rounded-bl-none'
+                  }`}>
+                    <p className="text-sm md:text-base font-medium leading-relaxed">{msg.text}</p>
+                    <p className={`text-[9px] font-black uppercase mt-1.5 ${isMine ? 'text-zinc-500' : 'text-zinc-300'}`}>
+                      {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
