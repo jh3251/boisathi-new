@@ -54,7 +54,7 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
                  <MapPin className="w-2 h-2 sm:w-3 sm:h-3 text-accent" />
                </div>
                <span className="text-[7px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
-                 {book.location?.upazilaName}, {book.location?.districtName}
+                 {book.location?.unionName ? `${book.location.unionName}, ` : ''}{book.location?.upazilaName}, {book.location?.districtName}
                </span>
              </div>
              <div className="flex items-center gap-1.5">

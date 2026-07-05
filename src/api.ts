@@ -239,6 +239,18 @@ export const api = {
       const { data } = await supabase.from('users').select('*').eq('uid', uid).single();
       return data as UserProfile | undefined;
     },
+    getAllUsers: async () => {
+      const { data } = await supabase.from('users').select('*').order('createdAt', { ascending: false });
+      return (data || []) as UserProfile[];
+    },
+    getAllConversationsCount: async () => {
+      try {
+        const { count } = await supabase.from('conversations').select('*', { count: 'exact', head: true });
+        return count || 0;
+      } catch (e) {
+        return 0;
+      }
+    },
     getListings: async () => {
       const { data } = await supabase.from('bookListings').select('*').order('createdAt', { ascending: false });
       return (data || []) as BookListing[];

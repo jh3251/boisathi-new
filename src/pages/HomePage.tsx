@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { api } from '../api';
 import { BookListing, LocationInfo } from '../types';
-import { CLASSES, CONDITIONS, DIVISIONS, DISTRICTS, UPAZILAS } from '../constants';
+import { CLASSES, CONDITIONS, DIVISIONS, DISTRICTS, UPAZILAS, UNIONS } from '../constants';
 import BookCard from '../components/BookCard';
-import { Search, MapPin, X, PlusCircle, ArrowRight, ChevronRight, ChevronLeft, HelpCircle, BookOpenCheck, Zap, Sparkles } from 'lucide-react';
+import { Search, MapPin, X, PlusCircle, ArrowRight, ChevronRight, ChevronLeft, HelpCircle, BookOpenCheck, Zap, Sparkles, Save, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../App';
 import SEO from '../components/SEO';
@@ -17,7 +17,8 @@ const HomePage: React.FC = () => {
   const [location, setLocation] = useState<Partial<LocationInfo>>({
     divisionId: '',
     districtId: '',
-    upazilaId: ''
+    upazilaId: '',
+    unionId: ''
   });
   
   const [currentPage, setCurrentPage] = useState(0);
@@ -25,6 +26,40 @@ const HomePage: React.FC = () => {
   const [howToTab, setHowToTab] = useState<'buy' | 'sell'>('buy');
   
   const { t, lang } = useTranslation();
+
+  const [savedSwitches, setSavedSwitches] = useState(() => {
+    const saved = localStorage.getItem('bk_filter_switches');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        // Fallback
+      }
+    }
+    return { division: true, district: true, upazila: true, union: true };
+  });
+
+  const [locUpdate, setLocUpdate] = useState(0);
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      const saved = localStorage.getItem('bk_filter_switches');
+      if (saved) {
+        try {
+          setSavedSwitches(JSON.parse(saved));
+        } catch (e) {}
+      }
+    };
+    const handleLocsUpdate = () => {
+      setLocUpdate(prev => prev + 1);
+    };
+    window.addEventListener('bk_filter_switches_updated', handleUpdate);
+    window.addEventListener('bk_locations_updated', handleLocsUpdate);
+    return () => {
+      window.removeEventListener('bk_filter_switches_updated', handleUpdate);
+      window.removeEventListener('bk_locations_updated', handleLocsUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     const unsubscribe = api.db.subscribeToListings((data) => {
@@ -37,16 +72,41 @@ const HomePage: React.FC = () => {
   const filteredListings = useMemo(() => {
     const term = searchTerm.toLowerCase().trim();
     return listings.filter(book => {
-      const searchStrings = [book.title, book.author, book.subject, book.condition, book.location.upazilaName, book.location.districtName];
+      const searchStrings = [
+        book.title, 
+        book.author, 
+        book.subject, 
+        book.condition, 
+        book.location.unionName || '',
+        book.location.upazilaName, 
+        book.location.districtName
+      ];
       const matchesSearch = !term || searchStrings.some(str => str?.toLowerCase().includes(term));
       const matchesClass = !selectedClass || book.subject === selectedClass;
       const matchesCondition = !selectedCondition || book.condition === selectedCondition;
-      const matchesDivision = !location.divisionId || book.location.divisionId === location.divisionId;
-      const matchesDistrict = !location.districtId || book.location.districtId === location.districtId;
-      const matchesUpazila = !location.upazilaId || book.location.upazilaId === location.upazilaId;
-      return matchesSearch && matchesClass && matchesCondition && matchesDivision && matchesDistrict && matchesUpazila;
+      const selectedDivName = location.divisionId ? DIVISIONS.find(d => d.id === location.divisionId)?.name.toLowerCase() : '';
+      const selectedDistName = location.districtId ? DISTRICTS.find(d => d.id === location.districtId)?.name.toLowerCase() : '';
+      const selectedUpaName = location.upazilaId ? UPAZILAS.find(d => d.id === location.upazilaId)?.name.toLowerCase() : '';
+      
+      const matchesDivision = !savedSwitches.division || !location.divisionId || 
+        book.location.divisionId === location.divisionId || 
+        (selectedDivName && book.location.divisionId?.toLowerCase() === selectedDivName) ||
+        (selectedDivName && book.location.divisionName?.toLowerCase() === selectedDivName);
+        
+      const matchesDistrict = !savedSwitches.district || !location.districtId || 
+        book.location.districtId === location.districtId || 
+        (selectedDistName && book.location.districtId?.toLowerCase() === selectedDistName) ||
+        (selectedDistName && book.location.districtName?.toLowerCase() === selectedDistName);
+        
+      const matchesUpazila = !savedSwitches.upazila || !location.upazilaId || 
+        book.location.upazilaId === location.upazilaId ||
+        (selectedUpaName && book.location.upazilaId?.toLowerCase() === selectedUpaName) ||
+        (selectedUpaName && book.location.upazilaName?.toLowerCase() === selectedUpaName);
+        
+      const matchesUnion = !savedSwitches.union || !location.unionId || book.location.unionId === location.unionId;
+      return matchesSearch && matchesClass && matchesCondition && matchesDivision && matchesDistrict && matchesUpazila && matchesUnion;
     });
-  }, [listings, searchTerm, location, selectedClass, selectedCondition]);
+  }, [listings, searchTerm, location, selectedClass, selectedCondition, savedSwitches]);
 
   const visibleListings = useMemo(() => {
     const start = currentPage * pageSize;
@@ -61,7 +121,7 @@ const HomePage: React.FC = () => {
   const handlePrevious = () => { if (hasPrevious) { setCurrentPage(prev => prev - 1); document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' }); } };
 
   const clearFilters = () => {
-    setLocation({ divisionId: '', districtId: '', upazilaId: '' });
+    setLocation({ divisionId: '', districtId: '', upazilaId: '', unionId: '' });
     setSearchTerm('');
     setSelectedClass('');
     setSelectedCondition('');
@@ -144,58 +204,84 @@ const HomePage: React.FC = () => {
                   {lang === 'bn' ? 'স্থান ও শ্রেণী' : 'LOCATION & FILTERS'}
                 </h3>
               </div>
-              <button onClick={clearFilters} className="text-[8px] md:text-[10px] font-black text-white hover:bg-red-600 transition-colors uppercase bg-red-500 px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl active:scale-95">
-                {t('reset')}
-              </button>
+              <div className="flex items-center gap-2">
+                <button onClick={clearFilters} className="text-[8px] md:text-[10px] font-black text-white hover:bg-red-600 transition-colors uppercase bg-red-500 px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl active:scale-95">
+                  {t('reset')}
+                </button>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-5">
-               <div className="space-y-1 md:space-y-2">
-                  <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('division')}</label>
-                  <select 
-                    value={location.divisionId}
-                    onChange={(e) => {
-                      setLocation({...location, divisionId: e.target.value, districtId: '', upazilaId: ''});
-                      setCurrentPage(0);
-                    }}
-                    className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
-                  >
-                    <option value="">{t('selectDivision')}</option>
-                    {DIVISIONS.map(d => <option key={d.id} value={d.id}>{lang === 'bn' ? d.nameBn : d.name}</option>)}
-                  </select>
-               </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-4">
+               {savedSwitches.division !== false && (
+                 <div className="space-y-1 md:space-y-2">
+                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('division')}</label>
+                    <select 
+                      value={location.divisionId}
+                      onChange={(e) => {
+                        setLocation({...location, divisionId: e.target.value, districtId: '', upazilaId: '', unionId: ''});
+                        setCurrentPage(0);
+                      }}
+                      className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-colors"
+                    >
+                      <option value="">{t('selectDivision')}</option>
+                      {DIVISIONS.map(d => <option key={d.id} value={d.id}>{lang === 'bn' ? d.nameBn : d.name}</option>)}
+                    </select>
+                 </div>
+               )}
 
-               <div className="space-y-1 md:space-y-2">
-                  <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('district')}</label>
-                  <select 
-                    disabled={!location.divisionId}
-                    value={location.districtId}
-                    onChange={(e) => {
-                      setLocation({...location, districtId: e.target.value, upazilaId: ''});
-                      setCurrentPage(0);
-                    }}
-                    className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer disabled:opacity-30 hover:border-accent transition-colors"
-                  >
-                    <option value="">{t('selectDistrict')}</option>
-                    {DISTRICTS.filter(d => d.divisionId === location.divisionId).map(d => <option key={d.id} value={d.id}>{lang === 'bn' ? d.nameBn : d.name}</option>)}
-                  </select>
-               </div>
+               {savedSwitches.district !== false && (
+                 <div className="space-y-1 md:space-y-2">
+                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('district')}</label>
+                    <select 
+                      disabled={savedSwitches.division !== false && !location.divisionId}
+                      value={location.districtId}
+                      onChange={(e) => {
+                        setLocation({...location, districtId: e.target.value, upazilaId: '', unionId: ''});
+                        setCurrentPage(0);
+                      }}
+                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.division !== false && !location.divisionId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
+                    >
+                      <option value="">{t('selectDistrict')}</option>
+                      {DISTRICTS.filter(d => !location.divisionId || d.divisionId === location.divisionId).map(d => <option key={d.id} value={d.id}>{lang === 'bn' ? d.nameBn : d.name}</option>)}
+                    </select>
+                 </div>
+               )}
 
-               <div className="space-y-1 md:space-y-2">
-                  <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('upazilaThana')}</label>
-                  <select 
-                    disabled={!location.districtId}
-                    value={location.upazilaId}
-                    onChange={(e) => {
-                      setLocation({...location, upazilaId: e.target.value});
-                      setCurrentPage(0);
-                    }}
-                    className="w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer disabled:opacity-30 hover:border-accent transition-colors"
-                  >
-                    <option value="">{t('selectUpazila')}</option>
-                    {UPAZILAS.filter(u => u.districtId === location.districtId).map(u => <option key={u.id} value={u.id}>{lang === 'bn' ? u.nameBn : u.name}</option>)}
-                  </select>
-               </div>
+               {savedSwitches.upazila !== false && (
+                 <div className="space-y-1 md:space-y-2">
+                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('upazilaThana')}</label>
+                    <select 
+                      disabled={savedSwitches.district !== false && !location.districtId}
+                      value={location.upazilaId}
+                      onChange={(e) => {
+                        setLocation({...location, upazilaId: e.target.value, unionId: ''});
+                        setCurrentPage(0);
+                      }}
+                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.district !== false && !location.districtId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
+                    >
+                      <option value="">{t('selectUpazila')}</option>
+                      {UPAZILAS.filter(u => !location.districtId || u.districtId === location.districtId).map(u => <option key={u.id} value={u.id}>{lang === 'bn' ? u.nameBn : u.name}</option>)}
+                    </select>
+                 </div>
+               )}
+
+               {savedSwitches.union !== false && (
+                 <div className="space-y-1 md:space-y-2">
+                    <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('union')}</label>
+                    <select 
+                      disabled={savedSwitches.upazila !== false && !location.upazilaId}
+                      value={location.unionId}
+                      onChange={(e) => {
+                        setLocation({...location, unionId: e.target.value});
+                        setCurrentPage(0);
+                      }}
+                      className={`w-full px-3 md:px-5 py-2.5 md:py-4 bg-zinc-50/50 border border-zinc-100 rounded-xl md:rounded-2xl outline-none text-[10px] md:text-sm font-black text-slate-900 appearance-none cursor-pointer hover:border-accent transition-all ${(savedSwitches.upazila !== false && !location.upazilaId) ? 'opacity-40 cursor-not-allowed bg-zinc-100/50' : ''}`}
+                    >
+                      <option value="">{t('selectUnion')}</option>
+                      {UNIONS.filter(u => !location.upazilaId || u.upazilaId === location.upazilaId).map(u => <option key={u.id} value={u.id}>{lang === 'bn' ? u.nameBn : u.name}</option>)}
+                    </select>
+                 </div>
+               )}
 
                <div className="space-y-1 md:space-y-2">
                   <label className="text-[9px] md:text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">{t('classLevel')}</label>

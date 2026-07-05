@@ -12,9 +12,11 @@ export interface LocationInfo {
   divisionId: string;
   districtId: string;
   upazilaId: string;
+  unionId?: string;
   divisionName: string;
   districtName: string;
   upazilaName: string;
+  unionName?: string;
 }
 
 export interface BookListing {
@@ -68,6 +70,13 @@ export interface District {
 export interface Upazila {
   id: string;
   districtId: string;
+  name: string;
+  nameBn: string;
+}
+
+export interface Union {
+  id: string;
+  upazilaId: string;
   name: string;
   nameBn: string;
 }

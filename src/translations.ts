@@ -39,10 +39,12 @@ export const translations = {
     selectDivision: 'Select Division',
     selectDistrict: 'Select District',
     selectUpazila: 'Select Upazila',
+    selectUnion: 'Select Union',
     find: 'FIND',
     division: 'Division',
     district: 'District',
     upazilaThana: 'Upazila/Thana',
+    union: 'Union',
     buyStep1: 'Find your Books in your local area.',
     buyStep2: 'Call the seller directly to check availability.',
     buyStep3: 'Meet in public to inspect and pay for the book.',
@@ -113,7 +115,10 @@ export const translations = {
     'Honours 4th Year': 'Honours 4th Year',
     'Masters': 'Masters',
     'IELTS': 'IELTS',
-    'Other': 'Other'
+    'Other': 'Other',
+    settings: 'Settings',
+    superAdmin: 'Super Admin',
+    manageLocations: 'Manage Locations'
   },
   bn: {
     home: 'হোম',
@@ -153,10 +158,12 @@ export const translations = {
     selectDivision: 'বিভাগ নির্বাচন করুন',
     selectDistrict: 'জেলা নির্বাচন করুন',
     selectUpazila: 'উপজেলা নির্বাচন করুন',
+    selectUnion: 'ইউনিয়ন নির্বাচন করুন',
     find: 'খুঁজুন',
     division: 'বিভাগ',
     district: 'জেলা',
     upazilaThana: 'উপজেলা/থানা',
+    union: 'ইউনিয়ন',
     buyStep1: 'আপনার স্থানীয় এলাকায় বই খুঁজুন।',
     buyStep2: 'বইয়ের প্রাপ্যতা যাচাই করতে সরাসরি বিক্রেতাকে কল করুন।',
     buyStep3: 'বইটি পরিদর্শন এবং মূল্য পরিশোধ করতে জনসমক্ষে দেখা করুন।',
@@ -227,6 +234,9 @@ export const translations = {
     'Honours 4th Year': 'অনার্স ৪র্থ বর্ষ (Honours 4th Year)',
     'Masters': 'মাস্টার্স (Masters)',
     'IELTS': 'আইইএলটিএস (IELTS)',
-    'Other': 'অন্যান্য'
+    'Other': 'অন্যান্য',
+    settings: 'সেটিংস',
+    superAdmin: 'সুপার অ্যাডমিন',
+    manageLocations: 'লোকেশন পরিচালনা'
   }
 };

@@ -4,7 +4,7 @@ import { api } from '../api';
 import { BookListing, UserProfile } from '../types';
 import { MapPin, Phone, User, Calendar, ChevronLeft, ShieldCheck, Share2, Bookmark, Mail, CheckCircle2, X, Link as LinkIcon, Facebook, MessageCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from '../App';
-import { DIVISIONS, DISTRICTS, UPAZILAS } from '../constants';
+import { DIVISIONS, DISTRICTS, UPAZILAS, UNIONS } from '../constants';
 import LoadingScreen from '../components/LoadingScreen';
 import SEO from '../components/SEO';
 
@@ -151,11 +151,22 @@ const BookDetailsPage: React.FC = () => {
 
   const localizedLocation = useMemo(() => {
     if (!book) return null;
-    if (lang !== 'bn') return { upazila: book.location.upazilaName, district: book.location.districtName, division: book.location.divisionName };
+    if (lang !== 'bn') return { 
+      union: book.location.unionName,
+      upazila: book.location.upazilaName, 
+      district: book.location.districtName, 
+      division: book.location.divisionName 
+    };
+    const union = UNIONS.find(u => u.id === book.location.unionId);
     const upazila = UPAZILAS.find(u => u.id === book.location.upazilaId);
     const district = DISTRICTS.find(d => d.id === book.location.districtId);
     const division = DIVISIONS.find(d => d.id === book.location.divisionId);
-    return { upazila: upazila?.nameBn || book.location.upazilaName, district: district?.nameBn || book.location.districtName, division: division?.nameBn || book.location.divisionName };
+    return { 
+      union: union?.nameBn || book.location.unionName,
+      upazila: upazila?.nameBn || book.location.upazilaName, 
+      district: district?.nameBn || book.location.districtName, 
+      division: division?.nameBn || book.location.divisionName 
+    };
   }, [book, lang]);
 
   if (loading) return <LoadingScreen />;
@@ -264,7 +275,9 @@ const BookDetailsPage: React.FC = () => {
                   <MapPin className="w-7 h-7 text-accent" />
                 </div>
                 <div>
-                  <p className="font-black text-black text-2xl leading-none">{localizedLocation?.upazila}</p>
+                  <p className="font-black text-black text-2xl leading-none">
+                    {localizedLocation?.union ? `${localizedLocation.union}, ` : ''}{localizedLocation?.upazila}
+                  </p>
                   <p className="text-[11px] text-zinc-400 font-black uppercase mt-1">
                     {localizedLocation?.district}, {localizedLocation?.division}
                   </p>

@@ -41,7 +41,9 @@ const SellPage: React.FC<SellPageProps> = ({ user }) => {
       districtId: '',
       districtName: '',
       upazilaId: '',
-      upazilaName: ''
+      upazilaName: '',
+      unionId: '',
+      unionName: ''
     }
   });
 

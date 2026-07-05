@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { env } from "hono/adapter";
 
-const getEnv = (c: any) => {
+const getEnv = (c: any): any => {
   let e: any = {};
   try {
     e = env(c) || {};
