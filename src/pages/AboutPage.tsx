@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from '../App';
-import { BookOpen, Heart, Globe, Sparkles, BookHeart, GraduationCap, ArrowRight, ShieldCheck, Scissors, RefreshCw } from 'lucide-react';
+import { BookOpen, Heart, Globe, Sparkles, BookHeart, GraduationCap, ArrowRight, ShieldCheck, Scissors, RefreshCw, Quote } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const AboutPage: React.FC = () => {
@@ -66,7 +66,7 @@ const AboutPage: React.FC = () => {
           <div className="absolute top-0 right-0 w-40 h-40 bg-accent/5 rounded-full blur-3xl group-hover:bg-accent/10 transition-colors duration-700"></div>
           <div className="space-y-6 relative z-10">
             <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm">
-              <Sparkles className="w-6 h-6 text-accent" />
+              <Quote className="w-6 h-6 text-accent fill-accent/10" />
             </div>
             <p className="text-xl font-bold text-black leading-relaxed italic">
               "বইসাথী শুধু একটি ওয়েবসাইট নয়— এটি পুরোনো বই, নতুন আশা। এখানে লেনদেন মানেই শিক্ষার প্রসার।"
@@ -126,10 +126,10 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* Footer Tagline */}
-      <section className="text-center pt-10">
-        <div className="inline-block px-10 py-6 bg-white border border-zinc-100 rounded-[2rem] shadow-sm">
-          <p className="text-2xl md:text-3xl font-serif font-black text-black">
-            BoiSathi.com — <span className="text-accent italic">পুরোনো বই, নতুন আশা।</span>
+      <section className="text-center pt-6 md:pt-10">
+        <div className="inline-block px-4 py-3 sm:px-6 sm:py-4 md:px-10 md:py-6 bg-white border border-zinc-100 rounded-2xl md:rounded-[2rem] shadow-sm max-w-full mx-4">
+          <p className="text-sm sm:text-base md:text-2xl lg:text-3xl font-serif font-black text-black leading-relaxed">
+            BoiSathi.com — <span className="text-accent">পুরোনো বই আর <span className="text-red-600 font-black">কেজি দরে নয়</span></span>
           </p>
         </div>
       </section>
