@@ -854,31 +854,31 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
       <aside className="lg:col-span-1">
         <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-8 shadow-2xl shadow-emerald-900/5 border border-emerald-50">
           <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-10">
-            <div className="w-10 h-10 md:w-14 md:h-14 bg-emerald-100 rounded-[10px] md:rounded-2xl flex items-center justify-center font-black text-sm md:text-xl text-black overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
-              <span className="text-black font-black uppercase">{(name || user.displayName || 'A').charAt(0)}</span>
+            <div className="w-10 h-10 md:w-14 md:h-14 bg-emerald-100 rounded-[10px] md:rounded-2xl flex items-center justify-center font-bold text-sm md:text-xl text-black overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
+              <span className="text-black font-bold uppercase">{(name || user.displayName || 'A').charAt(0)}</span>
             </div>
             <div className="min-w-0">
-              <p className="font-black text-black leading-tight text-sm md:text-lg truncate">{name || 'Anonymous'}</p>
-              <p className="text-[9px] md:text-[10px] text-accent font-black uppercase mt-0.5 truncate">
+              <p className="font-bold text-black leading-tight text-sm md:text-lg truncate">{name || 'Anonymous'}</p>
+              <p className="text-[9px] md:text-[10px] text-accent font-bold uppercase mt-0.5 truncate">
                 {isSuperAdmin ? (lang === 'bn' ? 'সুপার অ্যাডমিন' : 'SUPER ADMIN') : (lang === 'bn' ? 'মেম্বার' : 'MEMBER')}
               </p>
             </div>
           </div>
           <nav className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 md:gap-3 no-scrollbar pb-2 lg:pb-0">
-            <button onClick={() => setActiveTab('ads')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'ads' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+            <button onClick={() => setActiveTab('ads')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-bold rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'ads' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
               <LayoutGrid className="w-3.5 h-3.5 md:w-5 md:h-5" /> Ads
             </button>
-            <button onClick={() => setActiveTab('messages')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'messages' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+            <button onClick={() => setActiveTab('messages')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-bold rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'messages' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
               <MessageCircle className={`w-3.5 h-3.5 md:w-5 md:h-5 ${activeTab === 'messages' ? 'text-white' : 'text-accent'}`} /> Messages
             </button>
-            <button onClick={() => setActiveTab('saved')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'saved' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+            <button onClick={() => setActiveTab('saved')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-bold rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'saved' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
               <Heart className={`w-3.5 h-3.5 md:w-5 md:h-5 ${activeTab === 'saved' ? 'text-white' : 'text-accent'}`} /> Saved
             </button>
-            <button onClick={() => setActiveTab('account')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'account' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+            <button onClick={() => setActiveTab('account')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-bold rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'account' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
               <Settings className={`w-3.5 h-3.5 md:w-5 md:h-5 ${activeTab === 'account' ? 'text-white' : 'text-accent'}`} /> Profile
             </button>
             {isSuperAdmin && (
-              <button onClick={() => setActiveTab('settings')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-black rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'settings' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
+              <button onClick={() => setActiveTab('settings')} className={`flex-shrink-0 lg:w-full flex items-center justify-start gap-2 md:gap-4 p-3 md:p-4 font-bold rounded-xl md:rounded-2xl transition text-[9px] md:text-xs uppercase ${activeTab === 'settings' ? 'bg-accent text-white shadow-lg shadow-accent/20' : 'bg-emerald-50/50 text-black hover:bg-emerald-100'}`}>
                 <Sliders className={`w-3.5 h-3.5 md:w-5 md:h-5 ${activeTab === 'settings' ? 'text-white' : 'text-accent'}`} /> Settings
               </button>
             )}
@@ -892,18 +892,18 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-[#f0fdf4] p-4 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border border-emerald-100/50 gap-4 md:gap-6">
               <div className="flex items-center gap-3 md:gap-5">
                 <div className="p-2.5 md:p-3 bg-white rounded-xl md:rounded-2xl shadow-sm"><Package className="w-5 h-5 md:w-6 md:h-6 text-accent" /></div>
-                <div><h2 className="text-lg md:text-2xl font-sans font-black text-black leading-none">Your Ads</h2><p className="text-zinc-400 text-[9px] md:text-[10px] font-black uppercase mt-1.5">{listings.length} Items Live</p></div>
+                <div><h2 className="text-lg md:text-2xl font-sans font-bold text-black leading-none">Your Ads</h2><p className="text-zinc-400 text-[9px] md:text-[10px] font-bold uppercase mt-1.5">{listings.length} Items Live</p></div>
               </div>
-              <Link to="/sell" className="w-full sm:w-auto flex items-center justify-center gap-2 md:gap-3 bg-black text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl hover:bg-zinc-800 transition text-[9px] md:text-[10px] font-black uppercase shadow-xl shadow-black/10"><PlusCircle className="w-4 h-4" /> New Ad</Link>
+              <Link to="/sell" className="w-full sm:w-auto flex items-center justify-center gap-2 md:gap-3 bg-black text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl hover:bg-zinc-800 transition text-[9px] md:text-[10px] font-bold uppercase shadow-xl shadow-black/10"><PlusCircle className="w-4 h-4" /> New Ad</Link>
             </div>
-            {loading ? <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{[...Array(2)].map((_, i) => (<div key={i} className="bg-white rounded-[1.5rem] md:rounded-[2rem] h-64 animate-pulse border border-emerald-50"></div>))}</div> : listings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{listings.map(book => (<BookCard key={book.id} book={book} showActions onDelete={(id) => setDeletingId(id)} onEdit={(id) => navigate(`/edit/${id}`)} />))}</div>) : (<div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border-2 border-dashed border-emerald-100 shadow-sm px-6"><h3 className="text-lg md:text-xl font-black text-black mb-2">Nothing listed</h3><Link to="/sell" className="bg-accent text-white px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase text-[10px]">Post New Ad</Link></div>)}
+            {loading ? <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{[...Array(2)].map((_, i) => (<div key={i} className="bg-white rounded-[1.5rem] md:rounded-[2rem] h-64 animate-pulse border border-emerald-50"></div>))}</div> : listings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{listings.map(book => (<BookCard key={book.id} book={book} showActions onDelete={(id) => setDeletingId(id)} onEdit={(id) => navigate(`/edit/${id}`)} />))}</div>) : (<div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border-2 border-dashed border-emerald-100 shadow-sm px-6"><h3 className="text-lg md:text-xl font-bold text-black mb-2">Nothing listed</h3><Link to="/sell" className="bg-accent text-white px-8 md:px-10 py-4 md:py-5 rounded-xl md:rounded-2xl font-bold uppercase text-[10px]">Post New Ad</Link></div>)}
           </>
         )}
         {activeTab === 'messages' && (
           <>
             <div className="flex items-center gap-3 md:gap-4 bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border border-emerald-50 shadow-sm mb-4 md:mb-6">
               <div className="p-2.5 md:p-3 bg-emerald-50 rounded-xl"><MessageCircle className="w-4 h-4 md:w-5 md:h-5 text-accent" /></div>
-              <div><h2 className="text-lg md:text-xl font-black text-black leading-none">Chats</h2><p className="text-zinc-400 text-[8px] md:text-[9px] font-black uppercase mt-1 md:mt-1.5">{sortedConversations.length} Active Conversations</p></div>
+              <div><h2 className="text-lg md:text-xl font-bold text-black leading-none">Chats</h2><p className="text-zinc-400 text-[8px] md:text-[9px] font-bold uppercase mt-1 md:mt-1.5">{sortedConversations.length} Active Conversations</p></div>
             </div>
             {sortedConversations.length > 0 ? (
               <div className="space-y-3 md:space-y-4">
@@ -916,12 +916,12 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       to={`/chat/${conv.id}`}
                       className="flex items-center gap-3 md:gap-4 bg-white p-3 md:p-6 rounded-[1.2rem] md:rounded-[1.5rem] border border-emerald-50 hover:bg-zinc-50 transition shadow-sm group"
                     >
-                      <div className="w-10 h-10 md:w-16 md:h-16 bg-emerald-50 rounded-xl md:rounded-2xl flex items-center justify-center font-black text-accent shadow-sm flex-shrink-0">
+                      <div className="w-10 h-10 md:w-16 md:h-16 bg-emerald-50 rounded-xl md:rounded-2xl flex items-center justify-center font-bold text-accent shadow-sm flex-shrink-0">
                         {conv.bookImageUrl ? <img src={conv.bookImageUrl} className="w-full h-full object-cover rounded-xl md:rounded-2xl" alt="" /> : <User className="w-5 h-5 md:w-6 md:h-6" />}
                       </div>
                       <div className="flex-grow min-w-0">
-                        <h3 className="font-black text-black text-sm md:text-lg leading-tight truncate">{otherName}</h3>
-                        <p className="text-[9px] md:text-[11px] font-black text-accent uppercase tracking-wider mb-0.5 md:mb-1">{conv.bookTitle}</p>
+                        <h3 className="font-bold text-black text-sm md:text-lg leading-tight truncate">{otherName}</h3>
+                        <p className="text-[9px] md:text-[11px] font-bold text-accent uppercase tracking-wider mb-0.5 md:mb-1">{conv.bookTitle}</p>
                         <p className="text-[10px] md:text-sm text-zinc-400 font-medium truncate max-w-md">{conv.lastMessage || 'Start conversation...'}</p>
                       </div>
                       <ChevronRight className="w-4 h-4 md:w-5 md:h-5 text-zinc-300 group-hover:translate-x-1 transition-transform" />
@@ -930,7 +930,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                 })}
               </div>
             ) : (
-              <div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-lg md:text-xl font-black text-black">No messages yet</h3></div>
+              <div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-lg md:text-xl font-bold text-black">No messages yet</h3></div>
             )}
           </>
         )}
@@ -938,15 +938,15 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
           <>
             <div className="flex items-center gap-3 md:gap-4 bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border border-emerald-50 shadow-sm mb-4 md:mb-6">
               <div className="p-2.5 md:p-3 bg-red-50 rounded-xl"><Heart className="w-4 h-4 md:w-5 h-5 text-red-500 fill-current" /></div>
-              <div><h2 className="text-lg md:text-xl font-black text-black leading-none">Bookmarked</h2><p className="text-zinc-400 text-[8px] md:text-[9px] font-black uppercase mt-1 md:mt-1.5">{savedListings.length} Saved Books</p></div>
+              <div><h2 className="text-lg md:text-xl font-bold text-black leading-none">Bookmarked</h2><p className="text-zinc-400 text-[8px] md:text-[9px] font-bold uppercase mt-1 md:mt-1.5">{savedListings.length} Saved Books</p></div>
             </div>
-            {savedListings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{savedListings.map(book => (<BookCard key={book.id} book={book} />))}</div>) : (<div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-lg md:text-xl font-black text-black">No saved items</h3><Link to="/" className="mt-6 md:mt-10 inline-block bg-accent text-white px-8 md:px-10 py-3 md:py-4 rounded-xl font-black uppercase text-[9px] md:text-[10px]">Browse Feed</Link></div>)}
+            {savedListings.length > 0 ? (<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">{savedListings.map(book => (<BookCard key={book.id} book={book} />))}</div>) : (<div className="text-center py-12 md:py-20 bg-white rounded-[1.5rem] md:rounded-[2.5rem] border border-emerald-50 shadow-sm px-6"><h3 className="text-lg md:text-xl font-bold text-black">No saved items</h3><Link to="/" className="mt-6 md:mt-10 inline-block bg-accent text-white px-8 md:px-10 py-3 md:py-4 rounded-xl font-bold uppercase text-[9px] md:text-[10px]">Browse Feed</Link></div>)}
           </>
         )}
 
         {activeTab === 'account' && (
           <div className="bg-white rounded-[2rem] p-6 md:p-10 shadow-2xl shadow-emerald-900/5 border border-emerald-50">
-            <h2 className="text-3xl font-sans font-black text-black mb-8">Profile Settings</h2>
+            <h2 className="text-3xl font-sans font-bold text-black mb-8">Profile Settings</h2>
             <form onSubmit={handleUpdateProfile} className="space-y-10 max-w-xl">
               {updateError && (
                 <div className="p-4 bg-red-50 text-red-600 rounded-2xl text-[13px] font-semibold border border-red-100 flex items-center gap-3 animate-in fade-in duration-300">
@@ -956,45 +956,45 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
               )}
               <div className="space-y-8">
                 <div>
-                  <label className="block text-[10px] font-black text-black uppercase mb-3 ml-1">{t('fullName')}</label>
+                  <label className="block text-[10px] font-bold text-black uppercase mb-3 ml-1">{t('fullName')}</label>
                   <input 
                     type="text" 
                     value={name} 
                     onChange={(e) => setName(e.target.value)} 
-                    className="w-full px-6 py-4 bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl outline-none font-black text-black text-base" 
+                    className="w-full px-6 py-4 bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl outline-none font-bold text-black text-base" 
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-black uppercase mb-3 ml-1">{t('userName')}</label>
+                  <label className="block text-[10px] font-bold text-black uppercase mb-3 ml-1">{t('userName')}</label>
                   <div className="relative">
-                    <span className="absolute left-6 top-1/2 -translate-y-1/2 font-black text-emerald-400 text-lg">@</span>
+                    <span className="absolute left-6 top-1/2 -translate-y-1/2 font-bold text-emerald-400 text-lg">@</span>
                     <input 
                       type="text" 
                       value={username} 
                       onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/\s+/g, ''))} 
-                      className="w-full pl-14 pr-6 py-4 bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl outline-none font-black text-black text-base" 
+                      className="w-full pl-14 pr-6 py-4 bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl outline-none font-bold text-black text-base" 
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black text-black uppercase mb-3 ml-1">{t('emailAddress')}</label>
+                  <label className="block text-[10px] font-bold text-black uppercase mb-3 ml-1">{t('emailAddress')}</label>
                   <input 
                     type="text" 
                     value={user.email} 
                     disabled 
-                    className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl font-black text-zinc-400 opacity-60 text-base cursor-not-allowed" 
+                    className="w-full px-6 py-4 bg-zinc-50 border border-zinc-100 rounded-2xl font-bold text-zinc-400 opacity-60 text-base cursor-not-allowed" 
                   />
                 </div>
               </div>
               <div className="pt-4 flex flex-col sm:flex-row items-center gap-6">
-                <button type="submit" disabled={updating} className="w-full sm:w-auto bg-black text-white px-12 py-5 rounded-2xl font-black text-[10px] uppercase flex items-center justify-center gap-4 shadow-xl disabled:opacity-50">
+                <button type="submit" disabled={updating} className="w-full sm:w-auto bg-black text-white px-12 py-5 rounded-2xl font-bold text-[10px] uppercase flex items-center justify-center gap-4 shadow-xl disabled:opacity-50">
                   {updating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                   {t('saveProfile')}
                 </button>
-                {updateSuccess && <div className="flex items-center gap-3 text-emerald-600 font-black text-[10px] uppercase"><CheckCircle2 className="w-5 h-5" /> Saved!</div>}
+                {updateSuccess && <div className="flex items-center gap-3 text-emerald-600 font-bold text-[10px] uppercase"><CheckCircle2 className="w-5 h-5" /> Saved!</div>}
               </div>
               <div className="pt-10 border-t border-emerald-50">
-                <button type="button" onClick={() => setShowDeleteProfileConfirm(true)} className="text-red-600 font-black text-[10px] uppercase flex items-center gap-3 hover:text-red-700 transition">
+                <button type="button" onClick={() => setShowDeleteProfileConfirm(true)} className="text-red-600 font-bold text-[10px] uppercase flex items-center gap-3 hover:text-red-700 transition">
                   <Trash2 className="w-4 h-4" />
                   {t('deleteProfile')}
                 </button>
@@ -1010,11 +1010,11 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-3">
-                    <span className="px-2.5 py-1 bg-red-100 text-red-700 text-[9px] md:text-[10px] font-black uppercase rounded-full tracking-wider">
+                    <span className="px-2.5 py-1 bg-red-100 text-red-700 text-[9px] md:text-[10px] font-bold uppercase rounded-full tracking-wider">
                       SUPER ADMIN PANEL
                     </span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-sans font-black text-black mt-2">
+                  <h2 className="text-2xl md:text-3xl font-sans font-bold text-black mt-2">
                     {lang === 'bn' ? 'সুপার অ্যাডমিন সেটিংস' : 'Super Admin Settings'}
                   </h2>
                   <p className="text-zinc-500 font-bold text-xs mt-1">
@@ -1028,7 +1028,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                   <div className="flex items-center gap-3 bg-zinc-50 border border-zinc-100 rounded-2xl p-3 shadow-sm">
                     <div className="flex items-center gap-2">
                       <div className={`w-2 h-2 rounded-full ${adsenseEnabled ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-300'}`} />
-                      <span className="font-sans font-black text-[10px] md:text-xs uppercase text-zinc-700 tracking-wider">
+                      <span className="font-sans font-bold text-[10px] md:text-xs uppercase text-zinc-700 tracking-wider">
                         {lang === 'bn' ? 'গুগল বিজ্ঞাপন' : 'Google Ads'}
                       </span>
                     </div>
@@ -1043,7 +1043,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     </label>
                   </div>
 
-                  <div className="flex items-center gap-2 px-4 py-3 bg-emerald-50 text-emerald-800 rounded-2xl font-black text-[10px] md:text-xs uppercase tracking-wider shadow-sm">
+                  <div className="flex items-center gap-2 px-4 py-3 bg-emerald-50 text-emerald-800 rounded-2xl font-bold text-[10px] md:text-xs uppercase tracking-wider shadow-sm">
                     <Shield className="w-4 h-4 text-emerald-600" />
                     SECURE ACCESS
                   </div>
@@ -1055,10 +1055,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
               <div className="bg-white rounded-[1.5rem] p-6 border border-emerald-50 shadow-sm flex items-center justify-between">
                 <div>
-                  <p className="text-zinc-400 font-black text-[10px] uppercase tracking-wider">
+                  <p className="text-zinc-400 font-bold text-[10px] uppercase tracking-wider">
                     {lang === 'bn' ? 'মোট লিস্টিং' : 'Total Listings'}
                   </p>
-                  <p className="text-2xl md:text-3xl font-sans font-black text-black mt-1">
+                  <p className="text-2xl md:text-3xl font-sans font-bold text-black mt-1">
                     {allListings.length}
                   </p>
                 </div>
@@ -1069,10 +1069,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
               <div className="bg-white rounded-[1.5rem] p-6 border border-emerald-50 shadow-sm flex items-center justify-between">
                 <div>
-                  <p className="text-zinc-400 font-black text-[10px] uppercase tracking-wider">
+                  <p className="text-zinc-400 font-bold text-[10px] uppercase tracking-wider">
                     {lang === 'bn' ? 'মোট ব্যবহারকারী' : 'Total Users'}
                   </p>
-                  <p className="text-2xl md:text-3xl font-sans font-black text-black mt-1">
+                  <p className="text-2xl md:text-3xl font-sans font-bold text-black mt-1">
                     {allUsers.length || 1}
                   </p>
                 </div>
@@ -1083,10 +1083,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
               <div className="bg-white rounded-[1.5rem] p-6 border border-emerald-50 shadow-sm flex items-center justify-between">
                 <div>
-                  <p className="text-zinc-400 font-black text-[10px] uppercase tracking-wider">
+                  <p className="text-zinc-400 font-bold text-[10px] uppercase tracking-wider">
                     {lang === 'bn' ? 'মোট চ্যাট' : 'Total Chats'}
                   </p>
-                  <p className="text-2xl md:text-3xl font-sans font-black text-black mt-1">
+                  <p className="text-2xl md:text-3xl font-sans font-bold text-black mt-1">
                     {totalConvs}
                   </p>
                 </div>
@@ -1101,7 +1101,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
               <div className="flex border-b border-zinc-100 pb-2 overflow-x-auto no-scrollbar gap-6 md:gap-8">
                 <button
                   onClick={() => { setAdminTab('listings'); setAdminSearch(''); }}
-                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                  className={`font-bold text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
                     adminTab === 'listings' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
                   }`}
                 >
@@ -1110,7 +1110,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                 </button>
                 <button
                   onClick={() => { setAdminTab('users'); setAdminSearch(''); }}
-                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                  className={`font-bold text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
                     adminTab === 'users' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
                   }`}
                 >
@@ -1119,7 +1119,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                 </button>
                 <button
                   onClick={() => { setAdminTab('locations'); setAdminSearch(''); }}
-                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                  className={`font-bold text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
                     adminTab === 'locations' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
                   }`}
                 >
@@ -1128,7 +1128,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                 </button>
                 <button
                   onClick={() => { setAdminTab('seo'); setAdminSearch(''); }}
-                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                  className={`font-bold text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
                     adminTab === 'seo' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
                   }`}
                 >
@@ -1137,7 +1137,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                 </button>
                 <button
                   onClick={() => { setAdminTab('secrets'); setAdminSearch(''); }}
-                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                  className={`font-bold text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
                     adminTab === 'secrets' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
                   }`}
                 >
@@ -1146,7 +1146,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                 </button>
                 <button
                   onClick={() => { setAdminTab('adsense'); setAdminSearch(''); }}
-                  className={`font-black text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
+                  className={`font-bold text-xs uppercase pb-3 transition relative flex items-center gap-2 ${
                     adminTab === 'adsense' ? 'text-black border-b-2 border-black' : 'text-zinc-400 hover:text-black'
                   }`}
                 >
@@ -1194,11 +1194,11 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           <table className="w-full text-left border-collapse text-zinc-800">
                             <thead>
                               <tr className="border-b border-zinc-100">
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'বইয়ের বিবরণ' : 'Book Info'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'শ্রেণী' : 'Class'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'মূল্য' : 'Price'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'মালিক' : 'Seller'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400 text-right">{lang === 'bn' ? 'অ্যাকশন' : 'Action'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'বইয়ের বিবরণ' : 'Book Info'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'শ্রেণী' : 'Class'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'মূল্য' : 'Price'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'মালিক' : 'Seller'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400 text-right">{lang === 'bn' ? 'অ্যাকশন' : 'Action'}</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -1219,13 +1219,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                           )}
                                         </div>
                                         <div className="min-w-0">
-                                          <p className="font-black text-black text-sm truncate">{book.title}</p>
+                                          <p className="font-bold text-black text-sm truncate">{book.title}</p>
                                           <p className="text-[10px] text-zinc-400 font-medium truncate mt-0.5">{book.locationText}</p>
                                         </div>
                                       </div>
                                     </td>
                                     <td className="py-4 text-xs font-bold text-zinc-700">{book.classLevel}</td>
-                                    <td className="py-4 text-sm font-black text-emerald-600">
+                                    <td className="py-4 text-sm font-bold text-emerald-600">
                                       {book.price === 0 ? (lang === 'bn' ? 'ফ্রি' : 'FREE') : `৳${book.price}`}
                                     </td>
                                     <td className="py-4 text-xs font-medium text-zinc-500 max-w-[120px] truncate">
@@ -1265,11 +1265,11 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           <table className="w-full text-left border-collapse text-zinc-800">
                             <thead>
                               <tr className="border-b border-zinc-100">
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'ব্যবহারকারী' : 'User'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'ইউজারনেম' : 'Username'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'ইমেইল এড্রেস' : 'Email Address'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400 text-center">{lang === 'bn' ? 'বই লিস্টিং' : 'Listed Books'}</th>
-                                <th className="pb-3 text-[10px] font-black uppercase text-zinc-400 text-right">{lang === 'bn' ? 'রেজিস্ট্রেশন' : 'Registered'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'ব্যবহারকারী' : 'User'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'ইউজারনেম' : 'Username'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'ইমেইল এড্রেস' : 'Email Address'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400 text-center">{lang === 'bn' ? 'বই লিস্টিং' : 'Listed Books'}</th>
+                                <th className="pb-3 text-[10px] font-bold uppercase text-zinc-400 text-right">{lang === 'bn' ? 'রেজিস্ট্রেশন' : 'Registered'}</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -1286,7 +1286,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                     <tr key={u.uid} className="border-b border-zinc-50 hover:bg-zinc-50/50 transition">
                                       <td className="py-4 pr-3">
                                         <div className="flex items-center gap-3">
-                                          <div className="w-8 h-8 bg-emerald-100 rounded-full overflow-hidden flex items-center justify-center font-black text-xs text-black border border-white">
+                                          <div className="w-8 h-8 bg-emerald-100 rounded-full overflow-hidden flex items-center justify-center font-bold text-xs text-black border border-white">
                                             {u.photoURL ? (
                                               <img src={u.photoURL} alt={u.displayName} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                                             ) : (
@@ -1294,10 +1294,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                             )}
                                           </div>
                                           <div>
-                                            <p className="font-black text-black text-sm flex items-center gap-1.5">
+                                            <p className="font-bold text-black text-sm flex items-center gap-1.5">
                                               {u.displayName || 'Anonymous'}
                                               {u.email === 'jhshifat21@gmail.com' && (
-                                                <span className="px-1.5 py-0.5 bg-red-100 text-red-700 text-[8px] font-black uppercase rounded">SUPER</span>
+                                                <span className="px-1.5 py-0.5 bg-red-100 text-red-700 text-[8px] font-bold uppercase rounded">SUPER</span>
                                               )}
                                             </p>
                                           </div>
@@ -1308,7 +1308,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                       </td>
                                       <td className="py-4 text-xs font-semibold text-zinc-700">{u.email}</td>
                                       <td className="py-4 text-center">
-                                        <span className={`inline-block px-2.5 py-1 rounded-lg text-xs font-black ${
+                                        <span className={`inline-block px-2.5 py-1 rounded-lg text-xs font-bold ${
                                           listedCount > 0 ? 'bg-emerald-50 text-emerald-800' : 'bg-zinc-50 text-zinc-400'
                                         }`}>
                                           {listedCount}
@@ -1332,14 +1332,14 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     <div className="space-y-6">
                       <div className="bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                         <div className="space-y-1 max-w-xl">
-                          <h4 className="font-black text-black text-base">{t('seoTools')}</h4>
+                          <h4 className="font-bold text-black text-base">{t('seoTools')}</h4>
                           <p className="text-zinc-500 font-medium text-xs leading-relaxed">
                             {t('sitemapDesc')}
                           </p>
                         </div>
                         <button
                           onClick={handleCopySitemap}
-                          className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl font-black text-xs uppercase shadow-lg hover:opacity-90 transition flex-shrink-0"
+                          className="flex items-center gap-3 bg-black text-white px-6 py-3.5 rounded-xl font-bold text-xs uppercase shadow-lg hover:opacity-90 transition flex-shrink-0"
                         >
                           <Copy className="w-4 h-4" />
                           {copiedSitemap ? (lang === 'bn' ? 'কপি হয়েছে!' : 'COPIED!') : t('copySitemap')}
@@ -1348,7 +1348,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
                       <div className="border border-zinc-100 rounded-2xl overflow-hidden shadow-sm">
                         <div className="bg-zinc-50 px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
-                          <span className="font-black text-zinc-500 text-[10px] uppercase">sitemap.xml</span>
+                          <span className="font-bold text-zinc-500 text-[10px] uppercase">sitemap.xml</span>
                           <span className="text-[10px] bg-emerald-50 text-emerald-800 font-bold px-2 py-0.5 rounded">XML Schema 0.9</span>
                         </div>
                         <div className="bg-zinc-950 p-6 font-mono text-xs text-zinc-300 overflow-x-auto whitespace-pre leading-relaxed max-h-[350px] no-scrollbar">
@@ -1364,7 +1364,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       {/* Search Filter Availability Config */}
                       <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                         <div className="space-y-1">
-                          <h4 className="font-sans font-black text-black text-base">
+                          <h4 className="font-sans font-bold text-black text-base">
                             {lang === 'bn' ? 'সার্চ ফিল্টারিং অপশনস নিয়ন্ত্রণ' : 'Search Filtering Options Control'}
                           </h4>
                           <p className="text-zinc-500 font-bold text-xs">
@@ -1377,7 +1377,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           <div className="flex flex-wrap items-center gap-6 mt-4">
                             {/* Division Switch */}
                             <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-zinc-100 shadow-sm">
-                              <span className="text-xs font-black uppercase text-zinc-500">
+                              <span className="text-xs font-bold uppercase text-zinc-500">
                                 {lang === 'bn' ? 'বিভাগ' : 'Division'}
                               </span>
                               <label className="relative inline-flex items-center cursor-pointer">
@@ -1393,7 +1393,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
                             {/* District Switch */}
                             <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-zinc-100 shadow-sm">
-                              <span className="text-xs font-black uppercase text-zinc-500">
+                              <span className="text-xs font-bold uppercase text-zinc-500">
                                 {lang === 'bn' ? 'জেলা' : 'District'}
                               </span>
                               <label className="relative inline-flex items-center cursor-pointer">
@@ -1409,7 +1409,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
                             {/* Upazila Switch */}
                             <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-zinc-100 shadow-sm">
-                              <span className="text-xs font-black uppercase text-zinc-500">
+                              <span className="text-xs font-bold uppercase text-zinc-500">
                                 {lang === 'bn' ? 'উপজেলা' : 'Upazila'}
                               </span>
                               <label className="relative inline-flex items-center cursor-pointer">
@@ -1425,7 +1425,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
                             {/* Union Switch */}
                             <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-zinc-100 shadow-sm">
-                              <span className="text-xs font-black uppercase text-zinc-500">
+                              <span className="text-xs font-bold uppercase text-zinc-500">
                                 {lang === 'bn' ? 'ইউনিয়ন' : 'Union'}
                               </span>
                               <label className="relative inline-flex items-center cursor-pointer">
@@ -1444,13 +1444,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <div className="flex flex-col items-end gap-2 flex-shrink-0 w-full md:w-auto">
                           <button
                             onClick={handleSaveLocationSwitches}
-                            className="w-full md:w-auto flex items-center justify-center gap-2 bg-accent text-white px-6 py-3.5 rounded-xl font-black text-xs uppercase shadow-lg hover:opacity-90 transition active:scale-95"
+                            className="w-full md:w-auto flex items-center justify-center gap-2 bg-accent text-white px-6 py-3.5 rounded-xl font-bold text-xs uppercase shadow-lg hover:opacity-90 transition active:scale-95"
                           >
                             <Save className="w-4 h-4" />
                             {lang === 'bn' ? 'কনফিগারেশন সেভ করুন' : 'SAVE CONFIG'}
                           </button>
                           {showSwitchesSaved && (
-                            <span className="text-[10px] text-emerald-600 font-black bg-emerald-50 px-2.5 py-1.5 rounded-lg flex items-center gap-1 self-center md:self-end animate-in fade-in duration-200">
+                            <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1.5 rounded-lg flex items-center gap-1 self-center md:self-end animate-in fade-in duration-200">
                               <CheckCircle2 className="w-3.5 h-3.5" />
                               {lang === 'bn' ? 'কনফিগারেশন সেভ হয়েছে!' : 'Configuration Saved!'}
                             </span>
@@ -1464,7 +1464,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <button
                           type="button"
                           onClick={() => { setLocType('division'); setLocationsSearch(''); }}
-                          className={`flex-1 py-2.5 rounded-xl font-black text-xs uppercase transition-all ${
+                          className={`flex-1 py-2.5 rounded-xl font-bold text-xs uppercase transition-all ${
                             locType === 'division' ? 'bg-white text-black shadow-sm' : 'text-zinc-500 hover:text-zinc-800'
                           }`}
                         >
@@ -1473,7 +1473,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <button
                           type="button"
                           onClick={() => { setLocType('district'); setLocationsSearch(''); }}
-                          className={`flex-1 py-2.5 rounded-xl font-black text-xs uppercase transition-all ${
+                          className={`flex-1 py-2.5 rounded-xl font-bold text-xs uppercase transition-all ${
                             locType === 'district' ? 'bg-white text-black shadow-sm' : 'text-zinc-500 hover:text-zinc-800'
                           }`}
                         >
@@ -1482,7 +1482,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <button
                           type="button"
                           onClick={() => { setLocType('upazila'); setLocationsSearch(''); }}
-                          className={`flex-1 py-2.5 rounded-xl font-black text-xs uppercase transition-all ${
+                          className={`flex-1 py-2.5 rounded-xl font-bold text-xs uppercase transition-all ${
                             locType === 'upazila' ? 'bg-white text-black shadow-sm' : 'text-zinc-500 hover:text-zinc-800'
                           }`}
                         >
@@ -1491,7 +1491,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <button
                           type="button"
                           onClick={() => { setLocType('union'); setLocationsSearch(''); }}
-                          className={`flex-1 py-2.5 rounded-xl font-black text-xs uppercase transition-all ${
+                          className={`flex-1 py-2.5 rounded-xl font-bold text-xs uppercase transition-all ${
                             locType === 'union' ? 'bg-white text-black shadow-sm' : 'text-zinc-500 hover:text-zinc-800'
                           }`}
                         >
@@ -1503,7 +1503,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       <button
                         type="button"
                         onClick={() => setExplorerModal({ isOpen: true })}
-                        className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white hover:opacity-90 rounded-xl text-xs font-black uppercase transition-all shadow-md active:scale-95"
+                        className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white hover:opacity-90 rounded-xl text-xs font-bold uppercase transition-all shadow-md active:scale-95"
                       >
                         <Plus className="w-4 h-4" />
                         {lang === 'bn' ? 'স্থান যোগ করুন' : 'Add Location'}
@@ -1541,7 +1541,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <div className="w-full">
                           <div className="border border-zinc-100 rounded-[1.5rem] overflow-hidden bg-white shadow-sm">
                             <div className="bg-zinc-50 px-6 py-4 border-b border-zinc-100 flex items-center justify-between">
-                              <span className="font-black text-zinc-500 text-[10px] uppercase">
+                              <span className="font-bold text-zinc-500 text-[10px] uppercase">
                                 {locType === 'division' 
                                   ? (lang === 'bn' ? 'মোট বিভাগ' : 'All Divisions') 
                                   : locType === 'district' 
@@ -1578,7 +1578,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                       title={lang === 'bn' ? 'জেলাগুলো দেখতে ক্লিক করুন' : 'Click to view districts'}
                                     >
                                       <div>
-                                        <p className="font-black text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
+                                        <p className="font-bold text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
                                           {d.name}
                                           <span className="text-[9px] text-zinc-400 font-bold group-hover:text-accent transition-colors flex items-center gap-0.5">
                                             ({distList.filter(dist => dist.divisionId === d.id).length} {lang === 'bn' ? 'জেলা' : 'Districts'}) <ChevronRight className="w-3 h-3" />
@@ -1618,7 +1618,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                         title={lang === 'bn' ? 'উপজেলাগুলো দেখতে ক্লিক করুন' : 'Click to view upazilas'}
                                       >
                                         <div>
-                                          <p className="font-black text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
+                                          <p className="font-bold text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
                                             {d.name}
                                             <span className="text-[9px] text-zinc-400 font-bold group-hover:text-accent transition-colors flex items-center gap-0.5">
                                               ({upaList.filter(upa => upa.districtId === d.id).length} {lang === 'bn' ? 'উপজেলা' : 'Upazilas'}) <ChevronRight className="w-3 h-3" />
@@ -1626,7 +1626,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                           </p>
                                           <p className="text-zinc-500 font-bold text-xs mt-0.5">{d.nameBn}</p>
                                           <div className="flex items-center gap-2 mt-1">
-                                            <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-800 text-[9px] font-black uppercase rounded">
+                                            <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-800 text-[9px] font-bold uppercase rounded">
                                               {parentDiv ? (lang === 'bn' ? parentDiv.nameBn : parentDiv.name) : d.divisionId}
                                             </span>
                                             <span className="text-[9px] font-mono text-zinc-400 uppercase">ID: {d.id}</span>
@@ -1665,7 +1665,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                         title={lang === 'bn' ? 'ইউনিয়নগুলো দেখতে ক্লিক করুন' : 'Click to view unions'}
                                       >
                                         <div>
-                                          <p className="font-black text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
+                                          <p className="font-bold text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
                                             {u.name}
                                             <span className="text-[9px] text-zinc-400 font-bold group-hover:text-accent transition-colors flex items-center gap-0.5">
                                               ({unionList.filter(un => un.upazilaId === u.id).length} {lang === 'bn' ? 'ইউনিয়ন' : 'Unions'}) <ChevronRight className="w-3 h-3" />
@@ -1674,12 +1674,12 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                           <p className="text-zinc-500 font-bold text-xs mt-0.5">{u.nameBn}</p>
                                           <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
                                             {parentDist && (
-                                              <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-800 text-[9px] font-black uppercase rounded">
+                                              <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-800 text-[9px] font-bold uppercase rounded">
                                                 {lang === 'bn' ? parentDist.nameBn : parentDist.name}
                                               </span>
                                             )}
                                             {parentDiv && (
-                                              <span className="px-1.5 py-0.5 bg-zinc-100 text-zinc-600 text-[9px] font-black uppercase rounded">
+                                              <span className="px-1.5 py-0.5 bg-zinc-100 text-zinc-600 text-[9px] font-bold uppercase rounded">
                                                 {lang === 'bn' ? parentDiv.nameBn : parentDiv.name}
                                               </span>
                                             )}
@@ -1719,7 +1719,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                         title={lang === 'bn' ? 'বিশদ পথ দেখতে ক্লিক করুন' : 'Click to view path'}
                                       >
                                         <div>
-                                          <p className="font-black text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
+                                          <p className="font-bold text-black text-sm group-hover:text-accent transition-colors flex items-center gap-2">
                                             {un.name}
                                             <span className="text-[9px] text-zinc-400 font-bold group-hover:text-accent transition-colors flex items-center gap-0.5">
                                               ({lang === 'bn' ? 'বিশদ দেখুন' : 'View Path'} <ChevronRight className="w-3 h-3" />)
@@ -1728,12 +1728,12 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                           <p className="text-zinc-500 font-bold text-xs mt-0.5">{un.nameBn}</p>
                                           <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
                                             {parentUpa && (
-                                              <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-800 text-[9px] font-black uppercase rounded">
+                                              <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-800 text-[9px] font-bold uppercase rounded">
                                                 {lang === 'bn' ? parentUpa.nameBn : parentUpa.name}
                                               </span>
                                             )}
                                             {parentDist && (
-                                              <span className="px-1.5 py-0.5 bg-zinc-100 text-zinc-600 text-[9px] font-black uppercase rounded">
+                                              <span className="px-1.5 py-0.5 bg-zinc-100 text-zinc-600 text-[9px] font-bold uppercase rounded">
                                                 {lang === 'bn' ? parentDist.nameBn : parentDist.name}
                                               </span>
                                             )}
@@ -1776,7 +1776,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     <div className="space-y-6 animate-in fade-in duration-300">
                       <div className="bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                         <div className="space-y-1 max-w-xl">
-                          <h4 className="font-black text-black text-base">
+                          <h4 className="font-bold text-black text-base">
                             {lang === 'bn' ? 'সিক্রেট কোড ভল্ট' : 'Secret Codes Vault'}
                           </h4>
                           <p className="text-zinc-500 font-medium text-xs leading-relaxed">
@@ -1785,7 +1785,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                               : 'Securely store and manage your application API keys, passcodes, and environment secrets.'}
                           </p>
                         </div>
-                        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 text-emerald-800 rounded-xl font-black text-xs uppercase tracking-wider">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 text-emerald-800 rounded-xl font-bold text-xs uppercase tracking-wider">
                           <Shield className="w-4 h-4 text-emerald-600" />
                           {lang === 'bn' ? 'নিরাপদ স্টোরেজ' : 'SECURE VAULT'}
                         </div>
@@ -1793,7 +1793,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
                       {/* Add/Edit Secret Form */}
                       <div className="bg-zinc-50 border border-zinc-100 rounded-3xl p-6 space-y-4">
-                        <h4 className="font-sans font-black text-black text-sm uppercase tracking-wider">
+                        <h4 className="font-sans font-bold text-black text-sm uppercase tracking-wider">
                           {editingSecretId 
                             ? (lang === 'bn' ? 'সিক্রেট পরিবর্তন করুন' : 'Edit Secret Key') 
                             : (lang === 'bn' ? 'নতুন সিক্রেট যোগ করুন' : 'Add New Secret Key')}
@@ -1852,7 +1852,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           )}
                           <button
                             onClick={handleSaveSecret}
-                            className="px-6 py-2.5 bg-black text-white rounded-xl font-black text-xs uppercase flex items-center gap-2 hover:opacity-95 shadow-md active:scale-95 transition"
+                            className="px-6 py-2.5 bg-black text-white rounded-xl font-bold text-xs uppercase flex items-center gap-2 hover:opacity-95 shadow-md active:scale-95 transition"
                           >
                             <Save className="w-4 h-4" />
                             {editingSecretId 
@@ -1868,10 +1868,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           <table className="w-full text-left border-collapse">
                             <thead>
                               <tr className="bg-zinc-50 border-b border-zinc-100">
-                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'সিক্রেট কী' : 'Secret Key'}</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'মান' : 'Value'}</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400">{lang === 'bn' ? 'বিবরণ' : 'Description'}</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase text-zinc-400 text-right">{lang === 'bn' ? 'অ্যাকশন' : 'Actions'}</th>
+                                <th className="px-6 py-4 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'সিক্রেট কী' : 'Secret Key'}</th>
+                                <th className="px-6 py-4 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'মান' : 'Value'}</th>
+                                <th className="px-6 py-4 text-[10px] font-bold uppercase text-zinc-400">{lang === 'bn' ? 'বিবরণ' : 'Description'}</th>
+                                <th className="px-6 py-4 text-[10px] font-bold uppercase text-zinc-400 text-right">{lang === 'bn' ? 'অ্যাকশন' : 'Actions'}</th>
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-zinc-50">
@@ -1940,7 +1940,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     <div className="space-y-6 animate-in fade-in duration-300">
                       <div className="bg-[#f0fdf4] border border-emerald-100/50 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                         <div className="space-y-1 max-w-xl">
-                          <h4 className="font-black text-black text-base">
+                          <h4 className="font-bold text-black text-base">
                             {lang === 'bn' ? 'গুটল অ্যাডসেন্স ইন্টিগ্রেশন' : 'Google AdSense Integration'}
                           </h4>
                           <p className="text-zinc-500 font-medium text-xs leading-relaxed">
@@ -1949,7 +1949,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                               : 'Paste your Google AdSense script code below. It will automatically load and display ads inside the dedicated ad banners across the marketplace.'}
                           </p>
                         </div>
-                        <div className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-800 rounded-xl font-black text-xs uppercase tracking-wider">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-800 rounded-xl font-bold text-xs uppercase tracking-wider">
                           <BarChart3 className="w-4 h-4 text-amber-600" />
                           {lang === 'bn' ? 'উপার্জন' : 'MONETIZATION'}
                         </div>
@@ -1959,7 +1959,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         {/* Settings Form */}
                         <div className="lg:col-span-2 bg-zinc-50 border border-zinc-100 rounded-3xl p-6 space-y-4">
                           <div className="flex items-center justify-between">
-                            <h4 className="font-sans font-black text-black text-sm uppercase tracking-wider">
+                            <h4 className="font-sans font-bold text-black text-sm uppercase tracking-wider">
                               {lang === 'bn' ? 'বিজ্ঞাপন কোড বসান' : 'Paste AdSense Code'}
                             </h4>
                             {adsenseCode && (
@@ -1976,7 +1976,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           {/* AdSense Switch Toggle */}
                           <div className="flex items-center justify-between p-4 bg-white border border-zinc-100 rounded-2xl shadow-sm">
                             <div className="space-y-0.5">
-                              <span className="block text-xs font-black text-black uppercase tracking-wider">
+                              <span className="block text-xs font-bold text-black uppercase tracking-wider">
                                 {lang === 'bn' ? 'গুগল অ্যাডসেন্স অন / অফ' : 'Google AdSense On / Off'}
                               </span>
                               <span className="block text-[10px] text-zinc-400 font-bold">
@@ -2027,7 +2027,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                                 handleSaveAdsense(adsenseCode);
                                 alert(lang === 'bn' ? 'অ্যাডসেন্স কোড সফলভাবে সংরক্ষণ করা হয়েছে!' : 'AdSense code saved successfully!');
                               }}
-                              className="px-6 py-2.5 bg-black text-white rounded-xl font-black text-xs uppercase flex items-center gap-2 hover:opacity-95 shadow-md active:scale-95 transition"
+                              className="px-6 py-2.5 bg-black text-white rounded-xl font-bold text-xs uppercase flex items-center gap-2 hover:opacity-95 shadow-md active:scale-95 transition"
                             >
                               <Save className="w-4 h-4" />
                               {lang === 'bn' ? 'কোড সংরক্ষণ করুন' : 'Save AdSense Code'}
@@ -2038,7 +2038,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         {/* Live Sandbox Preview */}
                         <div className="bg-white border border-zinc-100 rounded-3xl p-6 space-y-4 shadow-xl shadow-emerald-900/5 flex flex-col justify-between">
                           <div className="space-y-1">
-                            <h4 className="font-sans font-black text-black text-sm uppercase tracking-wider">
+                            <h4 className="font-sans font-bold text-black text-sm uppercase tracking-wider">
                               {lang === 'bn' ? 'লাইভ ব্যানার প্রিভিউ' : 'Live Banner Preview'}
                             </h4>
                             <p className="text-zinc-400 font-bold text-[10px] leading-relaxed">
@@ -2051,7 +2051,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                           <div className="flex-grow flex items-center justify-center my-4 border-2 border-dashed border-zinc-100 rounded-2xl bg-zinc-50 p-3 min-h-[150px]">
                             {!adsenseEnabled ? (
                               <div className="text-center space-y-2">
-                                <div className="text-zinc-300 font-black text-3xl">⏸</div>
+                                <div className="text-zinc-300 font-bold text-3xl">⏸</div>
                                 <p className="text-zinc-400 font-bold text-xs">
                                   {lang === 'bn' ? 'বিজ্ঞাপন বন্ধ রয়েছে' : 'Google Ads are OFF'}
                                 </p>
@@ -2083,7 +2083,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                               </div>
                             ) : (
                               <div className="text-center space-y-2">
-                                <div className="text-zinc-300 font-black text-3xl">∅</div>
+                                <div className="text-zinc-300 font-bold text-3xl">∅</div>
                                 <p className="text-zinc-400 font-bold text-xs">
                                   {lang === 'bn' ? 'কোনো কোড নেই' : 'No Code Active'}
                                 </p>
@@ -2116,8 +2116,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setDeletingId(null)}></div>
           <div className="relative bg-white rounded-[2rem] shadow-2xl w-full max-sm p-8 text-center animate-in zoom-in">
              <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6"><Trash2 className="w-8 h-8 text-red-500" /></div>
-             <h3 className="text-xl font-black text-black mb-3">Delete this ad?</h3>
-             <div className="space-y-4"><button onClick={confirmDelete} className="w-full bg-red-600 text-white py-4 rounded-2xl font-black uppercase text-[10px]">Confirm Delete</button><button onClick={() => setDeletingId(null)} className="w-full bg-emerald-50 text-black py-4 rounded-2xl font-black uppercase text-[10px]">Cancel</button></div>
+             <h3 className="text-xl font-bold text-black mb-3">Delete this ad?</h3>
+             <div className="space-y-4"><button onClick={confirmDelete} className="w-full bg-red-600 text-white py-4 rounded-2xl font-bold uppercase text-[10px]">Confirm Delete</button><button onClick={() => setDeletingId(null)} className="w-full bg-emerald-50 text-black py-4 rounded-2xl font-bold uppercase text-[10px]">Cancel</button></div>
           </div>
         </div>
       )}
@@ -2126,9 +2126,9 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setShowDeleteProfileConfirm(false)}></div>
           <div className="relative bg-white rounded-[2rem] shadow-2xl w-full max-w-md p-8 md:p-12 text-center animate-in zoom-in">
              <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6"><AlertTriangle className="w-8 h-8 text-red-500" /></div>
-             <h3 className="text-2xl font-black text-black mb-4">{t('confirmDeleteProfile')}</h3>
+             <h3 className="text-2xl font-bold text-black mb-4">{t('confirmDeleteProfile')}</h3>
              <p className="text-zinc-500 font-bold text-sm mb-10">{t('deleteProfileWarning')}</p>
-             <div className="flex flex-col gap-4"><button onClick={handleDeleteProfile} disabled={deletingProfile} className="w-full bg-red-600 text-white py-5 rounded-2xl font-black text-[10px] uppercase flex items-center justify-center gap-3">{deletingProfile ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}Confirm Deletion</button><button onClick={() => setShowDeleteProfileConfirm(false)} className="w-full bg-zinc-100 text-black py-5 rounded-2xl font-black text-[10px] uppercase">Go Back</button></div>
+             <div className="flex flex-col gap-4"><button onClick={handleDeleteProfile} disabled={deletingProfile} className="w-full bg-red-600 text-white py-5 rounded-2xl font-bold text-[10px] uppercase flex items-center justify-center gap-3">{deletingProfile ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}Confirm Deletion</button><button onClick={() => setShowDeleteProfileConfirm(false)} className="w-full bg-zinc-100 text-black py-5 rounded-2xl font-bold text-[10px] uppercase">Go Back</button></div>
           </div>
         </div>
       )}
@@ -2181,7 +2181,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg md:text-xl font-black text-black leading-tight">
+                    <h3 className="text-lg md:text-xl font-bold text-black leading-tight">
                       {lang === 'bn' ? 'স্থান অন্বেষণকারী' : 'Location Explorer'}
                     </h3>
                     <p className="text-zinc-400 text-xs font-bold uppercase tracking-wider mt-0.5">
@@ -2202,7 +2202,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       setAddLocNameEn('');
                       setAddLocNameBn('');
                     }}
-                    className="flex items-center gap-1.5 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black uppercase transition shadow-sm active:scale-95"
+                    className="flex items-center gap-1.5 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase transition shadow-sm active:scale-95"
                   >
                     <Plus className="w-4 h-4" />
                     <span>
@@ -2271,13 +2271,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     placeholder={lang === 'bn' ? `এখানে খুঁজুন...` : `Search here...`}
                     value={explorerSearch}
                     onChange={(e) => setExplorerSearch(e.target.value)}
-                    className="w-full pl-11 pr-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-black outline-none focus:bg-white focus:border-accent transition-all"
+                    className="w-full pl-11 pr-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-bold outline-none focus:bg-white focus:border-accent transition-all"
                   />
                 </div>
                 {explorerSearch && (
                   <button 
                     onClick={() => setExplorerSearch('')} 
-                    className="text-zinc-500 hover:text-black font-black text-[10px] uppercase bg-zinc-100 px-3 py-2 rounded-lg transition"
+                    className="text-zinc-500 hover:text-black font-bold text-[10px] uppercase bg-zinc-100 px-3 py-2 rounded-lg transition"
                   >
                     {lang === 'bn' ? 'মুছুন' : 'Clear'}
                   </button>
@@ -2286,7 +2286,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
               {/* CURRENT LEVEL HEADING */}
               <div className="px-6 py-3.5 md:px-8 bg-zinc-50/50 border-b border-zinc-100 flex items-center justify-between">
-                <span className="text-[10px] font-black text-zinc-400 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
                   {lang === 'bn' ? levelTitleBn : levelTitleEn}
                 </span>
                 <span className="text-[10px] bg-emerald-50 text-emerald-800 font-bold px-2.5 py-1 rounded-full">
@@ -2347,7 +2347,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         >
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <h4 className="font-black text-black text-sm md:text-base leading-tight group-hover:text-emerald-600 transition-colors">
+                              <h4 className="font-bold text-black text-sm md:text-base leading-tight group-hover:text-emerald-600 transition-colors">
                                 {item.name}
                               </h4>
                               <span className="text-[10px] bg-zinc-50 text-zinc-500 font-bold px-1.5 py-0.5 rounded text-center leading-none">
@@ -2386,7 +2386,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
                             {currentLevel !== 'union' && (
-                              <button className="flex items-center gap-1 pl-2 pr-3 py-1.5 md:py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg text-[10px] font-black uppercase transition ml-1">
+                              <button className="flex items-center gap-1 pl-2 pr-3 py-1.5 md:py-2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-lg text-[10px] font-bold uppercase transition ml-1">
                                 <span>{lang === 'bn' ? 'ভিতরে' : 'Inside'}</span>
                                 <ChevronRight className="w-3 h-3" />
                               </button>
@@ -2431,7 +2431,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <Trash2 className="w-4 h-4" />
                       </div>
                       <div>
-                        <h4 className="font-black text-black text-base">
+                        <h4 className="font-bold text-black text-base">
                           {lang === 'bn' ? 'স্থান মুছে ফেলুন' : 'Delete Location'}
                         </h4>
                         <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">
@@ -2455,7 +2455,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
                   <form onSubmit={handleExplorerDeleteLocation} className="space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">
                         {lang === 'bn' ? 'CONFIRM টাইপ করুন' : 'Type CONFIRM to delete'} <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -2464,7 +2464,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         placeholder="CONFIRM"
                         value={deleteConfirmText}
                         onChange={(e) => setDeleteConfirmText(e.target.value)}
-                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-black outline-none focus:bg-white focus:border-red-300 transition-all text-black"
+                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-bold outline-none focus:bg-white focus:border-red-300 transition-all text-black"
                       />
                     </div>
 
@@ -2472,14 +2472,14 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       <button
                         type="button"
                         onClick={() => setDeleteLocModal(prev => ({ ...prev, isOpen: false }))}
-                        className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-black uppercase transition text-center font-bold"
+                        className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-bold uppercase transition text-center font-bold"
                       >
                         {lang === 'bn' ? 'বাতিল' : 'Cancel'}
                       </button>
                       <button
                         type="submit"
                         disabled={deleteConfirmText !== 'CONFIRM'}
-                        className="flex-1 py-3 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white rounded-xl text-xs font-black uppercase transition text-center shadow-md active:scale-95 flex items-center justify-center gap-2"
+                        className="flex-1 py-3 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold uppercase transition text-center shadow-md active:scale-95 flex items-center justify-center gap-2"
                       >
                         <Trash2 className="w-4 h-4" />
                         {lang === 'bn' ? 'মুছে ফেলুন' : 'Delete'}
@@ -2501,7 +2501,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <Edit2 className="w-4 h-4" />
                       </div>
                       <div>
-                        <h4 className="font-black text-black text-base">
+                        <h4 className="font-bold text-black text-base">
                           {lang === 'bn' ? 'স্থান সম্পাদনা করুন' : 'Edit Location'}
                         </h4>
                         <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">
@@ -2520,7 +2520,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                   <form onSubmit={handleExplorerEditLocation} className="space-y-4">
                     {/* English Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">
                         {lang === 'bn' ? 'ইংরেজি নাম' : 'English Name'} <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -2528,13 +2528,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         required
                         value={editLocNameEn}
                         onChange={(e) => setEditLocNameEn(e.target.value)}
-                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-black outline-none focus:bg-white focus:border-accent transition-all text-black"
+                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-bold outline-none focus:bg-white focus:border-accent transition-all text-black"
                       />
                     </div>
 
                     {/* Bangla Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">
                         {lang === 'bn' ? 'বাংলা নাম' : 'Bangla Name'} <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -2542,7 +2542,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         required
                         value={editLocNameBn}
                         onChange={(e) => setEditLocNameBn(e.target.value)}
-                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-black outline-none focus:bg-white focus:border-accent transition-all text-black"
+                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-bold outline-none focus:bg-white focus:border-accent transition-all text-black"
                       />
                     </div>
 
@@ -2551,13 +2551,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       <button
                         type="button"
                         onClick={() => setEditLocModal(prev => ({ ...prev, isOpen: false }))}
-                        className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-black uppercase transition text-center font-bold"
+                        className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-bold uppercase transition text-center font-bold"
                       >
                         {lang === 'bn' ? 'বাতিল' : 'Cancel'}
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black uppercase transition text-center shadow-md active:scale-95 flex items-center justify-center gap-2"
+                        className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase transition text-center shadow-md active:scale-95 flex items-center justify-center gap-2"
                       >
                         <Save className="w-4 h-4" />
                         {lang === 'bn' ? 'সেভ করুন' : 'Save'}
@@ -2579,7 +2579,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         <Plus className="w-4 h-4" />
                       </div>
                       <div>
-                        <h4 className="font-black text-black text-base">
+                        <h4 className="font-bold text-black text-base">
                           {lang === 'bn' ? 'নতুন স্থান যোগ করুন' : 'Add New Location'}
                         </h4>
                         <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">
@@ -2629,7 +2629,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
 
                     {/* English Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">
                         {lang === 'bn' ? 'ইংরেজি নাম (কমা বা নিউলাইন দিয়ে একাধিক লিখতে পারেন)' : 'English Name(s) (separate with comma or newline)'}
                       </label>
                       <textarea
@@ -2642,13 +2642,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         }
                         value={addLocNameEn}
                         onChange={(e) => setAddLocNameEn(e.target.value)}
-                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-black outline-none focus:bg-white focus:border-accent transition-all text-black resize-none"
+                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-bold outline-none focus:bg-white focus:border-accent transition-all text-black resize-none"
                       />
                     </div>
 
                     {/* Bangla Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-black text-zinc-400 uppercase ml-1 tracking-wider">
+                      <label className="text-[10px] font-bold text-zinc-400 uppercase ml-1 tracking-wider">
                         {lang === 'bn' ? 'বাংলা নাম (ইংরেজি নামের ক্রমানুসারে কমা বা নিউলাইন দিয়ে লিখুন)' : 'Bangla Name(s) (in the same order, separated with comma or newline)'}
                       </label>
                       <textarea
@@ -2661,7 +2661,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                         }
                         value={addLocNameBn}
                         onChange={(e) => setAddLocNameBn(e.target.value)}
-                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-black outline-none focus:bg-white focus:border-accent transition-all text-black resize-none"
+                        className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs font-bold outline-none focus:bg-white focus:border-accent transition-all text-black resize-none"
                       />
                     </div>
 
@@ -2670,13 +2670,13 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                       <button
                         type="button"
                         onClick={() => setAddLocModal(prev => ({ ...prev, isOpen: false }))}
-                        className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-black uppercase transition text-center font-bold"
+                        className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-bold uppercase transition text-center font-bold"
                       >
                         {lang === 'bn' ? 'বাতিল' : 'Cancel'}
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black uppercase transition shadow-sm font-bold"
+                        className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold uppercase transition shadow-sm font-bold"
                       >
                         {lang === 'bn' ? 'যোগ করুন' : 'Add Location'}
                       </button>
@@ -2690,7 +2690,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             {toast.message && (
               <div className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-4 bg-zinc-950 text-white rounded-2xl shadow-2xl max-w-sm animate-in slide-in-from-bottom duration-300 border border-zinc-800">
                 <div className={`w-2 h-2 rounded-full shrink-0 ${toast.type === 'error' ? 'bg-rose-500' : toast.type === 'info' ? 'bg-amber-500' : 'bg-emerald-500'}`} />
-                <div className="flex-1 text-xs font-black tracking-wide">{toast.message}</div>
+                <div className="flex-1 text-xs font-bold tracking-wide">{toast.message}</div>
                 <button onClick={() => setToast({ message: '', type: null })} className="text-zinc-400 hover:text-white transition p-0.5">
                   <X className="w-4 h-4" />
                 </button>
@@ -2701,7 +2701,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
             {confirmModal.isOpen && (
               <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-[90] animate-in fade-in duration-200">
                 <div className="bg-white rounded-[2rem] max-w-md w-full p-6 md:p-8 shadow-2xl border border-zinc-100 animate-in zoom-in-95 duration-200">
-                  <h3 className="text-xl md:text-2xl font-sans font-black text-black">
+                  <h3 className="text-xl md:text-2xl font-sans font-bold text-black">
                     {confirmModal.title}
                   </h3>
                   <p className="text-zinc-500 font-bold text-xs mt-3 leading-relaxed">
@@ -2711,14 +2711,14 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ user }) => {
                     <button
                       type="button"
                       onClick={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
-                      className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-black uppercase transition text-center font-bold"
+                      className="flex-1 py-3 bg-zinc-100 hover:bg-zinc-200 text-black rounded-xl text-xs font-bold uppercase transition text-center font-bold"
                     >
                       {lang === 'bn' ? 'বাতিল' : 'Cancel'}
                     </button>
                     <button
                       type="button"
                       onClick={confirmModal.onConfirm}
-                      className="flex-1 py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-black uppercase transition shadow-md font-bold"
+                      className="flex-1 py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold uppercase transition shadow-md font-bold"
                     >
                       {lang === 'bn' ? 'নিশ্চিত করুন' : 'Confirm'}
                     </button>

@@ -16,7 +16,7 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
   const { lang, t } = useTranslation();
 
   return (
-    <div className="bg-white rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-emerald-50 p-2 sm:p-4 flex flex-row gap-2 sm:gap-5 hover:shadow-lg transition-all duration-300">
+    <div className="w-full bg-white rounded-2xl sm:rounded-3xl shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-emerald-50 p-2 sm:p-4 flex flex-row gap-2 sm:gap-5 hover:shadow-lg transition-all duration-300 overflow-hidden">
       <div className="relative w-20 h-20 sm:w-28 sm:h-36 md:w-36 md:h-44 rounded-xl sm:rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
         {book.imageUrl ? (
           <img 
@@ -41,35 +41,35 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
         )}
       </div>
 
-      <div className="flex-grow flex flex-col justify-between py-1">
-        <div>
+      <div className="flex-grow flex flex-col justify-between py-1 min-w-0">
+        <div className="min-w-0">
           <h3 className="font-sans font-bold text-slate-900 text-base sm:text-lg md:text-xl leading-tight line-clamp-1">{book.title}</h3>
           <p className="text-slate-400 text-[8px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-widest mt-0.5 sm:mt-1 line-clamp-1">
              — {book.author || 'AUTHOR'}
           </p>
           
-          <div className="space-y-0.5 sm:space-y-1.5 mt-0.5 sm:mt-3">
-             <div className="flex items-center gap-1.5">
-               <div className="bg-emerald-50 p-1 rounded">
+          <div className="space-y-0.5 sm:space-y-1.5 mt-0.5 sm:mt-3 min-w-0">
+             <div className="flex items-center gap-1.5 min-w-0">
+               <div className="bg-emerald-50 p-1 rounded flex-shrink-0">
                  <MapPin className="w-2 h-2 sm:w-3 sm:h-3 text-accent" />
                </div>
-               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
+               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate min-w-0 flex-grow">
                  {book.location?.unionName ? `${book.location.unionName}, ` : ''}{book.location?.upazilaName}, {book.location?.districtName}
                </span>
              </div>
-             <div className="flex items-center gap-1.5">
-               <div className="bg-slate-100 p-1 rounded">
+             <div className="flex items-center gap-1.5 min-w-0">
+               <div className="bg-slate-100 p-1 rounded flex-shrink-0">
                  <BookOpen className="w-2 h-2 sm:w-3 sm:h-3 text-slate-500" />
                </div>
-               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate max-w-[200px] md:max-w-[250px]">
+               <span className="text-[7px] sm:text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate min-w-0 flex-grow">
                  {t(book.subject as any) || book.subject}
                </span>
              </div>
           </div>
         </div>
 
-        <div className="flex items-end justify-between mt-1 sm:mt-4">
-           <div>
+        <div className="flex flex-wrap items-end justify-between mt-2 sm:mt-4 gap-2 w-full">
+           <div className="min-w-0">
              <div className="flex items-baseline gap-1">
                <span className="font-bn text-accent font-bold text-sm sm:text-lg md:text-xl leading-none">৳</span>
                <span className="font-bold text-accent text-base sm:text-xl md:text-2xl leading-none">{book.price === 0 ? (lang === 'bn' ? 'ফ্রি' : 'FREE') : book.price}</span>
@@ -83,16 +83,16 @@ export default function BookCard({ book, showActions, onDelete, onEdit }: BookCa
            </div>
 
           {!showActions ? (
-             <div className="flex items-center gap-1.5 sm:gap-2">
+             <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
                <Link to={`/books/${book.id}`} className="bg-zinc-900 text-white px-2 sm:px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-[7px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-colors flex items-center gap-1">
                  DETAILS <ChevronRight className="w-2 h-2 sm:w-3 sm:h-3" />
                </Link>
-               <a href={`tel:${book.contactPhone || ''}`} className="bg-accent text-white p-1.5 sm:p-1.5 md:p-2 rounded-lg md:rounded-xl hover:bg-accent-hover transition-colors">
+               <a href={`tel:${book.contactPhone || ''}`} className="bg-accent text-white p-1.5 sm:p-1.5 md:p-2 rounded-lg md:rounded-xl hover:bg-accent-hover transition-colors flex-shrink-0">
                  <Phone className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5" />
                </a>
              </div>
           ) : (
-            <div className="flex gap-1.5 sm:gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
               <button onClick={() => onEdit?.(book.id)} className="bg-zinc-100 text-slate-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[8px] sm:text-[9px] font-bold uppercase hover:bg-zinc-200">Edit</button>
               <button onClick={() => onDelete?.(book.id)} className="bg-red-50 text-red-600 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[8px] sm:text-[9px] font-bold uppercase hover:bg-red-100">Delete</button>
             </div>
